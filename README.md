@@ -1,0 +1,2 @@
+# mweinhol_Fahrrad_Analyse
+Daten und R Code zum SEMINAR ZUR ANALYSE VON FAHRRAD-VERKEHRSDATEN SOSE 2022
