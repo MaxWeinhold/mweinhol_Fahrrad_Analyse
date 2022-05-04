@@ -1,0 +1,7 @@
+﻿"Produkt_Code","Produkt_Titel","Einheit","Beschreibung_DWD","Beschreibung_Inspire"
+"OBS_DEU_PT1H_T2M","Hourly station observations of air temperature at 2 m above ground in °C","°C","https://cdc.dwd.de/sdi/pid/OBS_DEU_PT1H_T2M/DESCRIPTION_OBS_DEU_PT1H_T2M_en.pdf","https://cdc.dwd.de/sdi/pid/OBS_DEU_PT1H_T2M/ISO_OBS_DEU_PT1H_T2M.xml"
+"OBS_DEU_PT1H_RF","Hourly station observations of relative humidity in %","%","https://cdc.dwd.de/sdi/pid/OBS_DEU_PT1H_RF/DESCRIPTION_OBS_DEU_PT1H_RF_en.pdf","https://cdc.dwd.de/sdi/pid/OBS_DEU_PT1H_RF/ISO_OBS_DEU_PT1H_RF.xml"
+"OBS_DEU_PT1H_SD","Hourly station observations of sun shine duration in minutes","minutes","https://cdc.dwd.de/sdi/pid/OBS_DEU_PT1H_SD/DESCRIPTION_OBS_DEU_PT1H_SD_en.pdf","https://cdc.dwd.de/sdi/pid/OBS_DEU_PT1H_SD/ISO_OBS_DEU_PT1H_SD.xml"
+"OBS_DEU_PT1H_FF","Hourly station observations of wind velocity ca. 10 m above ground in m/s","m/s","https://cdc.dwd.de/sdi/pid/OBS_DEU_PT1H_FF/DESCRIPTION_OBS_DEU_PT1H_FF_en.pdf","https://cdc.dwd.de/sdi/pid/OBS_DEU_PT1H_FF/ISO_OBS_DEU_PT1H_FF.xml"
+"OBS_DEU_PT1H_F","Hourly mean of station observations of wind speed ca. 10 m above ground in m/s","m/s","https://cdc.dwd.de/sdi/pid/OBS_DEU_PT1H_F/DESCRIPTION_OBS_DEU_PT1H_F_en.pdf","https://cdc.dwd.de/sdi/pid/OBS_DEU_PT1H_F/ISO_OBS_DEU_PT1H_F.xml"
+"OBS_DEU_PT1H_RR","Hourly station observations of precipitation amount in mm","mm","https://cdc.dwd.de/sdi/pid/OBS_DEU_PT1H_RR/DESCRIPTION_OBS_DEU_PT1H_RR_en.pdf","https://cdc.dwd.de/sdi/pid/OBS_DEU_PT1H_RR/ISO_OBS_DEU_PT1H_RR.xml"
