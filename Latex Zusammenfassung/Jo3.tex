@@ -1,0 +1,138 @@
+\documentclass[a4paper,12pt, left=6cm, right=1.5cm]{thesis}
+
+\usepackage[utf8]{inputenc}
+
+\usepackage{blindtext}
+
+
+\usepackage[onehalfspacing]{setspace}
+
+\usepackage[ngerman]{babel}
+\usepackage[T1]{fontenc}
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{mathtools} 
+\usepackage{mathabx}
+\usepackage{graphicx}
+\usepackage[table]{xcolor}
+%\usepackage{hyperref}
+
+\usepackage{setspace}
+
+\usepackage{color}
+\usepackage{transparent}
+
+\usepackage{tikz}
+\usetikzlibrary{positioning}
+\usetikzlibrary{arrows,calc}
+%\usepackage{pgfplots} % LaTeX
+\usepackage{colortbl}
+%\usepackage{pgfplotstable}
+\usepackage{booktabs, colortbl}
+
+\usepackage{eurosym}
+
+\usepackage{csvsimple}
+
+\usepackage[authoryear]{natbib}
+%\bibliographystyle{apalike}
+\usepackage[hidelinks]{hyperref}
+\bibliographystyle{apalike}
+
+\newcommand*{\captionsource}[2]{%
+	\caption[{#1}]{%
+		#1%
+		\\\hspace{\linewidth}%
+		\textbf{Quelle:} #2%
+	}%
+}
+
+\tikzset{
+%Define standard arrow tip
+>=stealth',
+%Define style for different line styles
+help lines/.style={dashed, thick},
+axis/.style={<->},
+important line/.style={thick},
+connection/.style={thick, dotted},
+}
+
+
+\begin{document}
+
+%%% TITELSEITE %%%
+
+\begin{center}								% Beginn einer center-Umgebung. Der Text innerhalb der center-Umgebung wird zentriert. Ansonsten wird Blocksatz verwendet
+	\begin{LARGE}								% LARGE beschreibt eine Schriftgröße in Latex. Der Standard ist \normalsize. Eine übersicht der Schriftgrößen steht z.B. auf der Seite: https://www.latex-kurs.de/fragen/schriftgroesse.html 
+		Faktoren des Fahrrad Verkehrs in Mannheim						% Text, der nun zentriert und in größerer Schrift geschrieben wird 
+	\end{LARGE}								% Die Verwendung der Schriftgröße LARGE wird beendet. Es gilt ab jetzt wieder die normale Schriftgröße.
+	
+	\vspace{\fill}								% Befehl, der den vertikalen Platz (vspace) "füllt" 
+	
+	\begin{large}								% Der folgende Text hat nun die Schriftgröße large 
+		Maximilian Samuer Weinhold\\					% Durch ein \\ wird eine neue Zeile angefangen. 
+		Economics, 6. Semester\\
+		505314\\
+		mweinhol@uni-muenster.de\\
+		
+		\vspace{\fill}
+		
+		Hausarbeit im Rahmen des Seminars zur\\
+		Analyse von Fahrrad-Verkehrsdaten\\
+		Sommersemester 2021\\
+		Institut für Verkehrswissenschaft\\
+		Dr. Jan Wessel\\
+	\end{large}
+	
+	\thispagestyle{empty}						% Definiert den Stil für diese Seite. empty bedeutet, dass keine Seitenzahl auf der Seite gedruckt wird. 
+	
+\end{center}								% Ab nun wird wieder Blocksatz verwendet
+
+\newpage									% Seitenumbruch. Es beginnt eine neue Seite
+
+
+%\chapter*{Tabellen und Abbildungen}\addchapmark{Tabellen und Abbildungen}
+\onehalfspacing	
+\thispagestyle{empty}	
+\tableofcontents
+%\begingroup
+%\let\clearpage\relax
+%\listoffigures
+%\endgroup
+
+%\newpage
+
+%\listoffigures
+
+%\newpage
+
+
+%\listoffigures
+%\addcontentsline{toc}{chapter}{Abbildungsverzeichnis}
+
+\chapter{Einleitung}
+
+\chapter{Literaturüberblick}
+
+\chapter{Beschreibung der Daten}
+
+\section{EcoCounter Mannheim}
+
+\section{VRnextbike Daten}
+
+\chapter{Vorgegebene Aufgaben}
+
+\section{Deskriptive Analyse}
+
+\section{Regressionsanalyse}
+
+\chapter{Einfluss des VRnextbike Angebots}
+
+\chapter{Fazit}
+
+
+\newpage
+\addcontentsline{toc}{chapter}{Literaturverzeichnis}
+\bibliography{bib1}
+
+\end{document}
