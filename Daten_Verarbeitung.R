@@ -172,10 +172,10 @@ library(lubridate)
 	#https://www.uni-muenster.de/studium/orga/termine_archiv.html
 	#Termine Uni Mannheim und DHBW Mannheim. Uni Mannheim bereits angefragt
 
-	datensatz$FeiertagBW = ifelse(datensatz$Datum %in% Feiertage_bw,1,0)
-	datensatz$FeiertagRP = ifelse(datensatz$Datum %in% Feiertage_rp,1,0)
-	datensatz$SchulferienBW = ifelse(datensatz$Datum %in% SchulferienBW,1,0)
-	#datensatz$semesterferien = ifelse(datensatz$Datum %in% c(semesterferien_2018,semesterferien_2019),1,0
+	datensatz$FeiertagBW 		= ifelse(datensatz$Datum %in% Feiertage_bw,1,0)
+	datensatz$FeiertagRP 		= ifelse(datensatz$Datum %in% Feiertage_rp,1,0)
+	datensatz$SchulferienBW 	= ifelse(datensatz$Datum %in% SchulferienBW,1,0)
+	#datensatz$semesterferien 	= ifelse(datensatz$Datum %in% c(semesterferien_2018,semesterferien_2019),1,0
 
 	summary(datensatz)
 
@@ -183,9 +183,100 @@ library(lubridate)
 #Wetterdaten einladen
 ###
 
-	#niederschlag = read_csv("Daten/Wetter_Daten/data_OBS_DEU_PT1H_RR.csv")
-	#lufttemperatur = read_csv("Daten/Wetter_Daten/data_OBS_DEU_PT1H_T2M_1766.csv")
-	#wind = read_csv("Daten/Wetter_Daten/data_OBS_DEU_PT1H_F_1766.csv")
+	niederschlag 	= read_csv("Daten/Wetter_Daten/data_OBS_DEU_PT1H_RR.csv")
+	lufttemperatur 	= read_csv("Daten/Wetter_Daten/data_OBS_DEU_PT1H_T2M.csv")
+	wind 			= read_csv("Daten/Wetter_Daten/data_OBS_DEU_PT1H_F.csv")
+	relativefeuchte 	= read_csv("Daten/Wetter_Daten/data_OBS_DEU_PT1H_RF.csv")
+	sonne 		= read_csv("Daten/Wetter_Daten/data_OBS_DEU_PT1H_SD.csv")
 
+	summary(niederschlag)
+	summary(lufttemperatur)
+	summary(wind)
+	summary(relativefeuchte)
+	summary(sonne)
+	
+	#Niederschlag---
 
+	niederschlag$Zeit_neu	= as.POSIXct(niederschlag$Zeitstempel, format="%Y-%s-%b %H:%M:%S")
+	niederschlag$Datum	= as.POSIXct(niederschlag$Zeit_neu, format="%Y-%m-%d")			#Nur_Datum
+	niederschlag$Stunde	= format(niederschlag$Zeit_neu, format = "%H")	#Nur Stunde
+	summary(niederschlag$Zeit_neu)
+
+	names(niederschlag)
+	niederschlag <- niederschlag %>%
+     		select(Wert, Qualitaet_Niveau, Datum, Stunde)
+	names(niederschlag)[1]="WertRR"
+	names(niederschlag)[2]="QualitaetRR"
+
+	datensatz = merge(x = datensatz,y = niederschlag,
+		by = c("Datum","Stunde"),
+		all = TRUE)
+
+	#Temperatur---
+
+	lufttemperatur$Zeit_neu	= as.POSIXct(lufttemperatur$Zeitstempel, format="%Y-%s-%b %H:%M:%S")
+	lufttemperatur$Datum	= as.POSIXct(lufttemperatur$Zeit_neu, format="%Y-%m-%d")			#Nur_Datum
+	lufttemperatur$Stunde	= format(lufttemperatur$Zeit_neu, format = "%H")	#Nur Stunde
+
+	names(lufttemperatur)
+	lufttemperatur <- lufttemperatur %>%
+     		select(Wert, Qualitaet_Niveau, Datum, Stunde)
+	names(lufttemperatur)[1]="WertT2M"
+	names(lufttemperatur)[2]="QualitaetT2M"
+
+	datensatz = merge(x = datensatz,y = lufttemperatur,
+		by = c("Datum","Stunde"),
+		all = TRUE)
+
+	#Wind---
+
+	wind$Zeit_neu	= as.POSIXct(wind$Zeitstempel, format="%Y-%s-%b %H:%M:%S")
+	wind$Datum		= as.POSIXct(wind$Zeit_neu, format="%Y-%m-%d")			#Nur_Datum
+	wind$Stunde		= format(wind$Zeit_neu, format = "%H")	#Nur Stunde
+
+	names(wind )
+	wind  <- wind  %>%
+     		select(Wert, Qualitaet_Niveau, Datum, Stunde)
+	names(wind)[1]="WertF"
+	names(wind)[2]="QualitaetF"
+
+	datensatz = merge(x = datensatz,y = wind,
+		by = c("Datum","Stunde"),
+		all = TRUE)
+
+	#Feuchte---
+
+	relativefeuchte$Zeit_neu	= as.POSIXct(relativefeuchte$Zeitstempel, format="%Y-%s-%b %H:%M:%S")
+	relativefeuchte$Datum		= as.POSIXct(relativefeuchte$Zeit_neu, format="%Y-%m-%d")			#Nur_Datum
+	relativefeuchte$Stunde		= format(relativefeuchte$Zeit_neu, format = "%H")	#Nur Stunde
+
+	names(relativefeuchte)
+	relativefeuchte <- relativefeuchte  %>%
+     		select(Wert, Qualitaet_Niveau, Datum, Stunde)
+	names(relativefeuchte)[1]="WertRF"
+	names(relativefeuchte)[2]="QualitaetRF"
+
+	datensatz = merge(x = datensatz,y = relativefeuchte,
+		by = c("Datum","Stunde"),
+		all = TRUE)
+
+	#Sonne---
+
+	sonne$Zeit_neu	= as.POSIXct(sonne$Zeitstempel, format="%Y-%s-%b %H:%M:%S")
+	sonne$Datum		= as.POSIXct(sonne$Zeit_neu, format="%Y-%m-%d")			#Nur_Datum
+	sonne$Stunde		= format(sonne$Zeit_neu, format = "%H")	#Nur Stunde
+
+	names(sonne)
+	sonne <- sonne %>%
+     		select(Wert, Qualitaet_Niveau, Datum, Stunde)
+	names(sonne)[1]="WertSD"
+	names(sonne)[2]="QualitaetSD"
+
+	datensatz = merge(x = datensatz,y = sonne,
+		by = c("Datum","Stunde"),
+		all = TRUE)
+
+	#Bedeckungsgrad fehlt noch!!!!!!!!!!!!!!
+
+	names(datensatz)
 
