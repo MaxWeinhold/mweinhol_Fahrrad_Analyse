@@ -188,12 +188,14 @@ library(lubridate)
 	wind 			= read_csv("Daten/Wetter_Daten/data_OBS_DEU_PT1H_F.csv")
 	relativefeuchte 	= read_csv("Daten/Wetter_Daten/data_OBS_DEU_PT1H_RF.csv")
 	sonne 		= read_csv("Daten/Wetter_Daten/data_OBS_DEU_PT1H_SD.csv")
+	bedeckung		= read_csv("Daten/Wetter_Daten/data_OBS_DEU_PT1H_N.csv")
 
 	summary(niederschlag)
 	summary(lufttemperatur)
 	summary(wind)
 	summary(relativefeuchte)
 	summary(sonne)
+	summary(bedeckung)
 	
 	#Niederschlag---
 
@@ -264,7 +266,7 @@ library(lubridate)
 
 	sonne$Zeit_neu	= as.POSIXct(sonne$Zeitstempel, format="%Y-%s-%b %H:%M:%S")
 	sonne$Datum		= as.POSIXct(sonne$Zeit_neu, format="%Y-%m-%d")			#Nur_Datum
-	sonne$Stunde		= format(sonne$Zeit_neu, format = "%H")	#Nur Stunde
+	sonne$Stunde	= format(sonne$Zeit_neu, format = "%H")	#Nur Stunde
 
 	names(sonne)
 	sonne <- sonne %>%
@@ -276,7 +278,63 @@ library(lubridate)
 		by = c("Datum","Stunde"),
 		all = TRUE)
 
-	#Bedeckungsgrad fehlt noch!!!!!!!!!!!!!!
+	#Bedeckungsgrad---
 
+	bedeckung$Zeit_neu	= as.POSIXct(bedeckung$Zeitstempel, format="%Y-%s-%b %H:%M:%S")
+	bedeckung$Datum		= as.POSIXct(bedeckung$Zeit_neu, format="%Y-%m-%d")			#Nur_Datum
+	bedeckung$Stunde	= format(bedeckung$Zeit_neu, format = "%H")	#Nur Stunde
+
+	names(bedeckung)
+	bedeckung <- bedeckung %>%
+     		select(Wert, Qualitaet_Niveau, Datum, Stunde)
+	names(bedeckung)[1]="WertN"
+	names(bedeckung)[2]="QualitaetN"
+
+	datensatz = merge(x = datensatz,y = bedeckung,
+		by = c("Datum","Stunde"),
+		all = TRUE)
+
+	table(datensatz$WertN)
+	datensatz = datensatz %>%
+	mutate(WertN = ifelse(WertN == -1,8,WertN))
+
+	table(datensatz$QualitaetRR)
+	table(datensatz$QualitaetT2M)
+	table(datensatz$QualitaetF)
+	table(datensatz$QualitaetRF)
+	table(datensatz$QualitaetSD)
+	table(datensatz$QualitaetN)
+
+	table(datensatz$WertRR)
+	table(datensatz$WertT2M)
+	table(datensatz$WertF)
+	table(datensatz$WertRF)
+	table(datensatz$WertSD)
+	table(datensatz$WertN)
+
+	length(datensatz$WertN)
+	length(datensatz$WertSD)
+	
 	names(datensatz)
 
+#Daten prüfen
+
+	ggplot(data=datensatz, aes(x=Monat,y=as.numeric(WertT2M)))+geom_point()
+
+	#Noch zu viele Na's vorhanden, woran liegt das?
+
+	min(datensatz$Datum)
+	#Wie man sieht, habe ich versehentlich Wetterdaten von 1948 mit in den Datensatz aufgenommen. Das ändern wir.
+
+	datensatz = datensatz %>%
+		subset(is.na(Jahr)==FALSE)
+
+	ggplot(data=datensatz, aes(x=Monat,y=as.numeric(WertT2M)))+geom_point()
+	min(datensatz$Datum)
+	#Frühestes Datum ist jetzt aus dem März 2014
+
+	names(datensatz)
+	ggplot(data=datensatz, aes(x=as.numeric(WertT2M),y=Zaehlstand))+geom_point()
+	ggplot(data=datensatz, aes(x=Stunde,y=Zaehlstand))+geom_point()
+
+	save(datensatz,file="datensatz.rdata")
