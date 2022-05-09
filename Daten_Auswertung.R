@@ -17,12 +17,13 @@ rm(list=ls())
 library(tidyverse)
 library(lubridate)
 
-install.packages("RColorBrewer")
+#install.packages("RColorBrewer")
 library(RColorBrewer)
-install.packages("scales")
+#install.packages("scales")
 library(scales)
 
 load("datensatz.rdata")
+datensatz=datensatz_omit
 nrow(datensatz)
 names(datensatz)
 
@@ -51,18 +52,25 @@ ggplot(data=datensatz, aes(x=Wochenende,y=Zaehlstand))+geom_boxplot()
 ggplot(data=datensatz, aes(x=as.factor(FeiertagBW),y=Zaehlstand))+geom_boxplot()
 ggplot(data=datensatz, aes(x=as.factor(FeiertagRP),y=Zaehlstand))+geom_boxplot()
 ggplot(data=datensatz, aes(x=as.factor(SchulferienBW),y=Zaehlstand))+geom_boxplot()
+    
+nrow(datensatz)
+datensatz = datensatz %>%
+	mutate(Zaehlstand = ifelse(Zaehlstand == 0,1,Zaehlstand))
+
+regression = lm(log(Zaehlstand) ~ WertT2M + WertT2M^2 + WertRR + WertF + WertRF + WertSD + WertN +
+	Wochentag + Wochenende + FeiertagBW + FeiertagRP + FeiertagBW*FeiertagRP +
+	SchulferienBW + Sommer + Standort, data=datensatz)
+
+summary(datensatz)
 
 regression = lm(log(Zaehlstand) ~ WertT2M + WertRR + 
 	WertF + WertRF + WertSD + WertN +
-	Wochentag + Wochenende + Wochenende + 
+	Wochentag + Wochenende + 
 	as.factor(FeiertagBW) + as.factor(FeiertagRP) + as.factor(FeiertagBW*FeiertagRP) +
-	as.factor(SchulferienBW) + as.factor(Sommer) + Monat + Stunde + Standort, data=datensatz)
-
-regression = lm(log(Zaehlstand) ~ WertT2M + WertRR + 
-	WertF + WertRF + WertSD + WertN, data=datensatz)
+	as.factor(SchulferienBW) + as.factor(Sommer) + as.factor(Monat) + as.factor(Stunde) + Standort, data=datensatz)
 
 
-coeftest(regression_dummy, vcov = vcovHC(regression_dummy, type="HC0"))
+datensatz$Stunde
 
 summary(regression)
 

@@ -201,102 +201,138 @@ library(lubridate)
 
 	niederschlag$Zeit_neu	= as.POSIXct(niederschlag$Zeitstempel, format="%Y-%s-%b %H:%M:%S")
 	niederschlag$Datum	= as.POSIXct(niederschlag$Zeit_neu, format="%Y-%m-%d")			#Nur_Datum
+	niederschlag$Jahr		= format(as.Date(niederschlag$Zeit_neu, format="%Y-%m-%d"),"%Y") 	#Jahr
+	niederschlag$Monat	= format(as.Date(niederschlag$Zeit_neu, format="%Y-%m-%d"),"%m") 	#Monat
+	niederschlag$Tag		= format(as.Date(niederschlag$Zeit_neu, format="%Y-%m-%d"),"%d") 	#Tag im Monat
+	
+	niederschlag = niederschlag %>%
+		subset(Jahr>2013)
+
 	niederschlag$Stunde	= format(niederschlag$Zeit_neu, format = "%H")	#Nur Stunde
 	summary(niederschlag$Zeit_neu)
 
 	names(niederschlag)
 	niederschlag <- niederschlag %>%
-     		select(Wert, Qualitaet_Niveau, Datum, Stunde)
+     		select(Wert, Qualitaet_Niveau, Jahr, Monat, Tag, Stunde)
 	names(niederschlag)[1]="WertRR"
 	names(niederschlag)[2]="QualitaetRR"
 
 	datensatz = merge(x = datensatz,y = niederschlag,
-		by = c("Datum","Stunde"),
+		by = c("Jahr","Monat","Tag","Stunde"),
 		all = TRUE)
 
 	#Temperatur---
 
+
+
+
 	lufttemperatur$Zeit_neu	= as.POSIXct(lufttemperatur$Zeitstempel, format="%Y-%s-%b %H:%M:%S")
 	lufttemperatur$Datum	= as.POSIXct(lufttemperatur$Zeit_neu, format="%Y-%m-%d")			#Nur_Datum
+	lufttemperatur$Jahr	= format(as.Date(lufttemperatur$Zeit_neu, format="%Y-%m-%d"),"%Y") 	#Jahr
+	lufttemperatur$Monat	= format(as.Date(lufttemperatur$Zeit_neu, format="%Y-%m-%d"),"%m") 	#Monat
+	lufttemperatur$Tag	= format(as.Date(lufttemperatur$Zeit_neu, format="%Y-%m-%d"),"%d") 	#Tag im Monat
 	lufttemperatur$Stunde	= format(lufttemperatur$Zeit_neu, format = "%H")	#Nur Stunde
+
+	lufttemperatur = lufttemperatur %>%
+		subset(Jahr>2013)
 
 	names(lufttemperatur)
 	lufttemperatur <- lufttemperatur %>%
-     		select(Wert, Qualitaet_Niveau, Datum, Stunde)
+     		select(Wert, Qualitaet_Niveau, Jahr, Monat, Tag, Stunde)
 	names(lufttemperatur)[1]="WertT2M"
 	names(lufttemperatur)[2]="QualitaetT2M"
 
 	datensatz = merge(x = datensatz,y = lufttemperatur,
-		by = c("Datum","Stunde"),
+		by = c("Jahr","Monat","Tag","Stunde"),
 		all = TRUE)
 
 	#Wind---
 
 	wind$Zeit_neu	= as.POSIXct(wind$Zeitstempel, format="%Y-%s-%b %H:%M:%S")
 	wind$Datum		= as.POSIXct(wind$Zeit_neu, format="%Y-%m-%d")			#Nur_Datum
+	wind$Jahr		= format(as.Date(wind$Zeit_neu, format="%Y-%m-%d"),"%Y") 	#Jahr
+	wind$Monat		= format(as.Date(wind$Zeit_neu, format="%Y-%m-%d"),"%m") 	#Monat
+	wind$Tag		= format(as.Date(wind$Zeit_neu, format="%Y-%m-%d"),"%d") 	#Tag im Monat
 	wind$Stunde		= format(wind$Zeit_neu, format = "%H")	#Nur Stunde
 
-	names(wind )
+	wind = wind %>%
+		subset(Jahr>2013)
+
 	wind  <- wind  %>%
-     		select(Wert, Qualitaet_Niveau, Datum, Stunde)
+     		select(Wert, Qualitaet_Niveau, Jahr, Monat, Tag, Stunde)
 	names(wind)[1]="WertF"
 	names(wind)[2]="QualitaetF"
 
 	datensatz = merge(x = datensatz,y = wind,
-		by = c("Datum","Stunde"),
+		by = c("Jahr","Monat","Tag","Stunde"),
 		all = TRUE)
 
 	#Feuchte---
 
 	relativefeuchte$Zeit_neu	= as.POSIXct(relativefeuchte$Zeitstempel, format="%Y-%s-%b %H:%M:%S")
 	relativefeuchte$Datum		= as.POSIXct(relativefeuchte$Zeit_neu, format="%Y-%m-%d")			#Nur_Datum
+	relativefeuchte$Jahr		= format(as.Date(relativefeuchte$Zeit_neu, format="%Y-%m-%d"),"%Y") 	#Jahr
+	relativefeuchte$Monat		= format(as.Date(relativefeuchte$Zeit_neu, format="%Y-%m-%d"),"%m") 	#Monat
+	relativefeuchte$Tag		= format(as.Date(relativefeuchte$Zeit_neu, format="%Y-%m-%d"),"%d") 	#Tag im Monat
 	relativefeuchte$Stunde		= format(relativefeuchte$Zeit_neu, format = "%H")	#Nur Stunde
 
-	names(relativefeuchte)
+	relativefeuchte = relativefeuchte %>%
+		subset(Jahr>2013)
+
 	relativefeuchte <- relativefeuchte  %>%
-     		select(Wert, Qualitaet_Niveau, Datum, Stunde)
+     		select(Wert, Qualitaet_Niveau, Jahr, Monat, Tag, Stunde)
 	names(relativefeuchte)[1]="WertRF"
 	names(relativefeuchte)[2]="QualitaetRF"
 
 	datensatz = merge(x = datensatz,y = relativefeuchte,
-		by = c("Datum","Stunde"),
+		by = c("Jahr","Monat","Tag","Stunde"),
 		all = TRUE)
 
 	#Sonne---
 
 	sonne$Zeit_neu	= as.POSIXct(sonne$Zeitstempel, format="%Y-%s-%b %H:%M:%S")
 	sonne$Datum		= as.POSIXct(sonne$Zeit_neu, format="%Y-%m-%d")			#Nur_Datum
+	sonne$Jahr		= format(as.Date(sonne$Zeit_neu, format="%Y-%m-%d"),"%Y") 	#Jahr
+	sonne$Monat		= format(as.Date(sonne$Zeit_neu, format="%Y-%m-%d"),"%m") 	#Monat
+	sonne$Tag		= format(as.Date(sonne$Zeit_neu, format="%Y-%m-%d"),"%d") 	#Tag im Monat
 	sonne$Stunde	= format(sonne$Zeit_neu, format = "%H")	#Nur Stunde
 
-	names(sonne)
+	sonne = sonne %>%
+		subset(Jahr>2013)
+
 	sonne <- sonne %>%
-     		select(Wert, Qualitaet_Niveau, Datum, Stunde)
+     		select(Wert, Qualitaet_Niveau, Jahr, Monat, Tag, Stunde)
 	names(sonne)[1]="WertSD"
 	names(sonne)[2]="QualitaetSD"
 
 	datensatz = merge(x = datensatz,y = sonne,
-		by = c("Datum","Stunde"),
+		by = c("Jahr","Monat","Tag","Stunde"),
 		all = TRUE)
 
 	#Bedeckungsgrad---
 
 	bedeckung$Zeit_neu	= as.POSIXct(bedeckung$Zeitstempel, format="%Y-%s-%b %H:%M:%S")
 	bedeckung$Datum		= as.POSIXct(bedeckung$Zeit_neu, format="%Y-%m-%d")			#Nur_Datum
-	bedeckung$Stunde	= format(bedeckung$Zeit_neu, format = "%H")	#Nur Stunde
+	bedeckung$Jahr		= format(as.Date(bedeckung$Zeit_neu, format="%Y-%m-%d"),"%Y") 	#Jahr
+	bedeckung$Monat		= format(as.Date(bedeckung$Zeit_neu, format="%Y-%m-%d"),"%m") 	#Monat
+	bedeckung$Tag		= format(as.Date(bedeckung$Zeit_neu, format="%Y-%m-%d"),"%d") 	#Tag im Monat
+	bedeckung$Stunde		= format(bedeckung$Zeit_neu, format = "%H")	#Nur Stunde
 
-	names(bedeckung)
+	bedeckung = bedeckung %>%
+		subset(Jahr>2013)
+
 	bedeckung <- bedeckung %>%
-     		select(Wert, Qualitaet_Niveau, Datum, Stunde)
+     		select(Wert, Qualitaet_Niveau, Jahr, Monat, Tag, Stunde)
 	names(bedeckung)[1]="WertN"
 	names(bedeckung)[2]="QualitaetN"
 
 	datensatz = merge(x = datensatz,y = bedeckung,
-		by = c("Datum","Stunde"),
+		by = c("Jahr","Monat","Tag","Stunde"),
 		all = TRUE)
 
 	table(datensatz$WertN)
 	datensatz = datensatz %>%
-	mutate(WertN = ifelse(WertN == -1,8,WertN))
+		mutate(WertN = ifelse(WertN == -1,8,WertN))
 
 	table(datensatz$QualitaetRR)
 	table(datensatz$QualitaetT2M)
@@ -329,12 +365,22 @@ library(lubridate)
 	datensatz = datensatz %>%
 		subset(is.na(Jahr)==FALSE)
 
-	ggplot(data=datensatz, aes(x=Monat,y=as.numeric(WertT2M)))+geom_point()
+	#ggplot(data=datensatz, aes(x=Monat,y=as.numeric(WertT2M)))+geom_point()
 	min(datensatz$Datum)
 	#Frühestes Datum ist jetzt aus dem März 2014
 
 	names(datensatz)
-	ggplot(data=datensatz, aes(x=as.numeric(WertT2M),y=Zaehlstand))+geom_point()
-	ggplot(data=datensatz, aes(x=Stunde,y=Zaehlstand))+geom_point()
+	#ggplot(data=datensatz, aes(x=as.numeric(WertT2M),y=Zaehlstand))+geom_point()
+	#ggplot(data=datensatz, aes(x=Stunde,y=Zaehlstand))+geom_point()
 
-	save(datensatz,file="datensatz.rdata")
+	summary(datensatz)
+
+	nrow(datensatz)
+	datensatz_omit <- na.omit(datensatz)
+	nrow(datensatz_omit)
+
+
+	write.csv(datensatz_omit,file="datensatz.csv")
+
+
+	save(datensatz_omit,file="datensatz.rdata")
