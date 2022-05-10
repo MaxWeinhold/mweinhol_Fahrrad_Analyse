@@ -18,9 +18,11 @@ rm(list=ls())
 #install.packages("lubridate")
 #install.packages("Rcpp")
 #install.packages("tidyverse")
+#install.packages("geosphere")
 library(readxl)
 library(tidyverse)
 library(lubridate)
+library(geosphere)
 
 #-------------------------------------------------------------------
 #Zählstationsdaten einladen-----------------------------------------
@@ -79,7 +81,25 @@ library(lubridate)
 	
 	zaehlstellen <- zaehlstellen %>%
      		select(Standort, Zaehlstand, Koordinaten, Zeit_neu, Datum, Stunde, Jahr, Monat, Tag, Wochentag)
-	
+
+#Koordinaten
+
+	names(zaehlstellen)
+	zaehlstellen$Koordinaten[1]
+	zaehlstellen$laengengrad = as.numeric(str_split_fixed(zaehlstellen$Koordinaten,',', 2)[,2])
+	zaehlstellen$breitengrad = as.numeric(str_split_fixed(zaehlstellen$Koordinaten,',', 2)[,1])
+
+	uniMA_breiteng=49.483397
+	uniMA_laengeng=8.462194
+	zaehlstellen$uniMA_dist=1
+
+	for(i in 1:length(zaehlstellen$uniMA_dist)) {
+		zaehlstellen$uniMA_dist[i] = distm(c(uniMA_laengeng, uniMA_breiteng), c(zaehlstellen$laengengrad[i], zaehlstellen$breitengrad[i]), fun = distHaversine)
+	}
+
+	zaehlstellen <- zaehlstellen %>%
+     		select(Standort, Zaehlstand, laengengrad, breitengrad, uniMA_dist, Zeit_neu, Datum, Stunde, Jahr, Monat, Tag, Wochentag)
+
 #Wochenende, Sommer, Feiertage, Schul- und Semesterferien
 
 	datensatz = zaehlstellen

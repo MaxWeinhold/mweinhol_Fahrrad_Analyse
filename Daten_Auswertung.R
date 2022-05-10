@@ -14,13 +14,26 @@ rm(list=ls())
 
 #packages
 
+#install.packages("sandwich")
+library(sandwich)
+#install.packages("fixest")
+library(fixest)
 library(tidyverse)
 library(lubridate)
-
+#install.packages("lmtest")
+library(lmtest)
 #install.packages("RColorBrewer")
 library(RColorBrewer)
 #install.packages("scales")
 library(scales)
+#install.packages("purrr")
+library(purrr)
+#install.packages("dplyr")
+library(dplyr)
+#install.packages("modelr")
+library(modelr)
+#install.packages("caret")
+library(caret)
 
 load("datensatz.rdata")
 datensatz=datensatz_omit
@@ -54,33 +67,83 @@ ggplot(data=datensatz, aes(x=as.factor(FeiertagRP),y=Zaehlstand))+geom_boxplot()
 ggplot(data=datensatz, aes(x=as.factor(SchulferienBW),y=Zaehlstand))+geom_boxplot()
     
 nrow(datensatz)
+
+datensatz = datensatz %>%
+	filter(as.numeric(Stunde) %in% c(5:22))
+
 datensatz = datensatz %>%
 	mutate(Zaehlstand = ifelse(Zaehlstand == 0,1,Zaehlstand))
 
-regression = lm(log(Zaehlstand) ~ WertT2M + WertT2M^2 + WertRR + WertF + WertRF + WertSD + WertN +
-	Wochentag + Wochenende + FeiertagBW + FeiertagRP + FeiertagBW*FeiertagRP +
-	SchulferienBW + Sommer + Standort, data=datensatz)
+datensatz = datensatz %>%
+	mutate(Wochenende = ifelse(Wochenende == "Wochenende",1,0))
 
-summary(datensatz)
+names(datensatz)
 
-regression = lm(log(Zaehlstand) ~ WertT2M + WertRR + 
-	WertF + WertRF + WertSD + WertN +
-	Wochentag + Wochenende + 
-	as.factor(FeiertagBW) + as.factor(FeiertagRP) + as.factor(FeiertagBW*FeiertagRP) +
-	as.factor(SchulferienBW) + as.factor(Sommer) + as.factor(Monat) + as.factor(Stunde) + Standort, data=datensatz)
+regression_fixest1 = feols(log(Zaehlstand) ~ WertT2M + WertT2M^2 + WertT2M^3 + WertRR + WertRR^2 + WertF + WertF^2 + 
+	WertRF + WertRF^2 + WertSD + WertSD^2 + WertN + WertN^2 +
+	FeiertagBW + FeiertagRP + FeiertagRP*FeiertagBW + SchulferienBW + Sommer + 
+	laengengrad + laengengrad^2 + breitengrad + breitengrad^2 + laengengrad*breitengrad + 
+	as.numeric(Jahr) + as.numeric(Jahr)^2 +uniMA_dist | Stunde + Wochentag, data=datensatz)
+
+#coeftest(regression_fixest1, vcov = vcovHC(regression_fixest, type="HC0"))
+summary(regression_fixest1,se="hetero")
+AIC(regression_fixest1)
+BIC(regression_fixest1)
+
+regression_fixest2 = feols(log(Zaehlstand) ~ WertT2M + WertT2M^2 + WertT2M^3 + WertRR + WertRR^2 + WertF + WertF^2 + 
+	WertRF + WertRF^2 + WertSD + WertSD^2 + WertN + WertN^2 +
+	FeiertagBW + FeiertagRP + FeiertagRP*FeiertagBW + SchulferienBW + Sommer
+ 	| Standort + Jahr + Stunde + Wochentag, data=datensatz)
+
+#coeftest(regression_fixes2t, vcov = vcovHC(regression_fixest, type="HC0"))
+summary(regression_fixest2,se="hetero")
+AIC(regression_fixest2)
+BIC(regression_fixest2)
+
+#Cross Validation
+
+# Split the data into training and test set
+set.seed(123)
+training.samples <- datensatz$Zaehlstand %>%
+  createDataPartition(p = 0.8, list = FALSE)
+train.data  <- datensatz[training.samples, ]
+test.data <- datensatz[-training.samples, ]
+
+# Build the model
+model <- lm(Zaehlstand ~., data = train.data)
+model1 <- feols(log(Zaehlstand) ~ WertT2M + WertT2M^2 + WertT2M^3 + WertRR + WertRR^2 + WertF + WertF^2 + 
+	WertRF + WertRF^2 + WertSD + WertSD^2 + WertN + WertN^2 +
+	FeiertagBW + FeiertagRP + FeiertagRP*FeiertagBW + SchulferienBW + Sommer + 
+	laengengrad + laengengrad^2 + breitengrad + breitengrad^2 + laengengrad*breitengrad + 
+	as.numeric(Jahr) + as.numeric(Jahr)^2 +uniMA_dist | Stunde + Wochentag, data = train.data)
+model2 <- feols(log(Zaehlstand) ~ WertT2M + WertT2M^2 + WertT2M^3 + WertRR + WertRR^2 + WertF + WertF^2 + 
+	WertRF + WertRF^2 + WertSD + WertSD^2 + WertN + WertN^2 +
+	FeiertagBW + FeiertagRP + FeiertagRP*FeiertagBW + SchulferienBW + Sommer + 
+	Standort + Jahr + Stunde + Wochentag, data = train.data)
 
 
-datensatz$Stunde
+# Make predictions and compute the R2, RMSE and MAE
+predictions <- model %>% predict(test.data)
+data.frame( R2 = R2(predictions, test.data$Zaehlstand),
+            RMSE = RMSE(predictions, test.data$Zaehlstand),
+            MAE = MAE(predictions, test.data$Zaehlstand))
 
-summary(regression)
+predictions <- model1 %>% predict(test.data)
+data.frame( R2 = R2(predictions, test.data$Zaehlstand),
+            RMSE = RMSE(predictions, test.data$Zaehlstand),
+            MAE = MAE(predictions, test.data$Zaehlstand))
 
+predictions <- model2 %>% predict(test.data)
+data.frame( R2 = R2(predictions, test.data$Zaehlstand),
+            RMSE = RMSE(predictions, test.data$Zaehlstand),
+            MAE = MAE(predictions, test.data$Zaehlstand))
 
+#Leave one out cross validation - LOOCV
 
-
-
-
-
-
-
-
-
+# Define training control
+train.control <- trainControl(method = "LOOCV")
+# Train the model
+model <- train(Zaehlstand ~., data = datensatz, method = "lm",
+               trControl = train.control)
+# Summarize the results
+print(model)
