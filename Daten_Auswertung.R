@@ -185,9 +185,39 @@ summary(model)
 
 
 
+datensatz$WertT2M2 = datensatz$WertT2M^2
+datensatz$WertRR2 = datensatz$WertRR^2
+datensatz$WertF2 = datensatz$WertF^2
+datensatz$WertRF2 = datensatz$WertRF^2
+datensatz$WertSD2 = datensatz$WertSD^2
+datensatz$WertN2 = datensatz$WertN^2
+datensatz$Jahr2 = as.numeric(datensatz$Jahr)^2
+datensatz$uniMA_dist2 = datensatz$uniMA_dist^2
+datensatz$laengengrad2 = datensatz$laengengrad^2
+datensatz$breitengrad2 = datensatz$breitengrad^2
 
+datensatz$laengenbreitengrad = datensatz$laengengrad*datensatz$breitengrad
+datensatz$FeiertagBWRP = datensatz$FeiertagBW*datensatz$FeiertagRP
 
+datensatz$WertT2M3 = datensatz$WertT2M^3
+datensatz$WertRR3 = datensatz$WertRR^3
+datensatz$WertF3 = datensatz$WertF^3
+datensatz$WertRF3 = datensatz$WertRF^3
+datensatz$WertSD3 = datensatz$WertSD^3
+datensatz$WertN3 = datensatz$WertN^3
+datensatz$Jahr3 = as.numeric(datensatz$Jahr)^3
+datensatz$uniMA_dist3 = datensatz$uniMA_dist^3
+datensatz$laengengrad3 = datensatz$laengengrad^3
+datensatz$breitengrad3 = datensatz$breitengrad^3
 
+names(datensatz)
+
+# Split the data into training and test set
+set.seed(123)
+training.samples <- datensatz$Zaehlstand %>%
+  createDataPartition(p = 0.8, list = FALSE)
+train.data  <- datensatz[training.samples, ]
+test.data <- datensatz[-training.samples, ]
 
 #Experementiere
 
@@ -233,79 +263,79 @@ model15 <- lm(log(Zaehlstand) ~ WertT2M + WertRR + WertF + WertRF + WertSD + Wer
 	as.numeric(Jahr) + uniMA_dist + Stunde + Wochentag, data = train.data)
 
 model16 <- lm(log(Zaehlstand) ~ WertT2M + WertRR + WertF + WertRF + WertSD + WertN +
-	FeiertagBW + FeiertagRP + FeiertagRP*FeiertagBW + SchulferienBW + Sommer + laengengrad + breitengrad + 
+	FeiertagBW + FeiertagRP + FeiertagBWRP + SchulferienBW + Sommer + laengengrad + breitengrad + 
 	as.numeric(Jahr) + uniMA_dist + Stunde + Wochentag, data = train.data)
 
-model17 <- lm(log(Zaehlstand) ~ WertT2M + WertT2M^2 + WertRR + WertF + 
+model17 <- lm(log(Zaehlstand) ~ WertT2M + WertT2M2 + WertRR + WertF + 
 	WertRF + WertSD + WertN +
-	FeiertagBW + FeiertagRP + FeiertagRP*FeiertagBW + SchulferienBW + Sommer + 
+	FeiertagBW + FeiertagRP + FeiertagBWRP + SchulferienBW + Sommer + 
 	laengengrad + breitengrad + 
 	as.numeric(Jahr) + uniMA_dist + Stunde + Wochentag, data = train.data)
 
-model18 <- lm(log(Zaehlstand) ~ WertT2M + WertT2M^2 + WertRR + WertRR^2 + WertF + 
+model18 <- lm(log(Zaehlstand) ~ WertT2M + WertT2M2 + WertRR + WertRR2 + WertF + 
 	WertRF + WertSD + WertN +
-	FeiertagBW + FeiertagRP + FeiertagRP*FeiertagBW + SchulferienBW + Sommer + 
-	laengengrad + breitengrad + laengengrad*breitengrad + 
+	FeiertagBW + FeiertagRP + FeiertagBWRP + SchulferienBW + Sommer + 
+	laengengrad + breitengrad + laengenbreitengrad + 
 	as.numeric(Jahr) + uniMA_dist + Stunde + Wochentag, data = train.data)
 
-model19 <- lm(log(Zaehlstand) ~ WertT2M + WertT2M^2 + WertRR + WertRR^2 + WertF + WertF^2 + 
+model19 <- lm(log(Zaehlstand) ~ WertT2M + WertT2M2 + WertRR + WertRR2 + WertF + WertF2 + 
 	WertRF + WertSD + WertN +
-	FeiertagBW + FeiertagRP + FeiertagRP*FeiertagBW + SchulferienBW + Sommer + 
-	laengengrad + breitengrad + laengengrad*breitengrad + 
+	FeiertagBW + FeiertagRP + FeiertagBWRP + SchulferienBW + Sommer + 
+	laengengrad + breitengrad + laengenbreitengrad + 
 	as.numeric(Jahr) + uniMA_dist + Stunde + Wochentag, data = train.data)
 
-model20 <- lm(log(Zaehlstand) ~ WertT2M + WertT2M^2 + WertRR + WertRR^2 + WertF + WertF^2 + 
-	WertRF + WertRF^2 + WertSD + WertN +
-	FeiertagBW + FeiertagRP + FeiertagRP*FeiertagBW + SchulferienBW + Sommer + 
-	laengengrad + breitengrad + laengengrad*breitengrad + 
+model20 <- lm(log(Zaehlstand) ~ WertT2M + WertT2M2 + WertRR + WertRR2 + WertF + WertF2 + 
+	WertRF + WertRF2 + WertSD + WertN +
+	FeiertagBW + FeiertagRP + FeiertagBWRP + SchulferienBW + Sommer + 
+	laengengrad + breitengrad + laengenbreitengrad + 
 	as.numeric(Jahr) + uniMA_dist + Stunde + Wochentag, data = train.data)
 
-model21 <- lm(log(Zaehlstand) ~ WertT2M + WertT2M^2 + WertRR + WertRR^2 + WertF + WertF^2 + 
-	WertRF + WertRF^2 + WertSD + WertSD^2 + WertN +
-	FeiertagBW + FeiertagRP + FeiertagRP*FeiertagBW + SchulferienBW + Sommer + 
-	laengengrad + breitengrad + laengengrad*breitengrad + 
+model21 <- lm(log(Zaehlstand) ~ WertT2M + WertT2M2 + WertRR + WertRR2 + WertF + WertF2 + 
+	WertRF + WertRF2 + WertSD + WertSD2 + WertN +
+	FeiertagBW + FeiertagRP + FeiertagBWRP + SchulferienBW + Sommer + 
+	laengengrad + breitengrad + laengenbreitengrad + 
 	as.numeric(Jahr) + uniMA_dist + Stunde + Wochentag, data = train.data)
 
-model22 <- lm(log(Zaehlstand) ~ WertT2M + WertT2M^2 + WertRR + WertRR^2 + WertF + WertF^2 + 
-	WertRF + WertRF^2 + WertSD + WertSD^2 + WertN + WertN^2 +
-	FeiertagBW + FeiertagRP + FeiertagRP*FeiertagBW + SchulferienBW + Sommer + 
-	laengengrad + breitengrad + laengengrad*breitengrad + 
+model22 <- lm(log(Zaehlstand) ~ WertT2M + WertT2M2 + WertRR + WertRR2 + WertF + WertF2 + 
+	WertRF + WertRF2 + WertSD + WertSD2 + WertN + WertN2 +
+	FeiertagBW + FeiertagRP + FeiertagBWRP + SchulferienBW + Sommer + 
+	laengengrad + breitengrad + laengenbreitengrad + 
 	as.numeric(Jahr) + uniMA_dist + Stunde + Wochentag, data = train.data)
 
-model23 <- lm(log(Zaehlstand) ~ WertT2M + WertT2M^2 + WertRR + WertRR^2 + WertF + WertF^2 + 
-	WertRF + WertRF^2 + WertSD + WertSD^2 + WertN + WertN^2 +
-	FeiertagBW + FeiertagRP + FeiertagRP*FeiertagBW + SchulferienBW + Sommer + 
-	laengengrad + laengengrad^2 + breitengrad + laengengrad*breitengrad + 
+model23 <- lm(log(Zaehlstand) ~ WertT2M + WertT2M2 + WertRR + WertRR2 + WertF + WertF2 + 
+	WertRF + WertRF2 + WertSD + WertSD2 + WertN + WertN2 +
+	FeiertagBW + FeiertagRP + FeiertagBWRP + SchulferienBW + Sommer + 
+	laengengrad + laengengrad2 + breitengrad + laengenbreitengrad + 
 	as.numeric(Jahr) + uniMA_dist + Stunde + Wochentag, data = train.data)
 
-model24 <- lm(log(Zaehlstand) ~ WertT2M + WertT2M^2 + WertRR + WertRR^2 + WertF + WertF^2 + 
-	WertRF + WertRF^2 + WertSD + WertSD^2 + WertN + WertN^2 +
-	FeiertagBW + FeiertagRP + FeiertagRP*FeiertagBW + SchulferienBW + Sommer + 
-	laengengrad + laengengrad^2 + breitengrad + breitengrad^2 + laengengrad*breitengrad + 
+model24 <- lm(log(Zaehlstand) ~ WertT2M + WertT2M2 + WertRR + WertRR2 + WertF + WertF2 + 
+	WertRF + WertRF2 + WertSD + WertSD2 + WertN + WertN2 +
+	FeiertagBW + FeiertagRP + FeiertagBWRP + SchulferienBW + Sommer + 
+	laengengrad + laengengrad2 + breitengrad + laengenbreitengrad + 
 	as.numeric(Jahr) + uniMA_dist  + Stunde + Wochentag, data = train.data)
 
-model25 <- lm(log(Zaehlstand) ~ WertT2M + WertT2M^2 + WertRR + WertRR^2 + WertF + WertF^2 + 
-	WertRF + WertRF^2 + WertSD + WertSD^2 + WertN + WertN^2 +
-	FeiertagBW + FeiertagRP + FeiertagRP*FeiertagBW + SchulferienBW + Sommer + 
-	laengengrad + laengengrad^2 + breitengrad + breitengrad^2 + laengengrad*breitengrad + 
-	as.numeric(Jahr) + as.numeric(Jahr)^2 + uniMA_dist + Stunde + Wochentag, data = train.data)
+model25 <- lm(log(Zaehlstand) ~ WertT2M + WertT2M2 + WertRR + WertRR2 + WertF + WertF2 + 
+	WertRF + WertRF2 + WertSD + WertSD2 + WertN + WertN2 +
+	FeiertagBW + FeiertagRP + FeiertagBWRP + SchulferienBW + Sommer + 
+	laengengrad + laengengrad2 + breitengrad + laengenbreitengrad + 
+	as.numeric(Jahr) + as.numeric(Jahr2) + uniMA_dist + Stunde + Wochentag, data = train.data)
 
-model26 <- lm(log(Zaehlstand) ~ WertT2M + WertT2M^2 + WertRR + WertRR^2 + WertF + WertF^2 + 
-	WertRF + WertRF^2 + WertSD + WertSD^2 + WertN + WertN^2 +
-	FeiertagBW + FeiertagRP + FeiertagRP*FeiertagBW + SchulferienBW + Sommer + 
-	laengengrad + laengengrad^2 + breitengrad + breitengrad^2 + laengengrad*breitengrad + 
-	as.numeric(Jahr) + as.numeric(Jahr)^2 + uniMA_dist + uniMA_dist^2 + Stunde + Wochentag, data = train.data)
+model26 <- lm(log(Zaehlstand) ~ WertT2M + WertT2M2 + WertRR + WertRR2 + WertF + WertF2 + 
+	WertRF + WertRF2 + WertSD + WertSD2 + WertN + WertN2 +
+	FeiertagBW + FeiertagRP + FeiertagBWRP + SchulferienBW + Sommer + 
+	laengengrad + laengengrad2 + breitengrad + laengenbreitengrad + 
+	as.numeric(Jahr) + as.numeric(Jahr2) + uniMA_dist+ Stunde + Wochentag, data = train.data)
 
+model27 <- lm(log(Zaehlstand) ~ WertT2M + WertT2M2 + WertT2M3 + WertRR + WertRR2 + WertRR3 + 
+	WertF + WertF2 + WertF3 + WertRF + WertRF2 + WertRF3 + WertSD + WertSD2 + WertSD3 + 
+	WertN + WertN2 + WertN3 + FeiertagBW + FeiertagRP + FeiertagRP*FeiertagBW + SchulferienBW + Sommer + 
+	laengengrad + laengengrad2 + laengengrad3 + breitengrad + breitengrad3 + laengenbreitengrad + 
+	as.numeric(Jahr) + as.numeric(Jahr2) + as.numeric(Jahr3) + 
+	uniMA_dist + Stunde + Wochentag, data = train.data)
 
-
-
-
-model27 <- lm(log(Zaehlstand) ~ WertT2M + WertT2M^2 + WertT2M^3 + WertRR + WertRR^2 + WertRR^3 + 
-	WertF + WertF^2 + WertF^3 + WertRF + WertRF^2 + WertRF^3 + WertSD + WertSD^2 + WertSD^3 + 
-	WertN + WertN^2 + WertN^3 + FeiertagBW + FeiertagRP + FeiertagRP*FeiertagBW + SchulferienBW + Sommer + 
-	laengengrad + laengengrad^2 + laengengrad^3 + breitengrad + breitengrad^2 + breitengrad^3 + laengengrad*breitengrad + 
-	as.numeric(Jahr) + as.numeric(Jahr)^2 + as.numeric(Jahr)^3 + 
-	uniMA_dist + uniMA_dist^2 + uniMA_dist^3 + Stunde + Wochentag, data = train.data)
+summary(model25)
+summary(model26)
+summary(model27)
 
 models=c(1:27)
 variables=c(1:27)
@@ -336,34 +366,7 @@ variables[24]=length(model24$coefficients)
 variables[25]=length(model25$coefficients)
 variables[26]=length(model26$coefficients)
 variables[27]=length(model27$coefficients)
-adjR2_train=c(1:27)
-adjR2_train[1]=summary(model1)$adj.r.squared
-adjR2_train[2]=summary(model2)$adj.r.squared
-adjR2_train[3]=summary(model3)$adj.r.squared
-adjR2_train[4]=summary(model4)$adj.r.squared
-adjR2_train[5]=summary(model5)$adj.r.squared
-adjR2_train[6]=summary(model6)$adj.r.squared
-adjR2_train[7]=summary(model7)$adj.r.squared
-adjR2_train[8]=summary(model8)$adj.r.squared
-adjR2_train[9]=summary(model9)$adj.r.squared
-adjR2_train[10]=summary(model10)$adj.r.squared
-adjR2_train[11]=summary(model11)$adj.r.squared
-adjR2_train[12]=summary(model12)$adj.r.squared
-adjR2_train[13]=summary(model13)$adj.r.squared
-adjR2_train[14]=summary(model14)$adj.r.squared
-adjR2_train[15]=summary(model15)$adj.r.squared
-adjR2_train[16]=summary(model16)$adj.r.squared
-adjR2_train[17]=summary(model17)$adj.r.squared
-adjR2_train[18]=summary(model18)$adj.r.squared
-adjR2_train[19]=summary(model19)$adj.r.squared
-adjR2_train[20]=summary(model20)$adj.r.squared
-adjR2_train[21]=summary(model21)$adj.r.squared
-adjR2_train[22]=summary(model22)$adj.r.squared
-adjR2_train[23]=summary(model23)$adj.r.squared
-adjR2_train[24]=summary(model24)$adj.r.squared
-adjR2_train[25]=summary(model25)$adj.r.squared
-adjR2_train[26]=summary(model26)$adj.r.squared
-adjR2_train[27]=summary(model27)$adj.r.squared
+
 
 predictions1 <- model1 %>% predict(train.data)
 predictions2 <- model2 %>% predict(train.data)
@@ -393,40 +396,125 @@ predictions25 <- model25 %>% predict(train.data)
 predictions26 <- model26 %>% predict(train.data)
 predictions27 <- model27 %>% predict(train.data)
 
+adjR2_train[1]=R2(predictions1, train.data$Zaehlstand)
+adjR2_train[2]=R2(predictions2, train.data$Zaehlstand)
+adjR2_train[3]=R2(predictions3, train.data$Zaehlstand)
+adjR2_train[4]=R2(predictions4, train.data$Zaehlstand)
+adjR2_train[5]=R2(predictions5, train.data$Zaehlstand)
+adjR2_train[6]=R2(predictions6, train.data$Zaehlstand)
+adjR2_train[7]=R2(predictions7, train.data$Zaehlstand)
+adjR2_train[8]=R2(predictions8, train.data$Zaehlstand)
+adjR2_train[9]=R2(predictions9, train.data$Zaehlstand)
+adjR2_train[10]=R2(predictions10, train.data$Zaehlstand)
+adjR2_train[11]=R2(predictions11, train.data$Zaehlstand)
+adjR2_train[12]=R2(predictions12, train.data$Zaehlstand)
+adjR2_train[13]=R2(predictions13, train.data$Zaehlstand)
+adjR2_train[14]=R2(predictions14, train.data$Zaehlstand)
+adjR2_train[15]=R2(predictions15, train.data$Zaehlstand)
+adjR2_train[16]=R2(predictions16, train.data$Zaehlstand)
+adjR2_train[17]=R2(predictions17, train.data$Zaehlstand)
+adjR2_train[18]=R2(predictions18, train.data$Zaehlstand)
+adjR2_train[19]=R2(predictions19, train.data$Zaehlstand)
+adjR2_train[20]=R2(predictions20, train.data$Zaehlstand)
+adjR2_train[21]=R2(predictions21, train.data$Zaehlstand)
+adjR2_train[22]=R2(predictions22, train.data$Zaehlstand)
+adjR2_train[23]=R2(predictions23, train.data$Zaehlstand)
+adjR2_train[24]=R2(predictions24, train.data$Zaehlstand)
+adjR2_train[25]=R2(predictions25, train.data$Zaehlstand)
+adjR2_train[26]=R2(predictions26, train.data$Zaehlstand)
+adjR2_train[27]=R2(predictions27, train.data$Zaehlstand)
+
+adjR2_train=c(1:27)
+adjR2_train[1]=summary(model1)$adj.r.squared
+adjR2_train[2]=summary(model2)$adj.r.squared
+adjR2_train[3]=summary(model3)$adj.r.squared
+adjR2_train[4]=summary(model4)$adj.r.squared
+adjR2_train[5]=summary(model5)$adj.r.squared
+adjR2_train[6]=summary(model6)$adj.r.squared
+adjR2_train[7]=summary(model7)$adj.r.squared
+adjR2_train[8]=summary(model8)$adj.r.squared
+adjR2_train[9]=summary(model9)$adj.r.squared
+adjR2_train[10]=summary(model10)$adj.r.squared
+adjR2_train[11]=summary(model11)$adj.r.squared
+adjR2_train[12]=summary(model12)$adj.r.squared
+adjR2_train[13]=summary(model13)$adj.r.squared
+adjR2_train[14]=summary(model14)$adj.r.squared
+adjR2_train[15]=summary(model15)$adj.r.squared
+adjR2_train[16]=summary(model16)$adj.r.squared
+adjR2_train[17]=summary(model17)$adj.r.squared
+adjR2_train[18]=summary(model18)$adj.r.squared
+adjR2_train[19]=summary(model19)$adj.r.squared
+adjR2_train[20]=summary(model20)$adj.r.squared
+adjR2_train[21]=summary(model21)$adj.r.squared
+adjR2_train[22]=summary(model22)$adj.r.squared
+adjR2_train[23]=summary(model23)$adj.r.squared
+adjR2_train[24]=summary(model24)$adj.r.squared
+adjR2_train[25]=summary(model25)$adj.r.squared
+adjR2_train[26]=summary(model26)$adj.r.squared
+adjR2_train[27]=summary(model27)$adj.r.squared
+
+predictions1test <- model1 %>% predict(test.data)
+predictions2test <- model2 %>% predict(test.data)
+predictions3test <- model3 %>% predict(test.data)
+predictions4test <- model4 %>% predict(test.data)
+predictions5test <- model5 %>% predict(test.data)
+predictions6test <- model6 %>% predict(test.data)
+predictions7test <- model7 %>% predict(test.data)
+predictions8test <- model8 %>% predict(test.data)
+predictions9test <- model9 %>% predict(test.data)
+predictions10test <- model10 %>% predict(test.data)
+predictions11test <- model11 %>% predict(test.data)
+predictions12test <- model12 %>% predict(test.data)
+predictions13test <- model13 %>% predict(test.data)
+predictions14test <- model14 %>% predict(test.data)
+predictions15test <- model15 %>% predict(test.data)
+predictions16test <- model16 %>% predict(test.data)
+predictions17test <- model17 %>% predict(test.data)
+predictions18test <- model18 %>% predict(test.data)
+predictions19test <- model19 %>% predict(test.data)
+predictions20test <- model20 %>% predict(test.data)
+predictions21test <- model21 %>% predict(test.data)
+predictions22test <- model22 %>% predict(test.data)
+predictions23test <- model23 %>% predict(test.data)
+predictions24test <- model24 %>% predict(test.data)
+predictions25test <- model25 %>% predict(test.data)
+predictions26test <- model26 %>% predict(test.data)
+predictions27test <- model27 %>% predict(test.data)
+
 adjR2_test=c(1:27)
-adjR2_test[1]=R2(predictions1, train.data$Zaehlstand)
-adjR2_test[2]=R2(predictions2, train.data$Zaehlstand)
-adjR2_test[3]=R2(predictions3, train.data$Zaehlstand)
-adjR2_test[4]=R2(predictions4, train.data$Zaehlstand)
-adjR2_test[5]=R2(predictions5, train.data$Zaehlstand)
-adjR2_test[6]=R2(predictions6, train.data$Zaehlstand)
-adjR2_test[7]=R2(predictions7, train.data$Zaehlstand)
-adjR2_test[8]=R2(predictions8, train.data$Zaehlstand)
-adjR2_test[9]=R2(predictions9, train.data$Zaehlstand)
-adjR2_test[10]=R2(predictions10, train.data$Zaehlstand)
-adjR2_test[11]=R2(predictions11, train.data$Zaehlstand)
-adjR2_test[12]=R2(predictions12, train.data$Zaehlstand)
-adjR2_test[13]=R2(predictions13, train.data$Zaehlstand)
-adjR2_test[14]=R2(predictions14, train.data$Zaehlstand)
-adjR2_test[15]=R2(predictions15, train.data$Zaehlstand)
-adjR2_test[16]=R2(predictions16, train.data$Zaehlstand)
-adjR2_test[17]=R2(predictions17, train.data$Zaehlstand)
-adjR2_test[18]=R2(predictions18, train.data$Zaehlstand)
-adjR2_test[19]=R2(predictions19, train.data$Zaehlstand)
-adjR2_test[20]=R2(predictions20, train.data$Zaehlstand)
-adjR2_test[21]=R2(predictions21, train.data$Zaehlstand)
-adjR2_test[22]=R2(predictions22, train.data$Zaehlstand)
-adjR2_test[23]=R2(predictions23, train.data$Zaehlstand)
-adjR2_test[24]=R2(predictions24, train.data$Zaehlstand)
-adjR2_test[25]=R2(predictions25, train.data$Zaehlstand)
-adjR2_test[26]=R2(predictions26, train.data$Zaehlstand)
-adjR2_test[27]=R2(predictions27, train.data$Zaehlstand)
+adjR2_test[1]=R2(predictions1test, test.data$Zaehlstand)
+adjR2_test[2]=R2(predictions2test, test.data$Zaehlstand)
+adjR2_test[3]=R2(predictions3test, test.data$Zaehlstand)
+adjR2_test[4]=R2(predictions4test, test.data$Zaehlstand)
+adjR2_test[5]=R2(predictions5test, test.data$Zaehlstand)
+adjR2_test[6]=R2(predictions6test, test.data$Zaehlstand)
+adjR2_test[7]=R2(predictions7test, test.data$Zaehlstand)
+adjR2_test[8]=R2(predictions8test, test.data$Zaehlstand)
+adjR2_test[9]=R2(predictions9test, test.data$Zaehlstand)
+adjR2_test[10]=R2(predictions10test, test.data$Zaehlstand)
+adjR2_test[11]=R2(predictions11test, test.data$Zaehlstand)
+adjR2_test[12]=R2(predictions12test, test.data$Zaehlstand)
+adjR2_test[13]=R2(predictions13test, test.data$Zaehlstand)
+adjR2_test[14]=R2(predictions14test, test.data$Zaehlstand)
+adjR2_test[15]=R2(predictions15test, test.data$Zaehlstand)
+adjR2_test[16]=R2(predictions16test, test.data$Zaehlstand)
+adjR2_test[17]=R2(predictions17test, test.data$Zaehlstand)
+adjR2_test[18]=R2(predictions18test, test.data$Zaehlstand)
+adjR2_test[19]=R2(predictions19test, test.data$Zaehlstand)
+adjR2_test[20]=R2(predictions20test, test.data$Zaehlstand)
+adjR2_test[21]=R2(predictions21test, test.data$Zaehlstand)
+adjR2_test[22]=R2(predictions22test, test.data$Zaehlstand)
+adjR2_test[23]=R2(predictions23test, test.data$Zaehlstand)
+adjR2_test[24]=R2(predictions24test, test.data$Zaehlstand)
+adjR2_test[25]=R2(predictions25test, test.data$Zaehlstand)
+adjR2_test[26]=R2(predictions26test, test.data$Zaehlstand)
+adjR2_test[27]=R2(predictions27test, test.data$Zaehlstand)
 
 ggplot() +
-	geom_point(aes(x = models, y = adjR2_train, color = "Train")) +
-	geom_line(aes(x = models, y = adjR2_train, color = "Train")) +
-	geom_point(aes(x = models, y = adjR2_test, color = "Test")) +
-	geom_line(aes(x = models, y = adjR2_test, color = "Test")) +
+	geom_point(aes(x = variables, y = adjR2_train, color = "Train")) +
+	geom_line(aes(x = variables, y = adjR2_train, color = "Train")) +
+	geom_point(aes(x = variables, y = adjR2_test, color = "Test")) +
+	geom_line(aes(x = variables, y = adjR2_test, color = "Test")) +
   	scale_color_manual(values = c("blue4", "darkorange1")) +
   	theme_classic()
 
