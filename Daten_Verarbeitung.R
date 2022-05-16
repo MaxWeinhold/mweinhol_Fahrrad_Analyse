@@ -392,7 +392,7 @@ library(geosphere)
 
 #Daten pr�fen
 
-	ggplot(data=datensatz, aes(x=Monat,y=as.numeric(WertT2M)))+geom_point()
+	#ggplot(data=datensatz, aes(x=Monat,y=as.numeric(WertT2M)))+geom_point()
 
 	#Noch zu viele Na's vorhanden, woran liegt das?
 
@@ -413,11 +413,46 @@ library(geosphere)
 	summary(datensatz)
 
 	nrow(datensatz)
-	datensatz_omit <- na.omit(datensatz)
+	datensatz <- datensatz %>%
+		drop_na(Zaehlstand)
+	nrow(datensatz_omit)
+
+	nrow(datensatz)
+	datensatz <- na.omit(datensatz)
 	nrow(datensatz_omit)
 
 
-	write.csv(datensatz_omit,file="datensatz.csv")
+# Station an Renszstra�e ist von Dez 2020 bis Dez 2021 ausgefallen. Diese Daten m�ssen wir trennen
 
+	datensatz_ohneRS = datensatz %>%
+		filter(Standort != "Renzstraße")
 
-	save(datensatz_omit,file="datensatz.rdata")
+	datensatz_nurRS = datensatz %>%
+		filter(as.numeric(Jahr)<2020 & Standort == "Renzstraße")
+
+	datensatz_nurRS2020 = datensatz %>%
+		filter(Jahr=="2020" & as.numeric(Monat)<12 & Standort == "Renzstraße")
+
+	datensatz_nurRS2022 = datensatz %>%
+		filter(Jahr=="2022" & Standort == "Renzstraße")
+
+	datensatz_final = rbind(datensatz_ohneRS,datensatz_nurRS)
+	datensatz_final = rbind(datensatz_final,datensatz_nurRS2020)
+	datensatz_final = rbind(datensatz_final,datensatz_nurRS2022)
+	nrow(datensatz)-nrow(datensatz_final)
+
+	datensatz_RS202012 = datensatz %>%
+		filter(Jahr=="2020" & Monat=="12" & Standort == "Renzstraße")
+	datensatz_RS2021 = datensatz %>%
+		filter(Jahr=="2021" & Standort == "Renzstraße")
+
+	datensatz_RSAusfall = rbind(datensatz_RS202012,datensatz_RS2021)
+	nrow(datensatz_RSAusfall)
+
+# Speichere Daten
+
+	write.csv(datensatz,file="datensatz.csv")
+	save(datensatz,file="datensatz.rdata")
+
+	write.csv(datensatz_RSAusfall,file="datensatz_RSAusfall.csv")
+	save(datensatz_RSAusfall,file="datensatz_RSAusfall.rdata")
