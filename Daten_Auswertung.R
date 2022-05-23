@@ -703,7 +703,7 @@ strassen[100,3]
 names(strassen)[2]="breitengrad"
 names(strassen)[3]="laengengrad"
 
-strassen$Jahr="2023"
+strassen$Jahr="2022"
 strassen$Monat="06"
 strassen$Tag="15"
 strassen$Stunde="12"
@@ -727,13 +727,41 @@ strassen$Sommer=1
 strassen$FeiertagBW=0
 strassen$FeiertagRP=0
 strassen$SchulferienBW=1
-strassen$SemesterferionUM=1
+strassen$SemesterferionUM=0
 strassen$WertRR=0
 strassen$WertT2M=22
 strassen$WertF=2
 strassen$WertRF=70
 strassen$WertSD=50
 strassen$WertN=1
+
+nrow(datensatz)
+ncollect =310891
+
+testzeitraum=c(25033,25035,25037,25039,25041,25043,25045,25047,25049,25051,25053,25055,25057,25059,25061,25063)
+
+paste("Fahradfahrer am ", datensatz$Tag[ncollect],".", datensatz$Monat[ncollect],".", datensatz$Jahr[ncollect], " um ",datensatz$Stunde[ncollect], " Uhr", sep="")
+
+strassen$Jahr=datensatz$Jahr[ncollect]
+strassen$Monat=datensatz$Monat[ncollect]
+strassen$Tag=datensatz$Tag[ncollect]
+strassen$Stunde=datensatz$Stunde[ncollect]
+strassen$Standort=datensatz$Standort[ncollect]
+strassen$Zaehlstand=1
+strassen$Wochentag=datensatz$Wochentag[ncollect]
+strassen$Wochenende=datensatz$Wochenende[ncollect]
+strassen$Sommer=datensatz$Sommer[ncollect]
+strassen$FeiertagBW=datensatz$FeiertagBW[ncollect]
+strassen$FeiertagRP=datensatz$FeiertagRP[ncollect]
+strassen$SchulferienBW=datensatz$SchulferienBW[ncollect]
+strassen$SemesterferionUM=datensatz$SemesterferionUM[ncollect]
+strassen$WertRR=datensatz$WertRR[ncollect]
+strassen$WertT2M=datensatz$WertT2M[ncollect]
+strassen$WertF=datensatz$WertF[ncollect]
+strassen$WertRF=datensatz$WertRF[ncollect]
+strassen$WertSD=datensatz$WertSD[ncollect]
+strassen$WertN=datensatz$WertN[ncollect]
+
 strassen$WertT2M2=strassen$WertT2M^2
 strassen$WertRR2=strassen$WertRR^2
 strassen$WertF2=strassen$WertF^2
@@ -764,11 +792,35 @@ summary(model25)$coefficients
 
 prediction_fuer_strassen <- model25 %>% predict(strassen)
 
+plot(exp(prediction_fuer_strassen))
+
 summary(datensatz$Zaehlstand)
 summary(predictions25test)
 summary(exp(predictions25test))
 summary(prediction_fuer_strassen)
+
+#https://www.r-bloggers.com/2013/08/forecasting-from-log-linear-regressions/
+se <- function(x) sqrt(var(x) / length(x))
+se(prediction_fuer_strassen)
+
 strassen$Zaehlstand=exp(prediction_fuer_strassen)
+
+#strassen$Zaehlstand=(exp(prediction_fuer_strassen)+(se(prediction_fuer_strassen)^2/2))
+
+#exp(prediction_fuer_strassen + sigma^2/2)
+
+#strassen$Zaehlstand=prediction_fuer_strassen
+summary(strassen$Zaehlstand)
+
+strassen$Zaehlstand=if_else(strassen$Zaehlstand > max(datensatz$Zaehlstand)
+	, max(datensatz$Zaehlstand) + (strassen$Zaehlstand-max(datensatz$Zaehlstand))*0.01
+	, strassen$Zaehlstand)
+
+strassen$Zaehlstand=if_else(strassen$Zaehlstand > 1200
+	, 1200
+	, strassen$Zaehlstand)
+
+plot(strassen$Zaehlstand)
 
 names(strassen)
 strassenA <- subset(strassen, Punkt == "A")
@@ -804,7 +856,7 @@ strassenAB26=rbind(strassenA[26,],strassenB[26,])
 strassenAB27=rbind(strassenA[27,],strassenB[27,])
 strassenAB28=rbind(strassenA[28,],strassenB[28,])
 strassenAB29=rbind(strassenA[29,],strassenB[29,])
-strassenAB30=rbind(strassenA[20,],strassenB[30,])
+strassenAB30=rbind(strassenA[30,],strassenB[30,])
 strassenAB31=rbind(strassenA[31,],strassenB[31,])
 strassenAB32=rbind(strassenA[32,],strassenB[32,])
 strassenAB33=rbind(strassenA[33,],strassenB[33,])
@@ -908,8 +960,22 @@ for(i in 1:nrow(strassenA)) {
 }
 warnings()
 
+
+
+names(datensatz)
+ncollect
+monat=datensatz$Monat[ncollect]
+tag=datensatz$Tag[ncollect]
+zeit=datensatz$Stunde[ncollect]
+jahr=datensatz$Jahr[ncollect]
+d = subset(datensatz, Monat == monat & Tag == tag & Stunde == zeit & Jahr == jahr)
+
+
+mid <- median(strassen$Zaehlstand)
+mid = min(strassen$Zaehlstand) +(max(strassen$Zaehlstand)-min(strassen$Zaehlstand))/2
 myMap <- get_stamenmap(bbox=myLocation, maptype="toner-lite", zoom=15)
 ggmap(myMap)+
+ggtitle(paste("Fahradfahrer am ", strassen$Tag[1],".", strassen$Monat[1],".", strassen$Jahr[1], " um ",strassen$Stunde[1], " Uhr", sep="")) +
 #geom_point(aes(x=laengengrad, y=breitengrad, color = Zaehlstand), data=strassen, size = 2) + 
 geom_line(aes(x=laengengrad, y=breitengrad, color = Zaehlstand), data=strassenAB1, size = 2) +
 geom_line(aes(x=laengengrad, y=breitengrad, color = Zaehlstand), data=strassenAB2, size = 2) +
@@ -937,10 +1003,10 @@ geom_line(aes(x=laengengrad, y=breitengrad, color = Zaehlstand), data=strassenAB
 geom_line(aes(x=laengengrad, y=breitengrad, color = Zaehlstand), data=strassenAB24, size = 2) +
 geom_line(aes(x=laengengrad, y=breitengrad, color = Zaehlstand), data=strassenAB25, size = 2) +
 geom_line(aes(x=laengengrad, y=breitengrad, color = Zaehlstand), data=strassenAB26, size = 2) +
-#geom_line(aes(x=laengengrad, y=breitengrad, color = Zaehlstand), data=strassenAB27, size = 2) +
-#geom_line(aes(x=laengengrad, y=breitengrad, color = Zaehlstand), data=strassenAB28, size = 2) +
+geom_line(aes(x=laengengrad, y=breitengrad, color = Zaehlstand), data=strassenAB27, size = 2) +
+geom_line(aes(x=laengengrad, y=breitengrad, color = Zaehlstand), data=strassenAB28, size = 2) +
 geom_line(aes(x=laengengrad, y=breitengrad, color = Zaehlstand), data=strassenAB29, size = 2) +
-#geom_line(aes(x=laengengrad, y=breitengrad, color = Zaehlstand), data=strassenAB30, size = 2) +
+geom_line(aes(x=laengengrad, y=breitengrad, color = Zaehlstand), data=strassenAB30, size = 2) +
 geom_line(aes(x=laengengrad, y=breitengrad, color = Zaehlstand), data=strassenAB31, size = 2) +
 geom_line(aes(x=laengengrad, y=breitengrad, color = Zaehlstand), data=strassenAB32, size = 2) +
 geom_line(aes(x=laengengrad, y=breitengrad, color = Zaehlstand), data=strassenAB33, size = 2) +
@@ -983,7 +1049,7 @@ geom_line(aes(x=laengengrad, y=breitengrad, color = Zaehlstand), data=strassenAB
 geom_line(aes(x=laengengrad, y=breitengrad, color = Zaehlstand), data=strassenAB70, size = 2) +
 geom_line(aes(x=laengengrad, y=breitengrad, color = Zaehlstand), data=strassenAB71, size = 2) +
 geom_line(aes(x=laengengrad, y=breitengrad, color = Zaehlstand), data=strassenAB72, size = 2) +
-geom_line(aes(x=laengengrad, y=breitengrad, color = Zaehlstand), data=strassenAB73, size = 2) +
+#geom_line(aes(x=laengengrad, y=breitengrad, color = Zaehlstand), data=strassenAB73, size = 2) +
 geom_line(aes(x=laengengrad, y=breitengrad, color = Zaehlstand), data=strassenAB74, size = 2) +
 geom_line(aes(x=laengengrad, y=breitengrad, color = Zaehlstand), data=strassenAB75, size = 2) +
 geom_line(aes(x=laengengrad, y=breitengrad, color = Zaehlstand), data=strassenAB76, size = 2) +
@@ -1029,12 +1095,335 @@ geom_line(aes(x=laengengrad, y=breitengrad, color = Zaehlstand), data=strassenAB
 geom_line(aes(x=laengengrad, y=breitengrad, color = Zaehlstand), data=strassenAB116, size = 2) +
 geom_line(aes(x=laengengrad, y=breitengrad, color = Zaehlstand), data=strassenAB117, size = 2) +
 geom_line(aes(x=laengengrad, y=breitengrad, color = Zaehlstand), data=strassenAB118, size = 2) +
-scale_color_gradient(low = "green", high = "red",limits=c(0,max(strassen$Zaehlstand)))
+geom_point(aes(x=laengengrad, y=breitengrad, color = Zaehlstand), data=d, size = 6) + 
+ scale_color_gradient2(midpoint = mid, low = "green", mid = "red",
+                            high = "blue", limits = c(0, 1200), space = "Lab" )
 
+
+
+for(i in 1:length(strassen$uniMA_dist)) {
+	strassen$uniMA_dist[i] = distm(c(uniMA_laengeng, uniMA_breiteng), c(strassen$laengengrad[i], strassen$breitengrad[i]), fun = distHaversine)
+}
+
+testzeitraum
+for(i in 1:length(testzeitraum)) {
+
+ncollect=testzeitraum[i]
+strassen$Jahr=datensatz$Jahr[ncollect]
+strassen$Monat=datensatz$Monat[ncollect]
+strassen$Tag=datensatz$Tag[ncollect]
+strassen$Stunde=datensatz$Stunde[ncollect]
+strassen$Standort=datensatz$Standort[ncollect]
+strassen$Zaehlstand=1
+strassen$Wochentag=datensatz$Wochentag[ncollect]
+strassen$Wochenende=datensatz$Wochenende[ncollect]
+strassen$Sommer=datensatz$Sommer[ncollect]
+strassen$FeiertagBW=datensatz$FeiertagBW[ncollect]
+strassen$FeiertagRP=datensatz$FeiertagRP[ncollect]
+strassen$SchulferienBW=datensatz$SchulferienBW[ncollect]
+strassen$SemesterferionUM=datensatz$SemesterferionUM[ncollect]
+strassen$WertRR=datensatz$WertRR[ncollect]
+strassen$WertT2M=datensatz$WertT2M[ncollect]
+strassen$WertF=datensatz$WertF[ncollect]
+strassen$WertRF=datensatz$WertRF[ncollect]
+strassen$WertSD=datensatz$WertSD[ncollect]
+strassen$WertN=datensatz$WertN[ncollect]
+
+strassen$WertT2M2=strassen$WertT2M^2
+strassen$WertRR2=strassen$WertRR^2
+strassen$WertF2=strassen$WertF^2
+strassen$WertRF2=strassen$WertRF^2
+strassen$WertSD2=strassen$WertSD^2
+strassen$WertN2=strassen$WertN^2
+strassen$Jahr2=as.numeric(strassen$Jahr)^2
+strassen$laengengrad2=strassen$laengengrad^2
+strassen$breitengrad2=strassen$breitengrad^2
+strassen$laengenbreitengrad=strassen$laengengrad*strassen$breitengrad
+strassen$FeiertagBWRP=strassen$FeiertagBW*strassen$FeiertagRP
+strassen$WertT2M3=strassen$WertT2M^3
+strassen$WertRR3=strassen$WertRR^3
+strassen$WertF3=strassen$WertF^3
+strassen$WertT2M3=strassen$WertT2M^3
+strassen$WertRR3=strassen$WertRR^3
+strassen$WertF3=strassen$WertF^3
+strassen$WertRF3=strassen$WertRF^3
+strassen$WertRF3=strassen$WertRF^3
+strassen$WertN3=strassen$WertN^3
+strassen$Jahr3=as.numeric(strassen$Jahr)^3
+strassen$laengengrad3=strassen$laengengrad^3
+strassen$breitengrad3=strassen$breitengrad^3
+
+prediction_fuer_strassen <- model25 %>% predict(strassen)
+strassen$Zaehlstand=exp(prediction_fuer_strassen)
+
+#strassen$Zaehlstand=if_else(strassen$Zaehlstand > max(datensatz$Zaehlstand)
+#	, max(datensatz$Zaehlstand) + (strassen$Zaehlstand-max(datensatz$Zaehlstand))*0.01
+#	, strassen$Zaehlstand)
+
+#strassen$Zaehlstand=if_else(strassen$Zaehlstand > 1200
+#	, 1200
+#	, strassen$Zaehlstand)
+
+strassen$Zaehlstand=if_else(strassen$Zaehlstand < 0
+	, 0
+	, strassen$Zaehlstand)
+
+strassenA <- subset(strassen, Punkt == "A")
+strassenB <- subset(strassen, Punkt == "B")
+strassenAB1=rbind(strassenA[1,],strassenB[1,])
+strassenAB2=rbind(strassenA[2,],strassenB[2,])
+strassenAB3=rbind(strassenA[3,],strassenB[3,])
+strassenAB4=rbind(strassenA[4,],strassenB[4,])
+strassenAB5=rbind(strassenA[5,],strassenB[5,])
+strassenAB6=rbind(strassenA[6,],strassenB[6,])
+strassenAB7=rbind(strassenA[7,],strassenB[7,])
+strassenAB8=rbind(strassenA[8,],strassenB[8,])
+strassenAB9=rbind(strassenA[9,],strassenB[9,])
+strassenAB10=rbind(strassenA[10,],strassenB[10,])
+strassenAB11=rbind(strassenA[11,],strassenB[11,])
+strassenAB12=rbind(strassenA[12,],strassenB[12,])
+strassenAB13=rbind(strassenA[13,],strassenB[13,])
+strassenAB14=rbind(strassenA[14,],strassenB[14,])
+strassenAB15=rbind(strassenA[15,],strassenB[15,])
+strassenAB16=rbind(strassenA[16,],strassenB[16,])
+strassenAB17=rbind(strassenA[17,],strassenB[17,])
+strassenAB18=rbind(strassenA[18,],strassenB[18,])
+strassenAB19=rbind(strassenA[19,],strassenB[19,])
+strassenAB20=rbind(strassenA[20,],strassenB[20,])
+strassenAB21=rbind(strassenA[21,],strassenB[21,])
+strassenAB22=rbind(strassenA[22,],strassenB[22,])
+strassenAB23=rbind(strassenA[23,],strassenB[23,])
+strassenAB24=rbind(strassenA[24,],strassenB[24,])
+strassenAB25=rbind(strassenA[25,],strassenB[25,])
+strassenAB26=rbind(strassenA[26,],strassenB[26,])
+strassenAB27=rbind(strassenA[27,],strassenB[27,])
+strassenAB28=rbind(strassenA[28,],strassenB[28,])
+strassenAB29=rbind(strassenA[29,],strassenB[29,])
+strassenAB30=rbind(strassenA[30,],strassenB[30,])
+strassenAB31=rbind(strassenA[31,],strassenB[31,])
+strassenAB32=rbind(strassenA[32,],strassenB[32,])
+strassenAB33=rbind(strassenA[33,],strassenB[33,])
+strassenAB34=rbind(strassenA[34,],strassenB[34,])
+strassenAB35=rbind(strassenA[35,],strassenB[35,])
+strassenAB36=rbind(strassenA[36,],strassenB[36,])
+strassenAB37=rbind(strassenA[37,],strassenB[37,])
+strassenAB38=rbind(strassenA[38,],strassenB[38,])
+strassenAB39=rbind(strassenA[39,],strassenB[39,])
+strassenAB40=rbind(strassenA[40,],strassenB[40,])
+strassenAB41=rbind(strassenA[41,],strassenB[41,])
+strassenAB42=rbind(strassenA[42,],strassenB[42,])
+strassenAB43=rbind(strassenA[43,],strassenB[43,])
+strassenAB44=rbind(strassenA[44,],strassenB[44,])
+strassenAB45=rbind(strassenA[45,],strassenB[45,])
+strassenAB46=rbind(strassenA[46,],strassenB[46,])
+strassenAB47=rbind(strassenA[47,],strassenB[47,])
+strassenAB48=rbind(strassenA[48,],strassenB[48,])
+strassenAB49=rbind(strassenA[49,],strassenB[49,])
+strassenAB50=rbind(strassenA[50,],strassenB[50,])
+strassenAB51=rbind(strassenA[51,],strassenB[51,])
+strassenAB52=rbind(strassenA[52,],strassenB[52,])
+strassenAB53=rbind(strassenA[53,],strassenB[53,])
+strassenAB54=rbind(strassenA[54,],strassenB[54,])
+strassenAB55=rbind(strassenA[55,],strassenB[55,])
+strassenAB56=rbind(strassenA[56,],strassenB[56,])
+strassenAB57=rbind(strassenA[57,],strassenB[57,])
+strassenAB58=rbind(strassenA[58,],strassenB[58,])
+strassenAB59=rbind(strassenA[59,],strassenB[59,])
+strassenAB60=rbind(strassenA[60,],strassenB[60,])
+strassenAB61=rbind(strassenA[61,],strassenB[61,])
+strassenAB62=rbind(strassenA[62,],strassenB[62,])
+strassenAB63=rbind(strassenA[63,],strassenB[63,])
+strassenAB64=rbind(strassenA[64,],strassenB[64,])
+strassenAB65=rbind(strassenA[65,],strassenB[65,])
+strassenAB66=rbind(strassenA[66,],strassenB[66,])
+strassenAB67=rbind(strassenA[67,],strassenB[67,])
+strassenAB68=rbind(strassenA[68,],strassenB[68,])
+strassenAB69=rbind(strassenA[69,],strassenB[69,])
+strassenAB70=rbind(strassenA[70,],strassenB[70,])
+strassenAB71=rbind(strassenA[71,],strassenB[71,])
+strassenAB72=rbind(strassenA[72,],strassenB[72,])
+strassenAB73=rbind(strassenA[73,],strassenB[73,])
+strassenAB74=rbind(strassenA[74,],strassenB[74,])
+strassenAB75=rbind(strassenA[75,],strassenB[75,])
+strassenAB76=rbind(strassenA[76,],strassenB[76,])
+strassenAB77=rbind(strassenA[77,],strassenB[77,])
+strassenAB78=rbind(strassenA[78,],strassenB[78,])
+strassenAB79=rbind(strassenA[79,],strassenB[79,])
+strassenAB80=rbind(strassenA[80,],strassenB[80,])
+strassenAB81=rbind(strassenA[81,],strassenB[81,])
+strassenAB82=rbind(strassenA[82,],strassenB[82,])
+strassenAB83=rbind(strassenA[83,],strassenB[83,])
+strassenAB84=rbind(strassenA[84,],strassenB[84,])
+strassenAB85=rbind(strassenA[85,],strassenB[85,])
+strassenAB86=rbind(strassenA[86,],strassenB[86,])
+strassenAB87=rbind(strassenA[87,],strassenB[87,])
+strassenAB88=rbind(strassenA[88,],strassenB[88,])
+strassenAB89=rbind(strassenA[89,],strassenB[89,])
+strassenAB90=rbind(strassenA[90,],strassenB[90,])
+strassenAB91=rbind(strassenA[91,],strassenB[91,])
+strassenAB92=rbind(strassenA[92,],strassenB[92,])
+strassenAB93=rbind(strassenA[93,],strassenB[93,])
+strassenAB94=rbind(strassenA[94,],strassenB[94,])
+strassenAB95=rbind(strassenA[95,],strassenB[95,])
+strassenAB96=rbind(strassenA[96,],strassenB[96,])
+strassenAB97=rbind(strassenA[97,],strassenB[97,])
+strassenAB98=rbind(strassenA[98,],strassenB[98,])
+strassenAB99=rbind(strassenA[99,],strassenB[99,])
+strassenAB100=rbind(strassenA[100,],strassenB[100,])
+strassenAB101=rbind(strassenA[101,],strassenB[101,])
+strassenAB102=rbind(strassenA[102,],strassenB[102,])
+strassenAB103=rbind(strassenA[103,],strassenB[103,])
+strassenAB104=rbind(strassenA[104,],strassenB[104,])
+strassenAB105=rbind(strassenA[105,],strassenB[105,])
+strassenAB106=rbind(strassenA[106,],strassenB[106,])
+strassenAB107=rbind(strassenA[107,],strassenB[107,])
+strassenAB108=rbind(strassenA[108,],strassenB[108,])
+strassenAB109=rbind(strassenA[109,],strassenB[109,])
+strassenAB110=rbind(strassenA[110,],strassenB[110,])
+strassenAB111=rbind(strassenA[111,],strassenB[111,])
+strassenAB112=rbind(strassenA[112,],strassenB[112,])
+strassenAB113=rbind(strassenA[113,],strassenB[113,])
+strassenAB114=rbind(strassenA[114,],strassenB[114,])
+strassenAB115=rbind(strassenA[115,],strassenB[115,])
+strassenAB116=rbind(strassenA[116,],strassenB[116,])
+strassenAB117=rbind(strassenA[117,],strassenB[117,])
+strassenAB118=rbind(strassenA[118,],strassenB[118,])
+
+monat=datensatz$Monat[ncollect]
+tag=datensatz$Tag[ncollect]
+zeit=datensatz$Stunde[ncollect]
+jahr=datensatz$Jahr[ncollect]
+d = subset(datensatz, Monat == monat & Tag == tag & Stunde == zeit & Jahr == jahr)
+
+mid <- 600
+mid = min(strassen$Zaehlstand) +(max(strassen$Zaehlstand)-min(strassen$Zaehlstand))/2
 myMap <- get_stamenmap(bbox=myLocation, maptype="toner-lite", zoom=15)
-ggmap(myMap)+
+map = ggmap(myMap)+
+ggtitle(paste("Fahradfahrer am ", strassen$Tag[1],".", strassen$Monat[1],".", strassen$Jahr[1], " um ",strassen$Stunde[1], " Uhr", sep="")) +
 #geom_point(aes(x=laengengrad, y=breitengrad, color = Zaehlstand), data=strassen, size = 2) + 
+geom_line(aes(x=laengengrad, y=breitengrad, color = Zaehlstand), data=strassenAB1, size = 2) +
+geom_line(aes(x=laengengrad, y=breitengrad, color = Zaehlstand), data=strassenAB2, size = 2) +
+geom_line(aes(x=laengengrad, y=breitengrad, color = Zaehlstand), data=strassenAB3, size = 2) +
+geom_line(aes(x=laengengrad, y=breitengrad, color = Zaehlstand), data=strassenAB4, size = 2) +
+geom_line(aes(x=laengengrad, y=breitengrad, color = Zaehlstand), data=strassenAB5, size = 2) +
+geom_line(aes(x=laengengrad, y=breitengrad, color = Zaehlstand), data=strassenAB6, size = 2) +
+geom_line(aes(x=laengengrad, y=breitengrad, color = Zaehlstand), data=strassenAB7, size = 2) +
+geom_line(aes(x=laengengrad, y=breitengrad, color = Zaehlstand), data=strassenAB8, size = 2) +
+geom_line(aes(x=laengengrad, y=breitengrad, color = Zaehlstand), data=strassenAB9, size = 2) +
+geom_line(aes(x=laengengrad, y=breitengrad, color = Zaehlstand), data=strassenAB10, size = 2) +
+geom_line(aes(x=laengengrad, y=breitengrad, color = Zaehlstand), data=strassenAB11, size = 2) +
+geom_line(aes(x=laengengrad, y=breitengrad, color = Zaehlstand), data=strassenAB12, size = 2) +
+geom_line(aes(x=laengengrad, y=breitengrad, color = Zaehlstand), data=strassenAB13, size = 2) +
+geom_line(aes(x=laengengrad, y=breitengrad, color = Zaehlstand), data=strassenAB14, size = 2) +
+geom_line(aes(x=laengengrad, y=breitengrad, color = Zaehlstand), data=strassenAB15, size = 2) +
+geom_line(aes(x=laengengrad, y=breitengrad, color = Zaehlstand), data=strassenAB16, size = 2) +
+geom_line(aes(x=laengengrad, y=breitengrad, color = Zaehlstand), data=strassenAB17, size = 2) +
+geom_line(aes(x=laengengrad, y=breitengrad, color = Zaehlstand), data=strassenAB18, size = 2) +
+geom_line(aes(x=laengengrad, y=breitengrad, color = Zaehlstand), data=strassenAB19, size = 2) +
+geom_line(aes(x=laengengrad, y=breitengrad, color = Zaehlstand), data=strassenAB20, size = 2) +
+geom_line(aes(x=laengengrad, y=breitengrad, color = Zaehlstand), data=strassenAB21, size = 2) +
+geom_line(aes(x=laengengrad, y=breitengrad, color = Zaehlstand), data=strassenAB22, size = 2) +
+geom_line(aes(x=laengengrad, y=breitengrad, color = Zaehlstand), data=strassenAB23, size = 2) +
+geom_line(aes(x=laengengrad, y=breitengrad, color = Zaehlstand), data=strassenAB24, size = 2) +
+geom_line(aes(x=laengengrad, y=breitengrad, color = Zaehlstand), data=strassenAB25, size = 2) +
+geom_line(aes(x=laengengrad, y=breitengrad, color = Zaehlstand), data=strassenAB26, size = 2) +
+geom_line(aes(x=laengengrad, y=breitengrad, color = Zaehlstand), data=strassenAB27, size = 2) +
+geom_line(aes(x=laengengrad, y=breitengrad, color = Zaehlstand), data=strassenAB28, size = 2) +
+geom_line(aes(x=laengengrad, y=breitengrad, color = Zaehlstand), data=strassenAB29, size = 2) +
 geom_line(aes(x=laengengrad, y=breitengrad, color = Zaehlstand), data=strassenAB30, size = 2) +
-scale_color_gradient(low = "green", high = "red",limits=c(0,30000))
-
+geom_line(aes(x=laengengrad, y=breitengrad, color = Zaehlstand), data=strassenAB31, size = 2) +
+geom_line(aes(x=laengengrad, y=breitengrad, color = Zaehlstand), data=strassenAB32, size = 2) +
+geom_line(aes(x=laengengrad, y=breitengrad, color = Zaehlstand), data=strassenAB33, size = 2) +
+geom_line(aes(x=laengengrad, y=breitengrad, color = Zaehlstand), data=strassenAB34, size = 2) +
+geom_line(aes(x=laengengrad, y=breitengrad, color = Zaehlstand), data=strassenAB35, size = 2) +
+geom_line(aes(x=laengengrad, y=breitengrad, color = Zaehlstand), data=strassenAB36, size = 2) +
+geom_line(aes(x=laengengrad, y=breitengrad, color = Zaehlstand), data=strassenAB37, size = 2) +
+geom_line(aes(x=laengengrad, y=breitengrad, color = Zaehlstand), data=strassenAB38, size = 2) +
+geom_line(aes(x=laengengrad, y=breitengrad, color = Zaehlstand), data=strassenAB39, size = 2) +
+geom_line(aes(x=laengengrad, y=breitengrad, color = Zaehlstand), data=strassenAB40, size = 2) +
+geom_line(aes(x=laengengrad, y=breitengrad, color = Zaehlstand), data=strassenAB41, size = 2) +
+geom_line(aes(x=laengengrad, y=breitengrad, color = Zaehlstand), data=strassenAB42, size = 2) +
+geom_line(aes(x=laengengrad, y=breitengrad, color = Zaehlstand), data=strassenAB43, size = 2) +
+geom_line(aes(x=laengengrad, y=breitengrad, color = Zaehlstand), data=strassenAB44, size = 2) +
+geom_line(aes(x=laengengrad, y=breitengrad, color = Zaehlstand), data=strassenAB45, size = 2) +
+geom_line(aes(x=laengengrad, y=breitengrad, color = Zaehlstand), data=strassenAB46, size = 2) +
+geom_line(aes(x=laengengrad, y=breitengrad, color = Zaehlstand), data=strassenAB47, size = 2) +
+geom_line(aes(x=laengengrad, y=breitengrad, color = Zaehlstand), data=strassenAB48, size = 2) +
+geom_line(aes(x=laengengrad, y=breitengrad, color = Zaehlstand), data=strassenAB49, size = 2) +
+geom_line(aes(x=laengengrad, y=breitengrad, color = Zaehlstand), data=strassenAB50, size = 2) +
+geom_line(aes(x=laengengrad, y=breitengrad, color = Zaehlstand), data=strassenAB51, size = 2) +
+geom_line(aes(x=laengengrad, y=breitengrad, color = Zaehlstand), data=strassenAB52, size = 2) +
+geom_line(aes(x=laengengrad, y=breitengrad, color = Zaehlstand), data=strassenAB53, size = 2) +
+geom_line(aes(x=laengengrad, y=breitengrad, color = Zaehlstand), data=strassenAB54, size = 2) +
+geom_line(aes(x=laengengrad, y=breitengrad, color = Zaehlstand), data=strassenAB55, size = 2) +
+geom_line(aes(x=laengengrad, y=breitengrad, color = Zaehlstand), data=strassenAB56, size = 2) +
+geom_line(aes(x=laengengrad, y=breitengrad, color = Zaehlstand), data=strassenAB57, size = 2) +
+geom_line(aes(x=laengengrad, y=breitengrad, color = Zaehlstand), data=strassenAB58, size = 2) +
+geom_line(aes(x=laengengrad, y=breitengrad, color = Zaehlstand), data=strassenAB59, size = 2) +
+geom_line(aes(x=laengengrad, y=breitengrad, color = Zaehlstand), data=strassenAB60, size = 2) +
+geom_line(aes(x=laengengrad, y=breitengrad, color = Zaehlstand), data=strassenAB61, size = 2) +
+geom_line(aes(x=laengengrad, y=breitengrad, color = Zaehlstand), data=strassenAB62, size = 2) +
+geom_line(aes(x=laengengrad, y=breitengrad, color = Zaehlstand), data=strassenAB63, size = 2) +
+geom_line(aes(x=laengengrad, y=breitengrad, color = Zaehlstand), data=strassenAB64, size = 2) +
+geom_line(aes(x=laengengrad, y=breitengrad, color = Zaehlstand), data=strassenAB65, size = 2) +
+geom_line(aes(x=laengengrad, y=breitengrad, color = Zaehlstand), data=strassenAB66, size = 2) +
+geom_line(aes(x=laengengrad, y=breitengrad, color = Zaehlstand), data=strassenAB67, size = 2) +
+geom_line(aes(x=laengengrad, y=breitengrad, color = Zaehlstand), data=strassenAB68, size = 2) +
+geom_line(aes(x=laengengrad, y=breitengrad, color = Zaehlstand), data=strassenAB69, size = 2) +
+geom_line(aes(x=laengengrad, y=breitengrad, color = Zaehlstand), data=strassenAB70, size = 2) +
+geom_line(aes(x=laengengrad, y=breitengrad, color = Zaehlstand), data=strassenAB71, size = 2) +
+geom_line(aes(x=laengengrad, y=breitengrad, color = Zaehlstand), data=strassenAB72, size = 2) +
+#geom_line(aes(x=laengengrad, y=breitengrad, color = Zaehlstand), data=strassenAB73, size = 2) +
+geom_line(aes(x=laengengrad, y=breitengrad, color = Zaehlstand), data=strassenAB74, size = 2) +
+geom_line(aes(x=laengengrad, y=breitengrad, color = Zaehlstand), data=strassenAB75, size = 2) +
+geom_line(aes(x=laengengrad, y=breitengrad, color = Zaehlstand), data=strassenAB76, size = 2) +
+geom_line(aes(x=laengengrad, y=breitengrad, color = Zaehlstand), data=strassenAB77, size = 2) +
+geom_line(aes(x=laengengrad, y=breitengrad, color = Zaehlstand), data=strassenAB78, size = 2) +
+geom_line(aes(x=laengengrad, y=breitengrad, color = Zaehlstand), data=strassenAB79, size = 2) +
+geom_line(aes(x=laengengrad, y=breitengrad, color = Zaehlstand), data=strassenAB80, size = 2) +
+geom_line(aes(x=laengengrad, y=breitengrad, color = Zaehlstand), data=strassenAB81, size = 2) +
+geom_line(aes(x=laengengrad, y=breitengrad, color = Zaehlstand), data=strassenAB82, size = 2) +
+geom_line(aes(x=laengengrad, y=breitengrad, color = Zaehlstand), data=strassenAB83, size = 2) +
+geom_line(aes(x=laengengrad, y=breitengrad, color = Zaehlstand), data=strassenAB84, size = 2) +
+geom_line(aes(x=laengengrad, y=breitengrad, color = Zaehlstand), data=strassenAB85, size = 2) +
+geom_line(aes(x=laengengrad, y=breitengrad, color = Zaehlstand), data=strassenAB86, size = 2) +
+geom_line(aes(x=laengengrad, y=breitengrad, color = Zaehlstand), data=strassenAB87, size = 2) +
+geom_line(aes(x=laengengrad, y=breitengrad, color = Zaehlstand), data=strassenAB88, size = 2) +
+geom_line(aes(x=laengengrad, y=breitengrad, color = Zaehlstand), data=strassenAB89, size = 2) +
+geom_line(aes(x=laengengrad, y=breitengrad, color = Zaehlstand), data=strassenAB90, size = 2) +
+geom_line(aes(x=laengengrad, y=breitengrad, color = Zaehlstand), data=strassenAB91, size = 2) +
+geom_line(aes(x=laengengrad, y=breitengrad, color = Zaehlstand), data=strassenAB92, size = 2) +
+geom_line(aes(x=laengengrad, y=breitengrad, color = Zaehlstand), data=strassenAB93, size = 2) +
+geom_line(aes(x=laengengrad, y=breitengrad, color = Zaehlstand), data=strassenAB94, size = 2) +
+geom_line(aes(x=laengengrad, y=breitengrad, color = Zaehlstand), data=strassenAB95, size = 2) +
+geom_line(aes(x=laengengrad, y=breitengrad, color = Zaehlstand), data=strassenAB96, size = 2) +
+geom_line(aes(x=laengengrad, y=breitengrad, color = Zaehlstand), data=strassenAB97, size = 2) +
+geom_line(aes(x=laengengrad, y=breitengrad, color = Zaehlstand), data=strassenAB98, size = 2) +
+geom_line(aes(x=laengengrad, y=breitengrad, color = Zaehlstand), data=strassenAB99, size = 2) +
+geom_line(aes(x=laengengrad, y=breitengrad, color = Zaehlstand), data=strassenAB100, size = 2) +
+geom_line(aes(x=laengengrad, y=breitengrad, color = Zaehlstand), data=strassenAB101, size = 2) +
+geom_line(aes(x=laengengrad, y=breitengrad, color = Zaehlstand), data=strassenAB102, size = 2) +
+geom_line(aes(x=laengengrad, y=breitengrad, color = Zaehlstand), data=strassenAB103, size = 2) +
+geom_line(aes(x=laengengrad, y=breitengrad, color = Zaehlstand), data=strassenAB104, size = 2) +
+geom_line(aes(x=laengengrad, y=breitengrad, color = Zaehlstand), data=strassenAB105, size = 2) +
+geom_line(aes(x=laengengrad, y=breitengrad, color = Zaehlstand), data=strassenAB106, size = 2) +
+geom_line(aes(x=laengengrad, y=breitengrad, color = Zaehlstand), data=strassenAB107, size = 2) +
+geom_line(aes(x=laengengrad, y=breitengrad, color = Zaehlstand), data=strassenAB108, size = 2) +
+geom_line(aes(x=laengengrad, y=breitengrad, color = Zaehlstand), data=strassenAB109, size = 2) +
+geom_line(aes(x=laengengrad, y=breitengrad, color = Zaehlstand), data=strassenAB110, size = 2) +
+geom_line(aes(x=laengengrad, y=breitengrad, color = Zaehlstand), data=strassenAB111, size = 2) +
+geom_line(aes(x=laengengrad, y=breitengrad, color = Zaehlstand), data=strassenAB112, size = 2) +
+geom_line(aes(x=laengengrad, y=breitengrad, color = Zaehlstand), data=strassenAB113, size = 2) +
+geom_line(aes(x=laengengrad, y=breitengrad, color = Zaehlstand), data=strassenAB114, size = 2) +
+geom_line(aes(x=laengengrad, y=breitengrad, color = Zaehlstand), data=strassenAB115, size = 2) +
+geom_line(aes(x=laengengrad, y=breitengrad, color = Zaehlstand), data=strassenAB116, size = 2) +
+geom_line(aes(x=laengengrad, y=breitengrad, color = Zaehlstand), data=strassenAB117, size = 2) +
+geom_line(aes(x=laengengrad, y=breitengrad, color = Zaehlstand), data=strassenAB118, size = 2) +
+geom_point(aes(x=laengengrad, y=breitengrad, color = Zaehlstand), data=d, size = 6) + 
+ scale_color_gradient2(midpoint = mid, low = "green", mid = "red",
+                            high = "blue", limits = c(0, 40000), space = "Lab" )
+map
+save(map, file = paste("HeatMaps/HeatMap", i, ".Rdata", sep=""))
+ggsave(plot = map,filename = paste("HeatMaps/HeatMap", i, ".png", sep=""))
+}
 
