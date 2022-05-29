@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (MiKTeX 22.3) (preloaded format=pdflatex 2022.4.7)  4 MAY 2022 14:23
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (MiKTeX 22.3) (preloaded format=pdflatex 2022.4.7)  29 MAY 2022 13:37
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -850,10 +850,6 @@ Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 2
 )
 \Hy@SectionHShift=\skip64
 )
-
-LaTeX Warning: Unused global option(s):
-    [left,right].
-
 (Jo3.aux)
 \openout1 = `Jo3.aux'.
 
@@ -944,46 +940,53 @@ Kapitel 2.
 
 ]
 Kapitel 3.
+
+Overfull \hbox (79.91537pt too wide) in paragraph at lines 126--130
+\T1/cmr/m/n/12 öf-fent-lich im Netz zu-gäng-lich sind (Link: htt-ps://mannheim.
+opendatasoft.com/page/home/).
+ []
+
 [5
 
-]
+] [6]
 Kapitel 4.
-[6
-
-]
-Kapitel 5.
 [7
 
 ]
-Kapitel 6.
+Kapitel 5.
 [8
 
-] (Jo3.bbl [9
+]
+Kapitel 6.
+[9
 
-]) [10] (Jo3.aux)
+] (Jo3.bbl) [10
+
+] (Jo3.aux)
 Package rerunfilecheck Info: File `Jo3.out' has not changed.
 (rerunfilecheck)             Checksum: 2B55CB314026E53323121E013A75BFCB;1544.
  ) 
 Here is how much of TeX's memory you used:
- 24819 strings out of 478582
- 458848 string characters out of 2854160
- 721505 words of memory out of 3000000
- 42520 multiletter control sequences out of 15000+600000
+ 24787 strings out of 478582
+ 458284 string characters out of 2854160
+ 722215 words of memory out of 3000000
+ 42496 multiletter control sequences out of 15000+600000
  483274 words of font info for 63 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 84i,8n,80p,414b,471s stack positions out of 10000i,1000n,20000p,200000b,80000s
- <C:\Users\MaxWe\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecsl
-1095.pk> <C:\Users\MaxWe\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi60
-0\ecti1200.pk> <C:\Users\MaxWe\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec
-/dpi600\ecsl1440.pk> <C:\Users\MaxWe\AppData\Local\MiKTeX\fonts/pk/ljfour/jknap
+ 84i,8n,80p,817b,344s stack positions out of 10000i,1000n,20000p,200000b,80000s
+ <C:\Users\MaxWe\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecti
+1200.pk> <C:\Users\MaxWe\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi60
+0\ecsl1440.pk> <C:\Users\MaxWe\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec
+/dpi600\ecsl1095.pk> <C:\Users\MaxWe\AppData\Local\MiKTeX\fonts/pk/ljfour/jknap
 pen/ec/dpi600\ecrm1200.pk> <C:\Users\MaxWe\AppData\Local\MiKTeX\fonts/pk/ljfour
 /jknappen/ec/dpi600\ecsl1200.pk> <C:\Users\MaxWe\AppData\Local\MiKTeX\fonts/pk/
 ljfour/jknappen/ec/dpi600\ecrm1440.pk> <C:\Users\MaxWe\AppData\Local\MiKTeX\fon
 ts/pk/ljfour/jknappen/ec/dpi600\ecrm2074.pk><C:/Program Files/MiKTeX/fonts/type
-1/public/amsfonts/cm/cmmi12.pfb>
-Output written on Jo3.pdf (10 pages, 125032 bytes).
+1/public/amsfonts/cm/cmmi12.pfb><C:/Program Files/MiKTeX/fonts/type1/public/ams
+fonts/cm/cmr8.pfb>
+Output written on Jo3.pdf (10 pages, 146582 bytes).
 PDF statistics:
- 417 PDF objects out of 1000 (max. 8388607)
- 35 named destinations out of 1000 (max. 500000)
+ 452 PDF objects out of 1000 (max. 8388607)
+ 29 named destinations out of 1000 (max. 500000)
  101 words of extra memory for PDF output out of 10000 (max. 10000000)
 

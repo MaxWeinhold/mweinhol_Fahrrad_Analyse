@@ -1,72 +1,39 @@
 \begin{thebibliography}{}
 
-\bibitem[Bindi and Olesen, 2011]{Bindi2011}
-Bindi, M. and Olesen, J.~E. (2011).
-\newblock The responses of agriculture in europe to climate change.
-\newblock {\em Regional Environmental Change}, 11:151--158.
+\bibitem[Hong~J, 2022]{Hong2022}
+Hong~J, McArthur~DP, S. J. K.~C. (2022).
+\newblock Did air pollution continue to affect bike share usage in seoul during
+  the covid-19 pandemic?
+\newblock {\em J Transp Health}.
 
-\bibitem[Cass, 1965]{Cass1965}
-Cass, D. (1965).
-\newblock Optimum growth in an aggregative model of capital accumulation.
-\newblock {\em Review of Economic Studies}, 32(3):233--240.
+\bibitem[Kahle and Wickham, 2013]{Kahle2013}
+Kahle, D. and Wickham, H. (2013).
+\newblock Spatial visualization with ggplot2.
+\newblock {\em The R Journal}, 5(1):144--161.
 
-\bibitem[Cook et~al., 2015]{rohtua}
-Cook, B.~I., Ault, T.~R., and Smerdon, J.~E. (2015).
-\newblock Unprecedented 21st century drought risk in the american southwest and
-  central plains.
-\newblock {\em Science Advances}, 1(1):e1400082.
+\bibitem[Nobis, 2019]{Nobis2019}
+Nobis, C. (2019).
+\newblock Mobilität in deutschland - analysen zum radverkehr und fußverkehr.
+\newblock {\em Studie von Infas, DLR, IVT, ind Infas 360 im Auftrag des
+  Bundesministeriums für Verkehr und digitale Infrastruktur}, (70.905/90).
 
-\bibitem[Gillingham et~al., 2015]{Gillingham2015}
-Gillingham, K., Nordhaus, W.~D., Anthoff, D., Blanford, G., Bosetti, V.,
-  Christensen, P., McJeon, H., Reilly, J., and Sztorc, P. (2015).
-\newblock Modeling uncertainty in climate change: A multi-model comparison.
-\newblock Working Paper 21637, National Bureau of Economic Research.
+\bibitem[Prati et~al., 2017]{PRATI201744}
+Prati, G., Pietrantoni, L., and Fraboni, F. (2017).
+\newblock Using data mining techniques to predict the severity of bicycle
+  crashes.
 
-\bibitem[H.-O.~Pörtner, 2022]{IPCC2022}
-H.-O.~Pörtner, D.C.~Roberts, M. T. E. P. K. M. A. A. M. C. S. L. S. L. V. M.
-  A. O. B. R.~e. (2022).
-\newblock Climate change 2022: Impacts, adaptation, and vulnerability.
-\newblock {\em Cambridge University Press}.
-\newblock Contribution of Working Group II to the Sixth Assessment Report of
-  the Intergovernmental Panel on Climate Change.
+\bibitem[Wessel, 2020]{Wessel2020}
+Wessel, J. (2020).
+\newblock Using weather forecasts to forecast whether bikes are used.
+\newblock {\em Transportation Research Part A: Policy and Practice},
+  138:537--559.
+\newblock Publication status: Published.
 
-\bibitem[Hansen and Russell, 1981]{Hansen1981}
-Hansen, J., D. J. A. L. S. L. P. L. D.~R. and Russell, G. (1981).
-\newblock Climate impact of increasing atmospheric carbon dioxide.
-\newblock {\em Science}, (213):957--966.
-
-\bibitem[Koopmans, 1963]{Koopmans1963}
-Koopmans, T. (1963).
-\newblock On the concept of optimal economic growth.
-\newblock Cowles Foundation Discussion Papers 163, Cowles Foundation for
-  Research in Economics, Yale University.
-
-\bibitem[Nordhaus, 2018]{nordhaus2018}
-Nordhaus, W. (2018).
-\newblock Projections and uncertainties about climate change in an era of
-  minimal climate policies.
-\newblock {\em American Economic Journal: Economic Policy}, 10(3):333--60.
-
-\bibitem[Nordhaus, 1992]{nordhaus1992}
-Nordhaus, W.~D. (1992).
-\newblock An optimal transition path for controlling greenhouse gases.
-\newblock {\em Science}, 258(5086):1315--1319.
-
-\bibitem[Rahmstorf et~al., 2012]{Rahmstorf_2012}
-Rahmstorf, S., Foster, G., and Cazenave, A. (2012).
-\newblock Comparing climate projections to observations up to 2011.
-\newblock {\em Environmental Research Letters}, 7(4):044035.
-
-\bibitem[Ramsey, 1928]{Ramsey1928}
-Ramsey, F.~P. (1928).
-\newblock A mathematical theory of saving.
-\newblock {\em The Economic Journal}, 38(152):543--559.
-
-\bibitem[Travis, 2003]{Travis2003}
-Travis, J. M.~J. (2003).
-\newblock Climate change and habitat destruction: a deadly anthropogenic
-  cocktail.
-\newblock {\em Proceedings of the Royal Society of London. Series B: Biological
-  Sciences}, 270(1514):467--473.
+\bibitem[Zhao et~al., 2018]{ZHAO2018826}
+Zhao, P., Li, S., Li, P., Liu, J., and Long, K. (2018).
+\newblock How does air pollution influence cycling behaviour? evidence from
+  beijing.
+\newblock {\em Transportation Research Part D: Transport and Environment},
+  63:826--838.
 
 \end{thebibliography}

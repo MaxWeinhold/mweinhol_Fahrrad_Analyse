@@ -1,4 +1,4 @@
-\documentclass[a4paper,12pt, left=6cm, right=1.5cm]{thesis}
+\documentclass[a4paper,12pt]{thesis}
 
 \usepackage[utf8]{inputenc}
 
@@ -112,9 +112,21 @@ connection/.style={thick, dotted},
 
 \chapter{Einleitung}
 
+Die mobile Infrastruktur urbaner Zentren in Deutschland unterliegt einem Wandel, der nicht mehr allein das Ziel einer autofreundlicheren Stadt hat, sondern auch andere Verkehrsteilnehmer hervor hebt. Im besonderen betrifft diese Entwicklung auch das Fahrrad. So ist laut \cite{Nobis2019} die Anzahl der Fahrradfahrer und die von ihnen zurückgelegten Wege innerhalb von 15 Jahren stark angestiegen und ebenso der Ausbau von Fahrradwegen. Ein Beispiel für diese Entwicklungen ist Mannheim. Denn hier verfolgt die städtische Planung ein 21 Punkte Programm, dass dazu dienen soll den Anteil des Radverkehrs zu steigern.\\
+Im Rahmen dieses Programms installierte die Stadt an verschiedenen Stellen 8 Fahrradzähler, deren stündlichen Zählungen öffentlich abrufbar sind. Mithilfe dieser Daten wollen wir versuchen ein Model zu entwickeln, dass die kausal Einflüsse auf den Radverkehr erklärt und das Aufkommen von Fahrrädern vorhersagen kann. Im besten Fall extrapolieren wir das Model und prüfen, ob wir das Model auch auf Bereiche außerhalb der Zählstellen anwenden können.\\
+Bei diesem Vorhaben bauen wir vornehmlich auf \cite{Wessel2020}, der primär untersuchte welchen Einfluss Wettervorhersagen und tatsächliches Wetter auf den Radverkehr in verschiedenen deutschen Städten hat. Dazu nutzen wir Daten des Deutschen Wetter Dienstes.\\
+Darüber hinaus (Wenn Zeit übrig bleibt) wollen wir versuchen die Methoden von \cite{PRATI201744} ebenfalls zu verwenden, um ein Model primär zu Vorhersage des extrapolierten Fahrradaufkommens zu entwickeln.
+
 \chapter{Literaturüberblick}
 
+Da diese Arbeit im Rahmen eines Seminares bei Dr. Jan Wessel entstanden ist, verfolgt diese Arbeit eine ähnliche Methodik wie bei \cite{Wessel2020}, der der Frage nachgeht, wie sehr Wettervorhersagen und tatsächliches Wetter einen Einfluss auf das Aufkommen der Fahrradfahrer hat. Dazu entwickelt er ein log-lineares Regressionsmodel, das nicht nur die notwendigen Wetterdaten berücksichtigt, sondern auch andere wesentliche Effekte, wie Feiertage, Schul- und Semesterferien. Sein Model kommt zu einem adjusted $R^2$ von 78 \%. Die Daten für das Model stammen von 188 Zählstationen in ganz Deutschland.
+
 \chapter{Beschreibung der Daten}
+
+Zur Bearbeitung des Models nutzen wir vornehmlich zwei Daten Quellen. Zum einem nutzen wir die Daten der Fahrradzählstationen Mannheims, die öffentlich im Netz zugänglich sind (Link: https://mannheim.opendatasoft.com/page/home/). Hier sind stündliche Werte gezählter Fahrräder verfügbar an 8 verschiedenen Stellen in der Stadt, sowie Längen und Breitengrad der Position, Standortname, Zeit und Datum. Diese Daten verbinden wir mit stündlichen Daten des Deutschen Wetter Dienstes zur Lufttemperatur in 2 Meter Höhe, zur relativen Feuchte, zum Bedeckungsgrad, zum Niederschlag und zur Sonnenstrahlung.\\
+\cite{ZHAO2018826} und \cite{Hong2022} zeigen, dass auch Feinstaubbelastung den Radverkehr beeinflussen kann. Und grundsätzlich wären die dazu notwendigen Daten aus Mannheim über Opensensemap.org auch zugänglich, jedoch nicht welche, die weit genug zurückreichen, um den gesamten Betrachtungszeitraum zu beachten. Da \cite{ZHAO2018826} und \cite{Hong2022} ihre Forschung in Ostasiatischen Ballungsräumen betrieben haben und in einer Stadt wie Mannheim nicht die selbe Feinstaubbelastung zu erwarten ist, kann man von dieser Variable nicht erhoffen, dass sie die notwendige Erklärungskraft bringt, um einen Wegfall des Betrachtungszeitraumes zu rechtfertigen, weshalb Feinstaubmessungen keinen Weg in den Datensatz gefunden haben.\\
+Dafür ist es wichtig Feiertage, Schulferien und Semesterferien zu berücksichtigen. Hier könnte potentiell eine geographische Besonderheit Mannheims eine Rolle spielen, denn das Stadgebiet grenzt direkt zu zwei verschiedenen Bundesländern an. Zum einem liegt auf dem gegenüberliegenden Rheinufer die Stadt Ludwigshafen, die bereits in Rheinland Pfalz liegt. Zwischen beiden Städten herrscht ein reger Verkehr, weshalb anzunehmen ist, dass voneinander abweichende Feiertage in Rheinland Pfalz und Badenwürttemberg eine Rolle spielen könnten. Ebenso grenzt Hessen an Mannheim an. Jedoch nicht in einer Reichweite, die für Fahrradfahrer realistisch erscheint und nicht mit einer Stadt, die vergleichbar grroß wie Ludwigshafen wäre. Somit finden Feiertage für Hessen keinen Weg ins Model.\\
+Dies gilt ebenso für die Schulferien. Es ist anzunehmen, dass innerhalb Mannheims, Schulen von Mannheimern überwiegend besucht werden, weshalb nur die Schulferien von Baden Württemberg im Datensatz zu finden sind. Neben Schülern fahren ebenso häufig Studenten Fahrrad als günstigstes Verkehrsmittel. Die größte Hochschulbildungseinrichtung ist die Universität Mannheim, deren Semeseterferien eine signifikante Rolle spielen dürften. \cite{Kahle2013},
 
 \section{EcoCounter Mannheim}
 
