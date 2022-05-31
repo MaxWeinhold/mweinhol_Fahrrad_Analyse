@@ -62,7 +62,7 @@ library(geosphere)
 	names(zaehlstellen)
 
 	zaehlstellen <- zaehlstellen %>%
-     		select(Datum.und.Uhrzeit, Zaehlstand, Standort, Koordinaten)
+     		dplyr::select(Datum.und.Uhrzeit, Zaehlstand, Standort, Koordinaten)
 
 	names(zaehlstellen)
 
@@ -80,7 +80,7 @@ library(geosphere)
 	zaehlstellen$Stunde	= format(zaehlstellen$Zeit_neu, format = "%H")	#Nur Stunde
 	
 	zaehlstellen <- zaehlstellen %>%
-     		select(Standort, Zaehlstand, Koordinaten, Zeit_neu, Datum, Stunde, Jahr, Monat, Tag, Wochentag)
+     		dplyr::select(Standort, Zaehlstand, Koordinaten, Zeit_neu, Datum, Stunde, Jahr, Monat, Tag, Wochentag)
 
 #Koordinaten
 
@@ -98,7 +98,7 @@ library(geosphere)
 	}
 
 	zaehlstellen <- zaehlstellen %>%
-     		select(Standort, Zaehlstand, laengengrad, breitengrad, uniMA_dist, Zeit_neu, Datum, Stunde, Jahr, Monat, Tag, Wochentag)
+     		dplyr::select(Standort, Zaehlstand, laengengrad, breitengrad, uniMA_dist, Zeit_neu, Datum, Stunde, Jahr, Monat, Tag, Wochentag)
 
 #Wochenende, Sommer, Feiertage, Schul- und Semesterferien
 
@@ -215,10 +215,11 @@ library(geosphere)
 	datensatz$SemesterferionUM 	= ifelse(datensatz$Datum %in% SemesterferienMA,1,0)
 
 	summary(datensatz)
-
+	
 ###
 #Wetterdaten einladen
 ###
+
 
 	niederschlag 	= read_csv("Daten/Wetter_Daten/data_OBS_DEU_PT1H_RR.csv")
 	lufttemperatur 	= read_csv("Daten/Wetter_Daten/data_OBS_DEU_PT1H_T2M.csv")
@@ -250,7 +251,7 @@ library(geosphere)
 
 	names(niederschlag)
 	niederschlag <- niederschlag %>%
-     		select(Wert, Qualitaet_Niveau, Jahr, Monat, Tag, Stunde)
+     		dplyr::select(Wert, Qualitaet_Niveau, Jahr, Monat, Tag, Stunde)
 	names(niederschlag)[1]="WertRR"
 	names(niederschlag)[2]="QualitaetRR"
 
@@ -275,7 +276,7 @@ library(geosphere)
 
 	names(lufttemperatur)
 	lufttemperatur <- lufttemperatur %>%
-     		select(Wert, Qualitaet_Niveau, Jahr, Monat, Tag, Stunde)
+     		dplyr::select(Wert, Qualitaet_Niveau, Jahr, Monat, Tag, Stunde)
 	names(lufttemperatur)[1]="WertT2M"
 	names(lufttemperatur)[2]="QualitaetT2M"
 
@@ -296,7 +297,7 @@ library(geosphere)
 		subset(Jahr>2013)
 
 	wind  <- wind  %>%
-     		select(Wert, Qualitaet_Niveau, Jahr, Monat, Tag, Stunde)
+     		dplyr::select(Wert, Qualitaet_Niveau, Jahr, Monat, Tag, Stunde)
 	names(wind)[1]="WertF"
 	names(wind)[2]="QualitaetF"
 
@@ -317,7 +318,7 @@ library(geosphere)
 		subset(Jahr>2013)
 
 	relativefeuchte <- relativefeuchte  %>%
-     		select(Wert, Qualitaet_Niveau, Jahr, Monat, Tag, Stunde)
+     		dplyr::select(Wert, Qualitaet_Niveau, Jahr, Monat, Tag, Stunde)
 	names(relativefeuchte)[1]="WertRF"
 	names(relativefeuchte)[2]="QualitaetRF"
 
@@ -338,7 +339,7 @@ library(geosphere)
 		subset(Jahr>2013)
 
 	sonne <- sonne %>%
-     		select(Wert, Qualitaet_Niveau, Jahr, Monat, Tag, Stunde)
+     		dplyr::select(Wert, Qualitaet_Niveau, Jahr, Monat, Tag, Stunde)
 	names(sonne)[1]="WertSD"
 	names(sonne)[2]="QualitaetSD"
 
@@ -359,7 +360,7 @@ library(geosphere)
 		subset(Jahr>2013)
 
 	bedeckung <- bedeckung %>%
-     		select(Wert, Qualitaet_Niveau, Jahr, Monat, Tag, Stunde)
+     		dplyr::select(Wert, Qualitaet_Niveau, Jahr, Monat, Tag, Stunde)
 	names(bedeckung)[1]="WertN"
 	names(bedeckung)[2]="QualitaetN"
 
@@ -412,15 +413,41 @@ library(geosphere)
 
 	summary(datensatz)
 
-	nrow(datensatz)
-	datensatz <- datensatz %>%
-		drop_na(Zaehlstand)
-	nrow(datensatz_omit)
+	#nrow(datensatz)
+	#datensatz <- datensatz %>%
+	#	drop_na(Zaehlstand)
+	#nrow(datensatz_omit)
 
 	nrow(datensatz)
 	datensatz <- na.omit(datensatz)
 	nrow(datensatz_omit)
 
+#Corona Variabeln
+
+	#Corona wurde am 11. März 2020 zur Pandemie erklärt
+	corona = as.POSIXct(as.character(20200311), format="%Y%m%d")
+
+	datensatz$Corona = ifelse(datensatz$Datum < corona,0,1)
+
+	#Lockdowns
+	#Erster Lockdown bundesweit 22. März bis zum 6. Mai 2020. Danach Landkreise Abweichungen
+	#https://www.mannheim.de/de/presse/58-aktuelle-meldung-zu-corona-02-05-2020
+	#Auch in BW keine Verlängerung
+	#Zweiter Lockdown Light 2. November 2020 bis 15. Januar 2021
+	#Bundesnotbremse vom 24. April bis zum 30. Juni 2021
+
+	kontaktbeschr=c(20200322:20200331,20200401:20200431,20200501:20200506,
+	20201102:20201131,20201201:20201231,20210101:20210115,20210424:20210431,
+	20210501:20210531,20210601:20210630)
+
+	Kontaktbeschr = as.POSIXct(as.character(kontaktbeschr), format="%Y%m%d")
+	datensatz$Kontaktbeschr	= ifelse(datensatz$Datum %in% Kontaktbeschr,1,0)
+
+	datensatz$TagesAusbr = ifelse(datensatz$Datum < corona,0, difftime(datensatz$Datum ,corona , units = c("days")))
+
+#Strassen Arten
+
+	#Brücken Dummy Variable
 
 # Station an Renszstraße ist von Dez 2020 bis Dez 2021 ausgefallen. Diese Daten müssen wir trennen
 
@@ -450,6 +477,8 @@ library(geosphere)
 	nrow(datensatz_RSAusfall)
 
 # Speichere Daten
+
+	names(datensatz)
 
 	write.csv(datensatz,file="datensatz.csv")
 	save(datensatz,file="datensatz.rdata")

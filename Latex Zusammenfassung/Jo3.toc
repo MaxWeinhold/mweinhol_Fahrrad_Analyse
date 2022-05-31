@@ -3,10 +3,9 @@
 \contentsline {chapter}{\numberline {2.}Literaturüberblick}{4}{chapter.2}%
 \contentsline {chapter}{\numberline {3.}Beschreibung der Daten}{5}{chapter.3}%
 \contentsline {section}{\numberline {3.1}EcoCounter Mannheim}{6}{section.3.1}%
-\contentsline {section}{\numberline {3.2}VRnextbike Daten}{6}{section.3.2}%
-\contentsline {chapter}{\numberline {4.}Vorgegebene Aufgaben}{7}{chapter.4}%
-\contentsline {section}{\numberline {4.1}Deskriptive Analyse}{7}{section.4.1}%
-\contentsline {section}{\numberline {4.2}Regressionsanalyse}{7}{section.4.2}%
-\contentsline {chapter}{\numberline {5.}Einfluss des VRnextbike Angebots}{8}{chapter.5}%
-\contentsline {chapter}{\numberline {6.}Fazit}{9}{chapter.6}%
-\contentsline {chapter}{Literaturverzeichnis}{10}{chapter.6}%
+\contentsline {section}{\numberline {3.2}DWD Daten}{6}{section.3.2}%
+\contentsline {chapter}{\numberline {4.}Deskriptive Analyse}{9}{chapter.4}%
+\contentsline {section}{\numberline {4.1}Regressionsanalyse}{9}{section.4.1}%
+\contentsline {chapter}{\numberline {5.}Einfluss des VRnextbike Angebots}{10}{chapter.5}%
+\contentsline {chapter}{\numberline {6.}Fazit}{11}{chapter.6}%
+\contentsline {chapter}{Literaturverzeichnis}{12}{chapter.6}%

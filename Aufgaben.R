@@ -40,12 +40,12 @@ library(sf)
 library(mapview)
 #install.packages("raster")
 library(raster)
-#install.packages("rgeos")
-library(rgeos)
+#install.packages("xtable")
+library(xtable)
 library(ggmap)
 
 load("datensatz.rdata")
-datensatz=datensatz_omit
+datensatz
 nrow(datensatz)
 names(datensatz)
 
@@ -61,6 +61,8 @@ datensatz = datensatz %>%
 names(datensatz)
 
 unique(datensatz$Standort)
+
+#3. Beschreibung der Daten
 
 boxplot(data=datensatz,
 	datensatz$Zaehlstand~datensatz$Standort,
@@ -282,10 +284,252 @@ geom_text(data = Station, aes(x = as.numeric(laengengrad), y = as.numeric(breite
           check_overlap = T,nudge_y = -0.0001,size=4)
 )
 
+#4. Deskriptive Analyse
 
+#4.1 Tabelle mit deskriptiven Statistiken
 
+names(datensatz)
 
+sd(datensatz$Zaehlstand)
 
+cor(datensatz$Zaehlstand, datensatz$uniMA_dist, method = "pearson")
 
+A = c("Zaehlstand",
+	round(min(datensatz$Zaehlstand), 2),
+	round(mean(datensatz$Zaehlstand), 2),
+	round(max(datensatz$Zaehlstand), 2),
+	round(sd(datensatz$Zaehlstand), 2),
+	round(cor(datensatz$Zaehlstand, datensatz$Zaehlstand, method = "pearson"), 2)
+)
 
+B = c("Stunde",
+	round(min(datensatz$Stunde), 2),
+	round(mean(datensatz$Stunde), 2),
+	round(max(datensatz$Stunde), 2),
+	round(sd(datensatz$Stunde), 2),
+	round(cor(datensatz$Zaehlstand, datensatz$Stunde, method = "pearson"), 2)
+)
 
+C = c("Distanz zur Uni MA in m",
+	round(min(datensatz$uniMA_dist), 2),
+	round(mean(datensatz$uniMA_dist), 2),
+	round(max(datensatz$uniMA_dist), 2),
+	round(sd(datensatz$uniMA_dist), 2),
+	round(cor(datensatz$Zaehlstand, datensatz$uniMA_dist, method = "pearson"), 2)
+)
+
+D = c("Datum",
+	round(min(datensatz$Datum), 2),
+	round(mean(datensatz$Datum), 2),
+	round(max(datensatz$Datum), 2),
+	round(sd(datensatz$Datum), 2),
+	round(cor(datensatz$Zaehlstand, datensatz$Datum, method = "pearson"), 2)
+)
+
+E = c("Wochenende",
+	round(min(datensatz$Wochenende), 2),
+	round(mean(datensatz$Wochenende), 2),
+	round(max(datensatz$Wochenende), 2),
+	round(sd(datensatz$Wochenende), 2),
+	round(cor(datensatz$Zaehlstand, datensatz$Wochenende, method = "pearson"), 2)
+)
+
+F = c("Sommer",
+	round(min(datensatz$Sommer), 2),
+	round(mean(datensatz$Sommer), 2),
+	round(max(datensatz$Sommer), 2),
+	round(sd(datensatz$Sommer), 2),
+	round(cor(datensatz$Zaehlstand, datensatz$Sommer, method = "pearson"), 2)
+)
+
+G = c("Feiertag BW",
+	round(min(datensatz$FeiertagBW), 2),
+	round(mean(datensatz$FeiertagBW), 2),
+	round(max(datensatz$FeiertagBW), 2),
+	round(sd(datensatz$FeiertagBW), 2),
+	round(cor(datensatz$Zaehlstand, datensatz$FeiertagBW, method = "pearson"), 2)
+)
+
+H = c("Feiertag RP",
+	round(min(datensatz$FeiertagRP), 2),
+	round(mean(datensatz$FeiertagRP), 2),
+	round(max(datensatz$FeiertagRP), 2),
+	round(sd(datensatz$FeiertagRP), 2),
+	round(cor(datensatz$Zaehlstand, datensatz$FeiertagRP, method = "pearson"), 2)
+)
+
+I = c("Schulferien BW",
+	round(min(datensatz$SchulferienBW), 2),
+	round(mean(datensatz$SchulferienBW), 2),
+	round(max(datensatz$SchulferienBW), 2),
+	round(sd(datensatz$SchulferienBW), 2),
+	round(cor(datensatz$Zaehlstand, datensatz$SchulferienBW, method = "pearson"), 2)
+)
+
+J = c("Semesterferien",
+	round(min(datensatz$SemesterferionUM), 2),
+	round(mean(datensatz$SemesterferionUM), 2),
+	round(max(datensatz$SemesterferionUM), 2),
+	round(sd(datensatz$SemesterferionUM), 2),
+	round(cor(datensatz$Zaehlstand, datensatz$SemesterferionUM, method = "pearson"), 2)
+)
+
+K = c("WertRR",
+	round(min(datensatz$WertRR), 2),
+	round(mean(datensatz$WertRR), 2),
+	round(max(datensatz$WertRR), 2),
+	round(sd(datensatz$WertRR), 2),
+	round(cor(datensatz$Zaehlstand, datensatz$WertRR, method = "pearson"), 2)
+)
+
+L = c("QualitaetRR",
+	round(min(datensatz$QualitaetRR), 2),
+	round(mean(datensatz$QualitaetRR), 2),
+	round(max(datensatz$QualitaetRR), 2),
+	round(sd(datensatz$QualitaetRR), 2),
+	round(cor(datensatz$Zaehlstand, datensatz$QualitaetRR, method = "pearson"), 2)
+)
+
+M = c("WertT2M",
+	round(min(datensatz$WertT2M), 2),
+	round(mean(datensatz$WertT2M), 2),
+	round(max(datensatz$WertT2M), 2),
+	round(sd(datensatz$WertT2M), 2),
+	round(cor(datensatz$Zaehlstand, datensatz$WertT2M, method = "pearson"), 2)
+)
+
+N = c("QualitaetT2M",
+	round(min(datensatz$QualitaetT2M), 2),
+	round(mean(datensatz$QualitaetT2M), 2),
+	round(max(datensatz$QualitaetT2M), 2),
+	round(sd(datensatz$QualitaetT2M), 2),
+	round(cor(datensatz$Zaehlstand, datensatz$QualitaetT2M, method = "pearson"), 2)
+)
+
+O = c("WertF",
+	round(min(datensatz$WertF), 2),
+	round(mean(datensatz$WertF), 2),
+	round(max(datensatz$WertF), 2),
+	round(sd(datensatz$WertF), 2),
+	round(cor(datensatz$Zaehlstand, datensatz$WertF, method = "pearson"), 2)
+)
+
+P = c("QualitaetF",
+	round(min(datensatz$QualitaetF), 2),
+	round(mean(datensatz$QualitaetF), 2),
+	round(max(datensatz$QualitaetF), 2),
+	round(sd(datensatz$QualitaetF), 2),
+	round(cor(datensatz$Zaehlstand, datensatz$QualitaetF, method = "pearson"), 2)
+)
+
+Q = c("WertRF",
+	round(min(datensatz$WertRF), 2),
+	round(mean(datensatz$WertRF), 2),
+	round(max(datensatz$WertRF), 2),
+	round(sd(datensatz$WertRF), 2),
+	round(cor(datensatz$Zaehlstand, datensatz$WertRF, method = "pearson"), 2)
+)
+
+R = c("QualitaetRF",
+	round(min(datensatz$QualitaetRF), 2),
+	round(mean(datensatz$QualitaetRF), 2),
+	round(max(datensatz$QualitaetRF), 2),
+	round(sd(datensatz$QualitaetRF), 2),
+	round(cor(datensatz$Zaehlstand, datensatz$QualitaetRF, method = "pearson"), 2)
+)
+
+S = c("WertSD",
+	round(min(datensatz$WertSD), 2),
+	round(mean(datensatz$WertSD), 2),
+	round(max(datensatz$WertSD), 2),
+	round(sd(datensatz$WertSD), 2),
+	round(cor(datensatz$Zaehlstand, datensatz$WertSD, method = "pearson"), 2)
+)
+
+T = c("QualitaetSD",
+	round(min(datensatz$QualitaetSD), 2),
+	round(mean(datensatz$QualitaetSD), 2),
+	round(max(datensatz$QualitaetSD), 2),
+	round(sd(datensatz$QualitaetSD), 2),
+	round(cor(datensatz$Zaehlstand, datensatz$QualitaetSD, method = "pearson"), 2)
+)
+
+U = c("WertN",
+	round(min(datensatz$WertN), 2),
+	round(mean(datensatz$WertN), 2),
+	round(max(datensatz$WertN), 2),
+	round(sd(datensatz$WertN), 2),
+	round(cor(datensatz$Zaehlstand, datensatz$WertN, method = "pearson"), 2)
+)
+
+V = c("QualitaetN",
+	round(min(datensatz$QualitaetN), 2),
+	round(mean(datensatz$QualitaetN), 2),
+	round(max(datensatz$QualitaetN), 2),
+	round(sd(datensatz$QualitaetN), 2),
+	round(cor(datensatz$Zaehlstand, datensatz$QualitaetN, method = "pearson"), 2)
+)
+
+W = c("Corona",
+	round(min(datensatz$Corona), 2),
+	round(mean(datensatz$Corona), 2),
+	round(max(datensatz$Corona), 2),
+	round(sd(datensatz$Corona), 2),
+	round(cor(datensatz$Zaehlstand, datensatz$Corona, method = "pearson"), 2)
+)
+
+X = c("Kontaktbeschr",
+	round(min(datensatz$Kontaktbeschr), 2),
+	round(mean(datensatz$Kontaktbeschr), 2),
+	round(max(datensatz$Kontaktbeschr), 2),
+	round(sd(datensatz$Kontaktbeschr), 2),
+	round(cor(datensatz$Zaehlstand, datensatz$Kontaktbeschr, method = "pearson"), 2)
+)
+
+Y = c("TagesAusbr",
+	round(min(datensatz$TagesAusbr), 2),
+	round(mean(datensatz$TagesAusbr), 2),
+	round(max(datensatz$TagesAusbr), 2),
+	round(sd(datensatz$TagesAusbr), 2),
+	round(cor(datensatz$Zaehlstand, datensatz$TagesAusbr, method = "pearson"), 2)
+)
+
+Uebersicht=rbind(A,B)
+Uebersicht=rbind(Uebersicht,C)
+Uebersicht=rbind(Uebersicht,D)
+Uebersicht=rbind(Uebersicht,E)
+Uebersicht=rbind(Uebersicht,F)
+Uebersicht=rbind(Uebersicht,G)
+Uebersicht=rbind(Uebersicht,H)
+Uebersicht=rbind(Uebersicht,I)
+Uebersicht=rbind(Uebersicht,J)
+Uebersicht=rbind(Uebersicht,K)
+Uebersicht=rbind(Uebersicht,L)
+Uebersicht=rbind(Uebersicht,M)
+Uebersicht=rbind(Uebersicht,N)
+Uebersicht=rbind(Uebersicht,O)
+Uebersicht=rbind(Uebersicht,P)
+Uebersicht=rbind(Uebersicht,Q)
+Uebersicht=rbind(Uebersicht,R)
+Uebersicht=rbind(Uebersicht,S)
+Uebersicht=rbind(Uebersicht,T)
+Uebersicht=rbind(Uebersicht,U)
+Uebersicht=rbind(Uebersicht,V)
+Uebersicht=rbind(Uebersicht,W)
+Uebersicht=rbind(Uebersicht,X)
+Uebersicht=rbind(Uebersicht,Y)
+Uebersicht
+
+Uebersicht = as.data.frame(Uebersicht)
+class(Uebersicht)
+
+names(Uebersicht)=c("Name",
+	"Minimum",
+	"Durchschnitt",
+	"Maximum",
+	"Stand.abw.",
+	"Korrelation")
+
+round(Uebersicht, 2)
+
+xtable(Uebersicht)

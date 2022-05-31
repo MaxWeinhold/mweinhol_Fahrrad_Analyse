@@ -119,22 +119,83 @@ Darüber hinaus (Wenn Zeit übrig bleibt) wollen wir versuchen die Methoden von 
 
 \chapter{Literaturüberblick}
 
-Da diese Arbeit im Rahmen eines Seminares bei Dr. Jan Wessel entstanden ist, verfolgt diese Arbeit eine ähnliche Methodik wie bei \cite{Wessel2020}, der der Frage nachgeht, wie sehr Wettervorhersagen und tatsächliches Wetter einen Einfluss auf das Aufkommen der Fahrradfahrer hat. Dazu entwickelt er ein log-lineares Regressionsmodel, das nicht nur die notwendigen Wetterdaten berücksichtigt, sondern auch andere wesentliche Effekte, wie Feiertage, Schul- und Semesterferien. Sein Model kommt zu einem adjusted $R^2$ von 78 \%. Die Daten für das Model stammen von 188 Zählstationen in ganz Deutschland.
+Da diese Arbeit im Rahmen eines Seminares bei Dr. Jan Wessel entstanden ist, verfolgt diese Arbeit eine ähnliche Methodik wie bei \cite{Wessel2020}, der der Frage nachgeht, wie sehr Wettervorhersagen und tatsächliches Wetter einen Einfluss auf das Aufkommen der Fahrradfahrer hat. Dazu entwickelt er ein log-lineares Regressionsmodel, das nicht nur die notwendigen Wetterdaten berücksichtigt, sondern auch andere wesentliche Effekte, wie Feiertage, Schul- und Semesterferien. Sein Model kommt zu einem adjusted $R^2$ von 78 \%. Die Daten für das Model stammen von 188 Zählstationen in ganz Deutschland.\\
+
+Hier noch mehr bearbeiten. Vor allem im Bezug auf die eigene Vorschungsfrage.
 
 \chapter{Beschreibung der Daten}
 
-Zur Bearbeitung des Models nutzen wir vornehmlich zwei Daten Quellen. Zum einem nutzen wir die Daten der Fahrradzählstationen Mannheims, die öffentlich im Netz zugänglich sind (Link: https://mannheim.opendatasoft.com/page/home/). Hier sind stündliche Werte gezählter Fahrräder verfügbar an 8 verschiedenen Stellen in der Stadt, sowie Längen und Breitengrad der Position, Standortname, Zeit und Datum. Diese Daten verbinden wir mit stündlichen Daten des Deutschen Wetter Dienstes zur Lufttemperatur in 2 Meter Höhe, zur relativen Feuchte, zum Bedeckungsgrad, zum Niederschlag und zur Sonnenstrahlung.\\
+Zur Bearbeitung des Models nutzen wir vornehmlich zwei Daten Quellen. Zum einem nutzen wir die Daten der Fahrradzählstationen Mannheims, die öffentlich im Netz zugänglich sind (Link: https://mannheim.opendatasoft. com/page/home/). Hier sind stündliche Werte gezählter Fahrräder verfügbar an 8 verschiedenen Stellen in der Stadt, sowie Längen und Breitengrad der Position, Standortname, Zeit und Datum. Diese Daten verbinden wir mit stündlichen Daten des Deutschen Wetter Dienstes zur Lufttemperatur in 2 Meter Höhe, zur relativen Feuchte, zum Bedeckungsgrad, zum Niederschlag und zur Sonnenstrahlung.\\
 \cite{ZHAO2018826} und \cite{Hong2022} zeigen, dass auch Feinstaubbelastung den Radverkehr beeinflussen kann. Und grundsätzlich wären die dazu notwendigen Daten aus Mannheim über Opensensemap.org auch zugänglich, jedoch nicht welche, die weit genug zurückreichen, um den gesamten Betrachtungszeitraum zu beachten. Da \cite{ZHAO2018826} und \cite{Hong2022} ihre Forschung in Ostasiatischen Ballungsräumen betrieben haben und in einer Stadt wie Mannheim nicht die selbe Feinstaubbelastung zu erwarten ist, kann man von dieser Variable nicht erhoffen, dass sie die notwendige Erklärungskraft bringt, um einen Wegfall des Betrachtungszeitraumes zu rechtfertigen, weshalb Feinstaubmessungen keinen Weg in den Datensatz gefunden haben.\\
 Dafür ist es wichtig Feiertage, Schulferien und Semesterferien zu berücksichtigen. Hier könnte potentiell eine geographische Besonderheit Mannheims eine Rolle spielen, denn das Stadgebiet grenzt direkt zu zwei verschiedenen Bundesländern an. Zum einem liegt auf dem gegenüberliegenden Rheinufer die Stadt Ludwigshafen, die bereits in Rheinland Pfalz liegt. Zwischen beiden Städten herrscht ein reger Verkehr, weshalb anzunehmen ist, dass voneinander abweichende Feiertage in Rheinland Pfalz und Badenwürttemberg eine Rolle spielen könnten. Ebenso grenzt Hessen an Mannheim an. Jedoch nicht in einer Reichweite, die für Fahrradfahrer realistisch erscheint und nicht mit einer Stadt, die vergleichbar grroß wie Ludwigshafen wäre. Somit finden Feiertage für Hessen keinen Weg ins Model.\\
-Dies gilt ebenso für die Schulferien. Es ist anzunehmen, dass innerhalb Mannheims, Schulen von Mannheimern überwiegend besucht werden, weshalb nur die Schulferien von Baden Württemberg im Datensatz zu finden sind. Neben Schülern fahren ebenso häufig Studenten Fahrrad als günstigstes Verkehrsmittel. Die größte Hochschulbildungseinrichtung ist die Universität Mannheim, deren Semeseterferien eine signifikante Rolle spielen dürften. \cite{Kahle2013},
+Dies gilt ebenso für die Schulferien. Es ist anzunehmen, dass innerhalb Mannheims, Schulen von Mannheimern überwiegend besucht werden, weshalb nur die Schulferien von Baden Württemberg im Datensatz zu finden sind. Neben Schülern fahren ebenso häufig Studenten Fahrrad als günstigstes Verkehrsmittel. Die größte Hochschulbildungseinrichtung ist die Universität Mannheim, deren Semeseterferien eine signifikante Rolle spielen dürften.
 
 \section{EcoCounter Mannheim}
 
-\section{VRnextbike Daten}
+In Mannheim gibt es 8 verschiedene Stationen. Einen Überblick über diese Stationen ist in Abbildung X zu sehen, wobei zu Erstellung der Graphik ein R Paket genutzt wurde nach \cite{Kahle2013}. Am Farbgradienten ist zu sehen, wie viele Fahrradfahrer pro Stunde die Zählstationen passieren. Zudem ist der Name der Zählstation eingeblendet zudem das Jahr, seitdem diese Zählstation installiert ist. Die älteste Station hier ist die Renzstraße. Jedoch zählte diese während einer Unterbrechung vom ... bis ... nicht.\\
+Weiter Variablen wurden aus den Datumsvariabeln erzeugt. So haben wir eine Dummy Variable für Wochenende eingefügt und eine für Sommermonate. Weiterhin nutzen wir Jahr, Monat, Tag und Stunde als Faktorvariablen, wobei wir nächtliche Stunden zwischen 22 und 5 Uhr ausgeschlossen haben.\\
+Zu Abweichungen des Fahrradverkehrs konnte es während Corona kommen, wo Teile des öffentlichen Lebens still standen und damit auch das Verkehrsaufkommen. Deshalb haben wir drei Variablen in das Modell aufgenommen.
 
-\chapter{Vorgegebene Aufgaben}
+\begin{figure}[!ht]
+	\centering
+	\includegraphics[width=\textwidth]{Plots/Karte_Durchschnittsauslastung.pdf}
+	\captionsource{Zählstationsüberblick Mannheim}{
+		Zählstation nach Durchschnitt pro Stunde und Startjahr
+	}
+	\label{fig:meine-grafik5}
+\end{figure}
 
-\section{Deskriptive Analyse}
+
+
+\begin{figure}[!ht]
+	\centering
+	\includegraphics[width=\textwidth]{Plots/Boxplot_Stationen.pdf}
+	\captionsource{Boxplots zu den Zählstationen}{
+		Verteilung der Fahrräder pro Stunde
+	}
+	\label{fig:meine-grafik5}
+\end{figure}
+
+\section{DWD Daten}
+
+
+\chapter{Deskriptive Analyse}
+
+
+\begin{table}[ht]
+	\centering
+	\begin{tabular}{rllllll}
+		\hline
+		Name & Min & Durchschnitt & Max & Stand.abw. & Korrelation \\ 
+		\hline
+		Zaehlstand & 1 & 108.35 & 955 & 120.21 & 1 \\ 
+		Distanz z Uni & 208.36 & 1122.51 & 1875.72 & 583.35 & 0.26 \\ 
+		Wochenende & 0 & 0.28 & 1 & 0.45 & -0.21 \\ 
+		Sommer & 0 & 0.48 & 1 & 0.5 & 0.15 \\ 
+		Feiertag BW & 0 & 0.03 & 1 & 0.18 & -0.09 \\ 
+		Feiertag RP & 0 & 0.03 & 1 & 0.18 & -0.08 \\ 
+		Schulferien BW & 0 & 0.32 & 1 & 0.47 & 0.04 \\ 
+		Semesterferien & 0 & 0.48 & 1 & 0.5 & -0.03 \\ 
+		WertRR & 0 & 0.07 & 30.4 & 0.49 & -0.03 \\ 
+		QualitaetRR & 3 & 3 & 3 & 0 &  \\ 
+		WertT2M & -13 & 12.67 & 39.4 & 8.33 & 0.24 \\ 
+		QualitaetT2M & 3 & 6.93 & 7 & 0.51 & 0.05 \\ 
+		WertF & 0.1 & 3 & 14.4 & 1.65 & -0.02 \\ 
+		QualitaetF & 3 & 9.67 & 10 & 1.16 & 0.1 \\ 
+		WertRF & 14 & 69.24 & 100 & 20.3 & -0.23 \\ 
+		QualitaetRF & 3 & 6.93 & 7 & 0.51 & 0.05 \\ 
+		WertSD & 0 & 19.22 & 60 & 24.82 & 0.17 \\ 
+		QualitaetSD & 3 & 9.33 & 10 & 1.42 & 0.1 \\ 
+		WertN & 0 & 5.72 & 8 & 3.14 & -0.08 \\ 
+		QualitaetN & 3 & 3 & 3 & 0 &  \\ 
+		Corona & 0 & 0.42 & 1 & 0.49 & -0.16 \\ 
+		Kontaktbeschr & 0 & 0.11 & 1 & 0.32 & -0.09 \\ 
+		TagesAusbr & 0 & 143.48 & 687 & 212.5 & -0.17 \\ 
+		\hline
+	\end{tabular}
+\end{table}
+
+
 
 \section{Regressionsanalyse}
 

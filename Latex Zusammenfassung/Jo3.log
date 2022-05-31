@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (MiKTeX 22.3) (preloaded format=pdflatex 2022.4.7)  29 MAY 2022 13:37
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (MiKTeX 22.3) (preloaded format=pdflatex 2022.4.7)  31 MAY 2022 15:09
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -850,7 +850,11 @@ Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 2
 )
 \Hy@SectionHShift=\skip64
 )
-(Jo3.aux)
+(Jo3.aux
+
+LaTeX Warning: Label `fig:meine-grafik5' multiply defined.
+
+)
 \openout1 = `Jo3.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 61.
@@ -936,57 +940,79 @@ Kapitel 1.
 
 ]
 Kapitel 2.
+
+Underfull \hbox (badness 10000) in paragraph at lines 122--123
+
+ []
+
 [4
 
 ]
 Kapitel 3.
-
-Overfull \hbox (79.91537pt too wide) in paragraph at lines 126--130
-\T1/cmr/m/n/12 öf-fent-lich im Netz zu-gäng-lich sind (Link: htt-ps://mannheim.
-opendatasoft.com/page/home/).
- []
-
 [5
 
-] [6]
+]
+<Plots/Karte_Durchschnittsauslastung.pdf, id=106, 783.92876pt x 693.59125pt>
+File: Plots/Karte_Durchschnittsauslastung.pdf Graphic file (type pdf)
+<use Plots/Karte_Durchschnittsauslastung.pdf>
+Package pdftex.def Info: Plots/Karte_Durchschnittsauslastung.pdf  used on input
+ line 141.
+(pdftex.def)             Requested size: 390.0pt x 345.0591pt.
+<Plots/Boxplot_Stationen.pdf, id=107, 1409.265pt x 668.4975pt>
+File: Plots/Boxplot_Stationen.pdf Graphic file (type pdf)
+<use Plots/Boxplot_Stationen.pdf>
+Package pdftex.def Info: Plots/Boxplot_Stationen.pdf  used on input line 152.
+(pdftex.def)             Requested size: 390.0pt x 184.99513pt.
+ [6] [7 <./Plots/Karte_Durchschnittsauslastung.pdf>] [8 <./Plots/Boxplot_Statio
+nen.pdf>]
 Kapitel 4.
-[7
+
+Overfull \hbox (15.21428pt too wide) in paragraph at lines 167--196
+ [][] 
+ []
+
+[9
 
 ]
 Kapitel 5.
-[8
+[10
 
 ]
 Kapitel 6.
-[9
+[11
 
-] (Jo3.bbl) [10
+] (Jo3.bbl) [12
 
 ] (Jo3.aux)
+
+LaTeX Warning: There were multiply-defined labels.
+
 Package rerunfilecheck Info: File `Jo3.out' has not changed.
-(rerunfilecheck)             Checksum: 2B55CB314026E53323121E013A75BFCB;1544.
+(rerunfilecheck)             Checksum: 4EA08FF57671E02DD0442FD09CE75445;1351.
  ) 
 Here is how much of TeX's memory you used:
- 24787 strings out of 478582
- 458284 string characters out of 2854160
- 722215 words of memory out of 3000000
- 42496 multiletter control sequences out of 15000+600000
- 483274 words of font info for 63 fonts, out of 8000000 for 9000
+ 24808 strings out of 478582
+ 458915 string characters out of 2854160
+ 728310 words of memory out of 3000000
+ 42510 multiletter control sequences out of 15000+600000
+ 484057 words of font info for 64 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 84i,8n,80p,817b,344s stack positions out of 10000i,1000n,20000p,200000b,80000s
+ 84i,9n,80p,817b,346s stack positions out of 10000i,1000n,20000p,200000b,80000s
  <C:\Users\MaxWe\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecti
 1200.pk> <C:\Users\MaxWe\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi60
-0\ecsl1440.pk> <C:\Users\MaxWe\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec
-/dpi600\ecsl1095.pk> <C:\Users\MaxWe\AppData\Local\MiKTeX\fonts/pk/ljfour/jknap
-pen/ec/dpi600\ecrm1200.pk> <C:\Users\MaxWe\AppData\Local\MiKTeX\fonts/pk/ljfour
-/jknappen/ec/dpi600\ecsl1200.pk> <C:\Users\MaxWe\AppData\Local\MiKTeX\fonts/pk/
-ljfour/jknappen/ec/dpi600\ecrm1440.pk> <C:\Users\MaxWe\AppData\Local\MiKTeX\fon
-ts/pk/ljfour/jknappen/ec/dpi600\ecrm2074.pk><C:/Program Files/MiKTeX/fonts/type
-1/public/amsfonts/cm/cmmi12.pfb><C:/Program Files/MiKTeX/fonts/type1/public/ams
-fonts/cm/cmr8.pfb>
-Output written on Jo3.pdf (10 pages, 146582 bytes).
+0\ecbx1095.pk> <C:\Users\MaxWe\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec
+/dpi600\ecrm1095.pk> <C:\Users\MaxWe\AppData\Local\MiKTeX\fonts/pk/ljfour/jknap
+pen/ec/dpi600\ecsl1440.pk> <C:\Users\MaxWe\AppData\Local\MiKTeX\fonts/pk/ljfour
+/jknappen/ec/dpi600\ecsl1095.pk> <C:\Users\MaxWe\AppData\Local\MiKTeX\fonts/pk/
+ljfour/jknappen/ec/dpi600\ecrm1200.pk> <C:\Users\MaxWe\AppData\Local\MiKTeX\fon
+ts/pk/ljfour/jknappen/ec/dpi600\ecsl1200.pk> <C:\Users\MaxWe\AppData\Local\MiKT
+eX\fonts/pk/ljfour/jknappen/ec/dpi600\ecrm1440.pk> <C:\Users\MaxWe\AppData\Loca
+l\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecrm2074.pk><C:/Program Files/MiKTe
+X/fonts/type1/public/amsfonts/cm/cmmi12.pfb><C:/Program Files/MiKTeX/fonts/type
+1/public/amsfonts/cm/cmr8.pfb>
+Output written on Jo3.pdf (12 pages, 890937 bytes).
 PDF statistics:
- 452 PDF objects out of 1000 (max. 8388607)
- 29 named destinations out of 1000 (max. 500000)
- 101 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 521 PDF objects out of 1000 (max. 8388607)
+ 32 named destinations out of 1000 (max. 500000)
+ 103 words of extra memory for PDF output out of 10000 (max. 10000000)
 
