@@ -533,3 +533,27 @@ names(Uebersicht)=c("Name",
 round(Uebersicht, 2)
 
 xtable(Uebersicht)
+
+#2. Korrelationen zwischen den Variablen
+#Im Anhang bearbeiten
+
+#install.packages("corrplot")
+library(corrplot)
+
+names(datensatz)
+d=datensatz
+
+d <- datensatz %>%
+     	dplyr::select(Zaehlstand, uniMA_dist, Wochenende, Sommer, FeiertagBW,
+	FeiertagRP, SchulferienBW, SemesterferionUM, WertRR, WertT2M, WertF,
+	WertRF, WertSD, WertN, Corona, Kontaktbeschr, TagesAusbr)
+
+corrplot(cor(d), method="color", type="lower")
+corrplot(cor(d), method="circle", type="lower")
+
+#3. Niederschlag und Temperatur
+
+
+
+
+
