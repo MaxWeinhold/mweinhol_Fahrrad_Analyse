@@ -553,6 +553,84 @@ corrplot(cor(d), method="circle", type="lower")
 
 #3. Niederschlag und Temperatur
 
+names(datensatz)
+
+datensatz_2018 = datensatz %>%
+	filter(Jahr == "2018")
+
+datensatz_2018_morgens = datensatz_2018 %>%
+	filter(Stunde <= "10")
+datensatz_2018_mittags = datensatz_2018 %>%
+	filter(Stunde > "10" & Stunde <= "14")
+datensatz_2018_nachmittags = datensatz_2018 %>%
+	filter(Stunde > "14" & Stunde <= "19")
+datensatz_2018_abends = datensatz_2018 %>%
+	filter(Stunde > "19")
+
+MonatsRegen = datensatz_2018 %>%
+    group_by(Monat) %>%
+    slice(which.max(WertRR))
+MonatsRegen_morgens = datensatz_2018_morgens %>%
+    group_by(Monat) %>%
+    slice(which.max(WertRR))
+MonatsRegen_mittags = datensatz_2018_mittags %>%
+    group_by(Monat) %>%
+    slice(which.max(WertRR))
+MonatsRegen_nachmittags = datensatz_2018_nachmittags %>%
+    group_by(Monat) %>%
+    slice(which.max(WertRR))
+MonatsRegen_abends = datensatz_2018_abends %>%
+    group_by(Monat) %>%
+    slice(which.max(WertRR))
+
+MonatsTemp=aggregate(datensatz_2018$WertT2M, list(datensatz_2018$Monat), FUN=mean) 
+
+rm(df)
+
+df=cbind(MonatsTemp,MonatsRegen_morgens$WertRR)
+df=cbind(df,MonatsRegen_mittags$WertRR)
+df=cbind(df,MonatsRegen_nachmittags$WertRR)
+df=cbind(df,MonatsRegen_abends$WertRR)
+
+names(df)[1]="Monat"
+names(df)[2]="Temp"
+names(df)[3]="Regen1"
+names(df)[4]="Regen2"
+names(df)[5]="Regen3"
+names(df)[6]="Regen4"
+
+ggplot() + 
+	geom_line(mapping = aes(x = df$Monat, y = df$Temp, group = 1), color = "red")
+
+ggplot() + 
+	geom_bar(mapping = aes(x = df$Monat, y = df$Regen1), stat = "identity", fill = "blue") +
+	geom_bar(mapping = aes(x = df$Monat, y = df$Regen2), stat = "identity", fill = "green") +
+	geom_bar(mapping = aes(x = df$Monat, y = df$Regen3), stat = "identity", fill = "orange") +
+	geom_bar(mapping = aes(x = df$Monat, y = df$Regen4), stat = "identity", fill = "yellow") +
+	geom_line(mapping = aes(x = df$Monat, y = df$Temp, group = 1), size = 2 , color = "red") +
+  	scale_y_continuous(name = "Temperatur", 
+    		sec.axis = sec_axis(~./5, name = "Niederschlag")) + 
+  	theme(
+      	axis.title.y = element_text(color = "blue"),
+      	axis.title.y.right = element_text(color = "red"))
+
+ggplot() + 
+	geom_bar(mapping = aes(x = df$Monat, y = df$Regen1), stat = "identity", fill = "blue") +
+  	geom_line(mapping = aes(x = df$Monat, y = df$Temp), size = 2, color = "blue") + 
+  	scale_y_continuous(name = "Interruptions/day", 
+    		sec.axis = sec_axis(~./5, name = "Productivity % of best", 
+      	labels = function(b) { paste0(round(b * 100, 0), "%")})) + 
+  	theme(
+      	axis.title.y = element_text(color = "grey"),
+      	axis.title.y.right = element_text(color = "blue"))
+
+
+
+
+
+
+
+
 
 
 

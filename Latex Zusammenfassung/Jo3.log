@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (MiKTeX 22.3) (preloaded format=pdflatex 2022.4.7)  1 JUN 2022 13:48
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (MiKTeX 22.3) (preloaded format=pdflatex 2022.6.8)  6 JUL 2022 13:04
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -854,6 +854,9 @@ Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 2
 
 LaTeX Warning: Label `fig:meine-grafik5' multiply defined.
 
+
+LaTeX Warning: Label `fig:meine-grafik5' multiply defined.
+
 )
 \openout1 = `Jo3.aux'.
 
@@ -952,13 +955,13 @@ Kapitel 3.
 [5
 
 ]
-<Plots/Karte_Durchschnittsauslastung.pdf, id=102, 783.92876pt x 693.59125pt>
+<Plots/Karte_Durchschnittsauslastung.pdf, id=112, 783.92876pt x 693.59125pt>
 File: Plots/Karte_Durchschnittsauslastung.pdf Graphic file (type pdf)
 <use Plots/Karte_Durchschnittsauslastung.pdf>
 Package pdftex.def Info: Plots/Karte_Durchschnittsauslastung.pdf  used on input
  line 141.
 (pdftex.def)             Requested size: 390.0pt x 345.0591pt.
-<Plots/Boxplot_Stationen.pdf, id=103, 1409.265pt x 668.4975pt>
+<Plots/Boxplot_Stationen.pdf, id=113, 1409.265pt x 668.4975pt>
 File: Plots/Boxplot_Stationen.pdf Graphic file (type pdf)
 <use Plots/Boxplot_Stationen.pdf>
 Package pdftex.def Info: Plots/Boxplot_Stationen.pdf  used on input line 152.
@@ -983,7 +986,7 @@ Kapitel 6.
 
 ]
 Kapitel 7.
-<Plots/Corr_Plot.pdf, id=149, 597.23125pt x 688.5725pt>
+<Plots/Corr_Plot.pdf, id=159, 597.23125pt x 688.5725pt>
 File: Plots/Corr_Plot.pdf Graphic file (type pdf)
 <use Plots/Corr_Plot.pdf>
 Package pdftex.def Info: Plots/Corr_Plot.pdf  used on input line 211.
@@ -996,20 +999,14 @@ Package pdftex.def Info: Plots/Corr_Plot.pdf  used on input line 211.
 
 LaTeX Warning: There were multiply-defined labels.
 
-
-Package rerunfilecheck Warning: File `Jo3.out' has changed.
-(rerunfilecheck)                Rerun to get outlines right
-(rerunfilecheck)                or use package `bookmark'.
-
-Package rerunfilecheck Info: Checksums for `Jo3.out':
-(rerunfilecheck)             Before: 0684203285C9CB791507F8D658E061FA;1207
-(rerunfilecheck)             After:  B95AED791955005CC4176A812EDBA749;1426.
+Package rerunfilecheck Info: File `Jo3.out' has not changed.
+(rerunfilecheck)             Checksum: B95AED791955005CC4176A812EDBA749;1426.
  ) 
 Here is how much of TeX's memory you used:
- 24819 strings out of 478582
- 459130 string characters out of 2854160
- 728310 words of memory out of 3000000
- 42516 multiletter control sequences out of 15000+600000
+ 24821 strings out of 478582
+ 459153 string characters out of 2854160
+ 728299 words of memory out of 3000000
+ 42518 multiletter control sequences out of 15000+600000
  484057 words of font info for 64 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  84i,9n,80p,817b,348s stack positions out of 10000i,1000n,20000p,200000b,80000s
@@ -1025,9 +1022,9 @@ eX\fonts/pk/ljfour/jknappen/ec/dpi600\ecrm1440.pk> <C:\Users\MaxWe\AppData\Loca
 l\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecrm2074.pk><C:/Program Files/MiKTe
 X/fonts/type1/public/amsfonts/cm/cmmi12.pfb><C:/Program Files/MiKTeX/fonts/type
 1/public/amsfonts/cm/cmr8.pfb>
-Output written on Jo3.pdf (14 pages, 904096 bytes).
+Output written on Jo3.pdf (14 pages, 905465 bytes).
 PDF statistics:
- 539 PDF objects out of 1000 (max. 8388607)
+ 548 PDF objects out of 1000 (max. 8388607)
  36 named destinations out of 1000 (max. 500000)
- 100 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 116 words of extra memory for PDF output out of 10000 (max. 10000000)
 
