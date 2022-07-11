@@ -586,11 +586,22 @@ MonatsRegen_abends = datensatz_2018_abends %>%
 MonatsTemp=aggregate(datensatz_2018$WertT2M, list(datensatz_2018$Monat), FUN=mean) 
 
 rm(df)
+rm(df1)
+rm(df2)
 
 df=cbind(MonatsTemp,MonatsRegen_morgens$WertRR)
 df=cbind(df,MonatsRegen_mittags$WertRR)
 df=cbind(df,MonatsRegen_nachmittags$WertRR)
 df=cbind(df,MonatsRegen_abends$WertRR)
+
+df1=cbind(MonatsTemp$Group.1,MonatsRegen_morgens$WertRR)
+df1=cbind(df1,MonatsRegen_mittags$WertRR)
+df1=cbind(df1,MonatsRegen_nachmittags$WertRR)
+df1=cbind(df1,MonatsRegen_abends$WertRR)
+
+class(df1)
+
+df1=data.frame(df1)
 
 names(df)[1]="Monat"
 names(df)[2]="Temp"
@@ -599,39 +610,38 @@ names(df)[4]="Regen2"
 names(df)[5]="Regen3"
 names(df)[6]="Regen4"
 
-ggplot() + 
-	geom_line(mapping = aes(x = df$Monat, y = df$Temp, group = 1), color = "red")
+names(df1)[1]="Monat"
+names(df1)[2]="Morgens"
+names(df1)[3]="Mittags"
+names(df1)[4]="Nachmittags"
+names(df1)[5]="Abends"
 
-ggplot() + 
-	geom_bar(mapping = aes(x = df$Monat, y = df$Regen1), stat = "identity", fill = "blue") +
-	geom_bar(mapping = aes(x = df$Monat, y = df$Regen2), stat = "identity", fill = "green") +
-	geom_bar(mapping = aes(x = df$Monat, y = df$Regen3), stat = "identity", fill = "orange") +
-	geom_bar(mapping = aes(x = df$Monat, y = df$Regen4), stat = "identity", fill = "yellow") +
-	geom_line(mapping = aes(x = df$Monat, y = df$Temp, group = 1), size = 2 , color = "red") +
+library(reshape2)
+library(ggplot2)
+
+df2 = melt(df1, id="Monat")
+class(df2$value)
+df2$value=as.numeric(df2$value)
+
+#Nur Temperatur Anzeige
+ggplot() + geom_line(data=df, mapping = aes(x = df$Monat, y = df$Temp, group = 1), size = 2 , color = "red") 
+
+#Nur Niederschlags Anzeige
+ggplot(data=df2, aes(x = Monat, y= value, fill = variable)) + 
+	geom_bar(stat="identity", width=.5, position = "dodge") 
+
+#Beides kombiniert
+ggplot(NULL, aes(v, p)) + 
+	geom_bar(data=df2, aes(x = Monat, y= value, fill = variable),stat="identity", width=.5, position = "dodge") +
+	geom_line(data=df, mapping = aes(x = df$Monat, y = df$Temp, group = 1), size = 1 , color = "red") 
+
+#Beides kombiniert und korrekte Graphen Beschriftung
+ggplot(NULL, aes(v, p)) + 
+	geom_bar(data=df2, aes(x = Monat, y= value, fill = variable),stat="identity", width=.5, position = "dodge") +
+	geom_line(data=df, mapping = aes(x = Monat, y = Temp, group = 1), size = 1 , color = "red") +
   	scale_y_continuous(name = "Temperatur", 
     		sec.axis = sec_axis(~./5, name = "Niederschlag")) + 
   	theme(
       	axis.title.y = element_text(color = "blue"),
       	axis.title.y.right = element_text(color = "red"))
-
-ggplot() + 
-	geom_bar(mapping = aes(x = df$Monat, y = df$Regen1), stat = "identity", fill = "blue") +
-  	geom_line(mapping = aes(x = df$Monat, y = df$Temp), size = 2, color = "blue") + 
-  	scale_y_continuous(name = "Interruptions/day", 
-    		sec.axis = sec_axis(~./5, name = "Productivity % of best", 
-      	labels = function(b) { paste0(round(b * 100, 0), "%")})) + 
-  	theme(
-      	axis.title.y = element_text(color = "grey"),
-      	axis.title.y.right = element_text(color = "blue"))
-
-
-
-
-
-
-
-
-
-
-
 

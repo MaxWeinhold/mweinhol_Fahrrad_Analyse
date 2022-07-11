@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (MiKTeX 22.3) (preloaded format=pdflatex 2022.6.8)  6 JUL 2022 13:04
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (MiKTeX 22.3) (preloaded format=pdflatex 2022.6.8)  11 JUL 2022 13:32
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -857,6 +857,12 @@ LaTeX Warning: Label `fig:meine-grafik5' multiply defined.
 
 LaTeX Warning: Label `fig:meine-grafik5' multiply defined.
 
+
+LaTeX Warning: Label `fig:meine-grafik5' multiply defined.
+
+
+LaTeX Warning: Label `fig:meine-grafik5' multiply defined.
+
 )
 \openout1 = `Jo3.aux'.
 
@@ -991,25 +997,41 @@ File: Plots/Corr_Plot.pdf Graphic file (type pdf)
 <use Plots/Corr_Plot.pdf>
 Package pdftex.def Info: Plots/Corr_Plot.pdf  used on input line 211.
 (pdftex.def)             Requested size: 390.0pt x 449.64714pt.
+<Plots/Monatliche_Temperatur_Niederschläge.png, id=160, 929.4725pt x 613.29124
+pt>
+File: Plots/Monatliche_Temperatur_Niederschläge.png Graphic file (type png)
+<use Plots/Monatliche_Temperatur_Niederschläge.png>
+Package pdftex.def Info: Plots/Monatliche_Temperatur_Niederschläge.png  used o
+n input line 220.
+(pdftex.def)             Requested size: 390.0pt x 257.3279pt.
+<Plots/Taegliche_Temperatur_Niederschläge.png, id=161, 929.4725pt x 613.29124p
+t>
+File: Plots/Taegliche_Temperatur_Niederschläge.png Graphic file (type png)
+<use Plots/Taegliche_Temperatur_Niederschläge.png>
+Package pdftex.def Info: Plots/Taegliche_Temperatur_Niederschläge.png  used on
+ input line 229.
+(pdftex.def)             Requested size: 390.0pt x 257.3279pt.
 [12
 
-] (Jo3.bbl [13 <./Plots/Corr_Plot.pdf>]) [14
+] (Jo3.bbl [13 <./Plots/Corr_Plot.pdf>] [14 <./Plots/Monatliche_Temperatur_Nied
+erschläge.png>] [15 <./Plots/Taegliche_Temperatur_Niederschläge.png>])
+[16
 
 ] (Jo3.aux)
 
 LaTeX Warning: There were multiply-defined labels.
 
 Package rerunfilecheck Info: File `Jo3.out' has not changed.
-(rerunfilecheck)             Checksum: B95AED791955005CC4176A812EDBA749;1426.
+(rerunfilecheck)             Checksum: F03BB795084A58FF1391FE48FA93651B;1426.
  ) 
 Here is how much of TeX's memory you used:
- 24821 strings out of 478582
- 459153 string characters out of 2854160
- 728299 words of memory out of 3000000
- 42518 multiletter control sequences out of 15000+600000
+ 24840 strings out of 478582
+ 459878 string characters out of 2854160
+ 728387 words of memory out of 3000000
+ 42530 multiletter control sequences out of 15000+600000
  484057 words of font info for 64 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 84i,9n,80p,817b,348s stack positions out of 10000i,1000n,20000p,200000b,80000s
+ 84i,9n,80p,817b,352s stack positions out of 10000i,1000n,20000p,200000b,80000s
  <C:\Users\MaxWe\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecti
 1200.pk> <C:\Users\MaxWe\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi60
 0\ecbx1095.pk> <C:\Users\MaxWe\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec
@@ -1022,9 +1044,9 @@ eX\fonts/pk/ljfour/jknappen/ec/dpi600\ecrm1440.pk> <C:\Users\MaxWe\AppData\Loca
 l\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecrm2074.pk><C:/Program Files/MiKTe
 X/fonts/type1/public/amsfonts/cm/cmmi12.pfb><C:/Program Files/MiKTeX/fonts/type
 1/public/amsfonts/cm/cmr8.pfb>
-Output written on Jo3.pdf (14 pages, 905465 bytes).
+Output written on Jo3.pdf (16 pages, 933224 bytes).
 PDF statistics:
- 548 PDF objects out of 1000 (max. 8388607)
- 36 named destinations out of 1000 (max. 500000)
- 116 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 576 PDF objects out of 1000 (max. 8388607)
+ 40 named destinations out of 1000 (max. 500000)
+ 126 words of extra memory for PDF output out of 10000 (max. 10000000)
 
