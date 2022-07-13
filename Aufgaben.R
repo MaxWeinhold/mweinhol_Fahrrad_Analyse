@@ -286,7 +286,7 @@ geom_text(data = Station, aes(x = as.numeric(laengengrad), y = as.numeric(breite
 
 #4. Deskriptive Analyse
 
-#4.1 Tabelle mit deskriptiven Statistiken
+#4.1.1 Tabelle mit deskriptiven Statistiken
 
 names(datensatz)
 
@@ -534,7 +534,7 @@ round(Uebersicht, 2)
 
 xtable(Uebersicht)
 
-#2. Korrelationen zwischen den Variablen
+#Aufgabe 4.1.2 Korrelationen zwischen den Variablen
 #Im Anhang bearbeiten
 
 #install.packages("corrplot")
@@ -551,9 +551,7 @@ d <- datensatz %>%
 corrplot(cor(d), method="color", type="lower")
 corrplot(cor(d), method="circle", type="lower")
 
-#3. Niederschlag und Temperatur
-
-names(datensatz)
+#Aufgabe 4.1.3 Niederschlag und Temperatur
 
 datensatz_2018 = datensatz %>%
 	filter(Jahr == "2018")
@@ -584,10 +582,13 @@ MonatsRegen_abends = datensatz_2018_abends %>%
     slice(which.max(WertRR))
 
 MonatsTemp=aggregate(datensatz_2018$WertT2M, list(datensatz_2018$Monat), FUN=mean) 
+TagesTemp=aggregate(datensatz_2018$WertT2M, list(datensatz_2018$Datum), FUN=mean) 
 
 rm(df)
 rm(df1)
 rm(df2)
+
+df0=cbind(c(1:365)/(365/12),as.numeric(TagesTemp$x))
 
 df=cbind(MonatsTemp,MonatsRegen_morgens$WertRR)
 df=cbind(df,MonatsRegen_mittags$WertRR)
@@ -623,8 +624,12 @@ df2 = melt(df1, id="Monat")
 class(df2$value)
 df2$value=as.numeric(df2$value)
 
-#Nur Temperatur Anzeige
+#Nur Temperatur Anzeige (monatlich)
 ggplot() + geom_line(data=df, mapping = aes(x = df$Monat, y = df$Temp, group = 1), size = 2 , color = "red") 
+
+#Nur Temperatur Anzeige (täglich)
+ggplot() + geom_line(mapping = aes(x = df0[,1], y = df0[,2], group = 1), size = 1 , color = "red") 
+
 
 #Nur Niederschlags Anzeige
 ggplot(data=df2, aes(x = Monat, y= value, fill = variable)) + 
@@ -638,10 +643,51 @@ ggplot(NULL, aes(v, p)) +
 #Beides kombiniert und korrekte Graphen Beschriftung
 ggplot(NULL, aes(v, p)) + 
 	geom_bar(data=df2, aes(x = Monat, y= value, fill = variable),stat="identity", width=.5, position = "dodge") +
+	scale_fill_brewer(palette = "Blues") +
+	theme_bw() +
+	ggtitle("Monatliche Temperatur und Niederschläge für 2018") +
+	xlab("Monat") +
 	geom_line(data=df, mapping = aes(x = Monat, y = Temp, group = 1), size = 1 , color = "red") +
-  	scale_y_continuous(name = "Temperatur", 
-    		sec.axis = sec_axis(~./5, name = "Niederschlag")) + 
+  	scale_y_continuous(name = "Temperatur in C°", 
+    		sec.axis = sec_axis(~./5, name = "Niederschlag in mm")) + 
   	theme(
-      	axis.title.y = element_text(color = "blue"),
-      	axis.title.y.right = element_text(color = "red"))
+      	axis.title.y = element_text(color = "red"),
+      	axis.title.y.right = element_text(color = "blue"))
+
+#Beides kombiniert und korrekte Graphen Beschriftung (tägliche Daten)
+ggplot(NULL, aes(v, p)) + 
+	geom_bar(data=df2, aes(x = Monat, y= value, fill = variable),stat="identity", width=.5, position = "dodge") +
+	scale_fill_brewer(palette = "Blues") +
+	theme_bw() +
+	ggtitle("Tägliche Temperatur und Niederschläge für 2018") +
+	xlab("Monat") +
+	geom_line(mapping = aes(x = df0[,1], y = df0[,2], group = 1), size = 1 , color = "red") +
+  	scale_y_continuous(name = "Temperatur in C°", 
+    		sec.axis = sec_axis(~./5, name = "Niederschlag in mm")) + 
+  	theme(
+      	axis.title.y = element_text(color = "red"),
+      	axis.title.y.right = element_text(color = "blue"))
+
+#Aufgabe 4 Kalender Heatmap
+
+names(datensatz)
+
+# install tidyquant 
+install.packages('tidyquant', repos = "http://cran.us.r-project.org")
+library(tidyquant) 
+#install ggplot2 
+install.packages("ggplot2", repos = "http://cran.us.r-project.org") library(ggplot2) 
+#Load the function to the local through Paul Bleicher's GitHub page
+source("https://raw.githubusercontent.com/iascchen/VisHealth/master/R/calendarHeat.R")
+
+r2g <- c("#D61818", "#FFAE63", "#FFFFBD", "#B5E384")
+
+pdf(file = "My Plot 1.pdf")
+calendarHeat(datensatz$Datum, datensatz$Zaehlstand, ncolors = 99, color = "r2g", varname="bicycle traffic in Mannheim")
+dev.off()
+
+
+
+
+
 
