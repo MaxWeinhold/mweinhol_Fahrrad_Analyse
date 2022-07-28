@@ -110,7 +110,7 @@ summary(regression_fixest2,se="hetero")
 AIC(regression_fixest2)
 BIC(regression_fixest2)
 
-#Cross Validation
+#Validation
 
 # Split the data into training and test set
 set.seed(123)

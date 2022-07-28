@@ -84,6 +84,11 @@ datensatz$uniMA_dist3 = datensatz$uniMA_dist^3
 datensatz$laengengrad3 = datensatz$laengengrad^3
 datensatz$breitengrad3 = datensatz$breitengrad^3
 
+names(datensatz)
+
+datensatz$Zeit_neu <- NULL
+datensatz$Datum <- NULL
+
 model <- lm(Zaehlstand ~ ., data = datensatz)
 k <- ols_step_forward_p(model)
 plot(k)

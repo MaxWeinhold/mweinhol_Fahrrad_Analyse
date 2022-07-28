@@ -15,6 +15,7 @@
 \usepackage{mathabx}
 \usepackage{graphicx}
 \usepackage[table]{xcolor}
+\usepackage{longtable}
 %\usepackage{hyperref}
 
 \usepackage{setspace}
@@ -70,7 +71,7 @@ connection/.style={thick, dotted},
 	\vspace{\fill}								% Befehl, der den vertikalen Platz (vspace) "füllt" 
 	
 	\begin{large}								% Der folgende Text hat nun die Schriftgröße large 
-		Maximilian Samuer Weinhold\\					% Durch ein \\ wird eine neue Zeile angefangen. 
+		Maximilian Samuel Weinhold\\					% Durch ein \\ wird eine neue Zeile angefangen. 
 		Economics, 6. Semester\\
 		505314\\
 		mweinhol@uni-muenster.de\\
@@ -133,11 +134,13 @@ Dies gilt ebenso für die Schulferien. Es ist anzunehmen, dass innerhalb Mannhei
 \begin{figure}[!ht]
 	\centering
 	\includegraphics[width=\textwidth]{Plots/CalendarHeatMap.png}
-	\captionsource{Korrelations Plot}{
-		Korrelation zwischen den verschiedenen Variablen
+	\captionsource{Heat Map}{
+		Ausprägungen des Fahrradaufkommens
 	}
-	\label{fig:meine-grafik5}
+	\label{fig:calendarheatmap}
 \end{figure}
+
+Fügt man all diese Daten zusammen, erhält man einen Datensatz der 410891 Beobachtungen umfasst. Die Ausprägungen pro Tag sind der Darstellung \ref{fig:calendarheatmap} zu entnehmen. Dabei fallen zwei Dinge vornehmlich auf. Zum einem sehen wir, wie gegen Ende 2016 die Varianz der Ausprägungen zu nimmt. Dies hängt mit der Anzahl der Zählstationen zusammen. Die früheste Zählstation an der Renzstraße ging 2014 in Betrieb. Weiter folgten erst 2016. Je mehr Zählstationen mit unterschiedlichen Verkehrsströmen messen, desto höher ist die tägliche Varianz in den Zähldaten. Weiterhin fallen einige wenige weiße Stellen auf. Dies hängt mit unvollständigen Wetterdaten zusammen. Die Menge fehlender Daten fällt hier aber in einen vertretbaren Rahmen, wobei fehlende Tage nicht weiter mit wichtigen Variabeln korrelieren.
 
 \section{EcoCounter Mannheim}
 
@@ -162,7 +165,7 @@ Zu Abweichungen des Fahrradverkehrs konnte es während Corona kommen, wo Teile d
 	\captionsource{Boxplots zu den Zählstationen}{
 		Verteilung der Fahrräder pro Stunde
 	}
-	\label{fig:meine-grafik5}
+	\label{BoxplotStationen}
 \end{figure}
 
 \section{DWD Daten}
@@ -171,7 +174,7 @@ Zu Abweichungen des Fahrradverkehrs konnte es während Corona kommen, wo Teile d
 \chapter{Deskriptive Analyse}
 
 
-\begin{table}[ht]
+\begin{table}[!ht]
 	\centering
 	\begin{tabular}{rllllll}
 		\hline
@@ -202,6 +205,7 @@ Zu Abweichungen des Fahrradverkehrs konnte es während Corona kommen, wo Teile d
 		TagesAusbr & 0 & 143.48 & 687 & 212.5 & -0.17 \\ 
 		\hline
 	\end{tabular}
+	\label{Tabelle1}
 \end{table}
 
 Notiz für später: Am besten wertest du die Qualitätsdaten genauer aus.
@@ -209,7 +213,196 @@ Notiz für später: Am besten wertest du die Qualitätsdaten genauer aus.
 
 \section{Regressionsanalyse}
 
-\chapter{Einfluss des VRnextbike Angebots}
+Vorerst sind die gesammelten Daten trotz des Umfang recht nutzlos, da sie allein wenig Antworten geben. Durchschnitte und Standardabweichungen einzelner Variablen wie der Temperatur oder des Fahrrad Aufkommens, gäben durchaus Aufschluss nie aber in einem größeren Zusammenhang. Was wir vornehmlich in Erfahrung bringen möchten ist, was den Fahrradverkehr beeinflusst, um daraus folgend Vorhersagen treffen zu können. Dies mündet z.B. in der Frage welchen Einfluss der Regenfall auf den Fahrradverkehr ausübt, oder ob mehr Fahrradfahrer an Feiertagen auf Mannheims Straßen anzufinden sind. Dies wollen wir nicht nur qualitativ beantworten, sondern auch quantitativ.\\
+
+Ein Mittel um an diese Informationen zu kommen ist die Regressionsanalyse. Diese versucht den Zusammenhang zu messen, in dem zwei Variablen zu einander stehen. So könnte man zb versuchen zu messen, wie sehr die Lufttemperatur in zwei Meter Höhe das Aufkommen von Fahrrädern in Mannheim beeinflusst, dargestellt in der Darstellung \ref{fig:BSP}. Mithilfe der Regressionsanalyse kann man nun durch diese in diesem Fall sehr dichte Punktwolke jene Linie ziehen, die das Verhältnis mathematisch am besten repräsentiert. Natürlich verhält sich nicht alles linear zu einander. In der Darstellung sieht man bereits, dass das Fahrradaufkommen bis knapp über 20 °C steigt, danach aber wieder rapide sinkt, das es den Leuten schlicht zu heiß wird. Dies kann manchmal mit einer nicht linearen Funktion dargestellt werden. Aber wie man sieht, egal ob man einen linearen, quadratischen oder kubischen Zusammenhang sieht, die eingezeichneten Regressionslinien erwecken nicht den Eindruck, den wahren Zusammenhang widerzuspiegeln, denn die beobachteten Werte also die eingezeichneten Punkte liegen weit auseinander. Das bedeutet der Fit unseres Models ist gering, allein mit der Außentemperatur können wir die Variation im Fahrradverkehr selbstverständlich nicht erklären.\\
+
+\begin{figure}[!ht]
+	\centering
+	\includegraphics[width=\textwidth]{Plots/Regression_Bsp.png}
+	\captionsource{Fahrrad Daten Mannheim und DWD}{
+		Graphisches Beispiel einer Regression
+	}
+	\label{fig:BSP}
+\end{figure}
+
+Nehmen wir weitere Variablen in das Regressionsmodel auf, die den Fahrradverkehr erklären können, wie z.B. Niederschlag oder Ferientage, dann steigt der Fit des Models. Das heißt wir können präzisere Vorhersagen treffen, weil wir uns ein mehrdimensionales Model schaffen. Dies nennt man dann auch die multiple Regressionsanalyse. Lässt man wiederum wichtige Variablen aus, dann kann das auch den die Aussage über die Kausalität verzerren. Deswegen ist es wichtig, die richtigen und sinnigen Variablen in das Model aufzunehmen. Jedoch wie geht man bei der Auswahl der Variablen vor?\\
+Zunächst muss man Variablen finden, von denen man argumentieren kann, dass sie die unabhängige Variable den Fahrradverkehr in unserem Fall beieinflussen. Eine Auflistung dieser findet sich in der Übersicht \ref{Tabelle1}. Nehmen wir nicht nur diese Variablen auf, sondern auch die quadratischen oder kubischen Werte oder Intersektionen der verschiedenen Variablen, haben wir einen großen Pool an Variablen, die wir wählen können. Eine naheliegende Vorgehensweise ist es, verschiedene Modelle zu erstellen, die verschiedene Variablen beinhalten und diese zu validieren, um im Vergleich das beste Model für seine Vorhersagen zu nehmen. Natürlich könnte man auch mittels Stepwise Selection das Model erstellen, dies ist ein maschineller Prozesse, der das Model Durchgang für Durchgang mit den Schätzern füllt, die den größten Fit mit sich bringen, ist jedoch auch sehr rechen intensiv, vor allem bei einem Datensatz dieser Größe.\\
+
+Stattdessen erstellen wir manuell 30 verschiedene Modelle. Danach zerlegen wir den Datensatz zufällig in einen Trainings Datensatz und in einen Test Datensatz. Der Trainings Datensatz dient dazu, die abhängigen Variablen des Models zu berechnen. Mithilfe des Test Datensatzes versuchen wir die externe Validität des Models zu prüfen, also ob das Model auch zutreffende Aussagen auf Beobachtungswerte treffen kann, mit denen das Model nicht berechnet worden ist. Zur Validierung der 30 Modelle nutzen wir das angepasste Bestimmtheitsmaß $adj R^2$. Das Bestimmtheitsmaß beschreibt wie hoch der Anteil der Streuung der Beobachtungsdaten ist, der durch das Model erklärt werden kann. Je näher das Bestimmtheitsmaß an 1 ist, desto besser fittet das Model, bzw desto besser erklärt das Model die Realität. Um die Modelle zu vergleichen schauen wir das Bestimmtheitsmaß der Modelle im Traininsg und Test Datensatz. Dabei kommt die Graphik \ref{ModelSelektion} zustande.
+
+\begin{figure}[]
+	\centering
+	\includegraphics[width=\textwidth]{Plots/ModelSelektion1.pdf}
+	\captionsource{Fahrrad Daten Mannheim und DWD}{
+		Graphisches Beispiel einer Regression
+	}
+	\label{ModelSelektion}
+\end{figure}
+
+Auf der Y-Achse der Graphik \ref{ModelSelektion} abgetragen sehen wir die Höhe des Bestimmtheitsmaß. Auf der X Achse sehen wir die Anzahl der Koeffizienten. Mit jedem weiteren Model haben wir weitere Variablen hinzugefügt, angefangen mit den Wetter Variablen, Feiertage, Ferien, Zeitliche Variablen, wie das Jahr, Sommer oder Tageszeit bis hin zur geographischen Lage. Wir sehen, dass das Bestimmtheitsmaß, also die Genauigkeit der Vorhersage des Models, zu nimmt je mehr Variablen wir hinzufügen, bis zu einem Punkt, an dem das Bestimmtheitsmaß im Trainingsdatensatz zwar nochmals bedeutend zu nimmt, im Test Datensatz aber abnimmt. Hier geraten wir ins Overfitting. Das heißt, das Model, das hier entwickelt wurde, kann zwar die Daten, mit denen es trainiert wurde, extrem gut erklären, sobald wir aber mithilfe des Models vorhersagen treffen wollen, aufgrundlage neuer Daten, ist die Genauigkeit der Daten schlechter, als sie sein müsste. Das wollen wir verhindern. Denn wenn wir mit unserem Model Overfitting haben, kann es der Fall sein, dass wir in den Variablen Zusammenhänge sehen, die sich nicht replizieren lassen.\\
+
+Was löst in unserem Fall das Overfitting aus? Dazu vergleichen wir den Regressions Output zweier Modelle in der Tabele \ref{ZweiModelle}. Das zweite Model ist jenes, in dem erstmals Overfitting auftritt. Das erste Model ist das Model vor diesem, in dem noch kein Overfitting auftritt.
+
+% Table created by stargazer v.5.2.3 by Marek Hlavac, Social Policy Institute. E-mail: marek.hlavac at gmail.com
+% Date and time: So, Jul 24, 2022 - 12:23:05
+	
+	%\scalebox{0.9}{
+	\begin{longtable}{@{\extracolsep{-5pt}}lcc} 
+		\caption{Log-Lineare Modele} 
+		\label{ZweiModelle}
+		\\[-1.8ex]\hline 
+		\hline \\[-1.8ex] 
+		& \multicolumn{2}{c}{\textit{Dependent variable:}} \\ 
+		\cline{2-3} 
+		\\[-1.8ex] & \multicolumn{2}{c}{log(Zaehlstand)} \\ 
+		\\[-1.8ex] & (1) & (2)\\ 
+		\hline \\[-1.8ex] 
+		WertT2M & 0.027$^{***}$ & 0.027$^{***}$ \\ 
+		& (0.001) & (0.001) \\ 
+		WertT2M2 & 0.001$^{***}$ & 0.001$^{***}$ \\ 
+		& (0.0001) & (0.0001) \\ 
+		WertT2M3 & $-$0.00003$^{***}$ & $-$0.00002$^{***}$ \\ 
+		& (0.00000) & (0.00000) \\ 
+		WertRR & $-$0.231$^{***}$ & $-$0.229$^{***}$ \\ 
+		& (0.007) & (0.005) \\ 
+		WertRR2 & 0.029$^{***}$ & 0.029$^{***}$ \\ 
+		& (0.001) & (0.001) \\ 
+		WertRR3 & $-$0.001$^{***}$ & $-$0.001$^{***}$ \\ 
+		& (0.00004) & (0.00003) \\ 
+		WertF & $-$0.073$^{***}$ & $-$0.077$^{***}$ \\ 
+		& (0.006) & (0.005) \\ 
+		WertF2 & 0.008$^{***}$ & 0.009$^{***}$ \\ 
+		& (0.002) & (0.001) \\ 
+		WertF3 & $-$0.001$^{***}$ & $-$0.001$^{***}$ \\ 
+		& (0.0001) & (0.0001) \\ 
+		WertRF & 0.003 & 0.002 \\ 
+		& (0.002) & (0.002) \\ 
+		WertRF2 & $-$0.0001$^{***}$ & $-$0.0001$^{***}$ \\ 
+		& (0.00003) & (0.00003) \\ 
+		WertRF3 & 0.00000$^{***}$ & 0.00000$^{***}$ \\ 
+		& (0.00000) & (0.00000) \\ 
+		WertSD & 0.0005 & 0.0005 \\ 
+		& (0.001) & (0.001) \\ 
+		WertSD2 & $-$0.00000 & 0.00001 \\ 
+		& (0.00004) & (0.00003) \\ 
+		WertSD3 & $-$0.00000 & $-$0.00000 \\ 
+		& (0.00000) & (0.00000) \\ 
+		WertN & 0.010 & 0.008$^{*}$ \\ 
+		& (0.006) & (0.005) \\ 
+		WertN2 & $-$0.005$^{***}$ & $-$0.005$^{***}$ \\ 
+		& (0.002) & (0.001) \\ 
+		WertN3 & 0.0003$^{**}$ & 0.0004$^{***}$ \\ 
+		& (0.0001) & (0.0001) \\ 
+		FeiertagBW & $-$0.402$^{***}$ & $-$0.389$^{***}$ \\ 
+		& (0.026) & (0.019) \\ 
+		FeiertagRP & 0.035 & 0.043 \\ 
+		& (0.162) & (0.122) \\ 
+		SchulferienBW & $-$0.155$^{***}$ & $-$0.145$^{***}$ \\ 
+		& (0.004) & (0.003) \\ 
+		SemesterferionUM & $-$0.131$^{***}$ & $-$0.142$^{***}$ \\ 
+		& (0.003) & (0.003) \\ 
+		Sommer & 0.031$^{***}$ & 0.024$^{***}$ \\ 
+		& (0.005) & (0.004) \\ 
+		laengengrad & 3,000,977.000$^{***}$ &  \\ 
+		& (14,623.910) &  \\ 
+		laengengrad2 & $-$7,155.153$^{***}$ &  \\ 
+		& (34.176) &  \\ ad & 493,372.000$^{***}$ &  \\ 
+		& (2,544.529) &  \\ 
+		laengenbreitengrad & $-$58,179.300$^{***}$ &  \\ 
+		& (300.081) &  \\ 
+		as.numeric(Jahr) & 31,617.400$^{***}$ & 2,480.775 \\ 
+		& (2,353.575) & (1,764.690) \\ 
+		as.numeric(Jahr2) & $-$15.658$^{***}$ & $-$1.216 \\ 
+		& (1.166) & (0.874) \\ 
+		as.numeric(Jahr3) & 0.003$^{***}$ & 0.0002 \\ 
+		& (0.0002) & (0.0001) \\ 
+		uniMA\_dist & $-$0.013$^{***}$ &  \\ 
+		& (0.0001) &  \\ 
+		Stunde06 & 0.404$^{***}$ & 0.404$^{***}$ \\ 
+		& (0.008) & (0.006) \\ 
+		Stunde07 & 0.929$^{***}$ & 0.926$^{***}$ \\ 
+		& (0.008) & (0.006) \\ 
+		Stunde08 & 1.078$^{***}$ & 1.072$^{***}$ \\ 
+		& (0.009) & (0.006) \\ 
+		Stunde09 & 0.921$^{***}$ & 0.915$^{***}$ \\ 
+		& (0.009) & (0.006) \\ 
+		Stunde10 & 0.817$^{***}$ & 0.811$^{***}$ \\ 
+		& (0.009) & (0.007) \\ 
+		Stunde11 & 0.882$^{***}$ & 0.874$^{***}$ \\ 
+		& (0.009) & (0.007) \\ 
+		Stunde12 & 0.997$^{***}$ & 0.990$^{***}$ \\ 
+		& (0.009) & (0.007) \\ 
+		Stunde13 & 1.118$^{***}$ & 1.112$^{***}$ \\ 
+		& (0.009) & (0.007) \\ 
+		Stunde14 & 1.172$^{***}$ & 1.165$^{***}$ \\ 
+		& (0.009) & (0.007) \\ 
+		Stunde15 & 1.304$^{***}$ & 1.297$^{***}$ \\ 
+		& (0.009) & (0.007) \\ 
+		Stunde16 & 1.466$^{***}$ & 1.458$^{***}$ \\ 
+		& (0.009) & (0.007) \\ 
+		Stunde17 & 1.470$^{***}$ & 1.465$^{***}$ \\ 
+		& (0.009) & (0.007) \\ 
+		Stunde18 & 1.283$^{***}$ & 1.281$^{***}$ \\ 
+		& (0.009) & (0.006) \\ 
+		Stunde19 & 1.005$^{***}$ & 1.002$^{***}$ \\ 
+		& (0.009) & (0.006) \\ 
+		Stunde20 & 0.698$^{***}$ & 0.698$^{***}$ \\ 
+		& (0.009) & (0.006) \\ 
+		Stunde21 & 0.635$^{***}$ & 0.628$^{***}$ \\ 
+		& (0.050) & (0.037) \\ 
+		Stunde22 & 0.548$^{***}$ & 0.534$^{***}$ \\ 
+		& (0.049) & (0.037) \\ 
+		WochentagDo & $-$0.007 & $-$0.005 \\ 
+		& (0.006) & (0.004) \\ 
+		WochentagFr & $-$0.084$^{***}$ & $-$0.083$^{***}$ \\ 
+		& (0.006) & (0.004) \\ 
+		WochentagMi & $-$0.001 & $-$0.002 \\ 
+		& (0.006) & (0.004) \\ 
+		WochentagMo & $-$0.050$^{***}$ & $-$0.046$^{***}$ \\ 
+		& (0.006) & (0.004) \\ 
+		WochentagSa & $-$0.626$^{***}$ & $-$0.626$^{***}$ \\ 
+		& (0.006) & (0.004) \\ 
+		WochentagSo & $-$0.970$^{***}$ & $-$0.968$^{***}$ \\ 
+		& (0.006) & (0.004) \\ 
+		Adenauer-Brücke &  & 0.185$^{***}$ \\ 
+		&  & (0.004) \\ 
+		Kurpfalzbrücke &  & 1.549$^{***}$ \\ 
+		&  & (0.004) \\ 
+		K-Schumacher-Brücke &  & $-$2.609$^{***}$ \\ 
+		&  & (0.004) \\ 
+		Lindenhofüberführung &  & $-$0.507$^{***}$ \\ 
+		&  & (0.005) \\ 
+		Neckarauer Übergang &  & $-$0.039$^{***}$ \\ 
+		&  & (0.005) \\ 
+		Renzstraße &  & 0.861$^{***}$ \\ 
+		&  & (0.004) \\ 
+		Schlosspark Lindenhof &  & 0.180$^{***}$ \\ 
+		&  & (0.005) \\ 
+		FeiertagBW:FeiertagRP & $-$0.519$^{***}$ & $-$0.535$^{***}$ \\ 
+		& (0.164) & (0.123) \\ 
+		Constant & $-$46,216,015.000$^{***}$ & $-$1,687,396.000 \\ 
+		& (1,582,933.000) & (1,187,073.000) \\ 
+		\hline \\[-1.8ex] 
+		Observations & 328,715 & 328,715 \\ 
+		R$^{2}$ & 0.668 & 0.814 \\ 
+		Adjusted R$^{2}$ & 0.668 & 0.814 \\ 
+		Residual Std. Error & 0.842 (df = 328659) & 0.631 (df = 328657) \\ 
+		F Statistic & 12,043.5$^{***}$  & 25,194.4$^{***}$ \\ 
+		&(df = 55; 328659)& (df = 57; 328657)\\
+		\hline 
+		\hline \\[-1.8ex] 
+		\textit{Note:}  & \multicolumn{2}{r}{$^{*}$p$<$0.1; $^{**}$p$<$0.05; $^{***}$p$<$0.01} \\ 
+	\end{longtable}
+	%}
+
+Beide Modelle unterscheiden sich im wesentlichen in der Wahl der Fixed Effects. Fixed Effects sind all jene Schätzer, die über die Zeit nicht variieren, also fix sind und nur zwischen den Entitäten variieren. In diesem konkreten Fall heißt das, ein Fixed Effect ist eine Variable die zeitlich konstant bleibt, sich aber zwischen den Fahrradzählstationen unterscheidet. Das dient dazu, die Unterschiede zwischen diesen Stationen zu messen und im Model mit aufzunehmen. Denn wenn wir uns die Graphik \ref{BoxplotStationen} anschauen, sehen wir, dass die Stationen untereinander recht stark variieren. Z.B. sehen wir, dass auf der Kurpfalzbrücke, die von der Innenstadt über den Neckar führt, grundsätzlich mehr Radverkehr herrscht. Nehmen wir jetzt z.B. eine Dummy Variable in das Model auf, die 1 ist, wenn ein Beobachtungswert von der Kurpfalzbrücke stammte und 0 ist, wenn der Beobachtungswert von einer anderen Station stammte, dann erklärt diese Variable den Unterschied zwischen der Kurpfalzbrücke und den anderen Stationen im Model, ohne den Ursächlichen Grund dafür zu kennen, erhöht aber den Fit des Models, denn nun können die anderen Variablen ihren Einfluss präziser schätzen.\\ 
+
+Eine solche Dummy Variable können wir für 7 von 8 Stationen in das Model aufnehmen. Bei der achten reicht es, wenn alle anderen Dummy Variablen 0 sind. Andernfalls bekämen wir ein multikollineares Model, also ein Model in dem mindestens zwei Variablen linear abhängig von einander sind. Genau auf diese Weise sind wir im zweiten Model vorgegangen. Dieses beinhaltet eine Dummy Variable Kurpfalzbrücke, Lindenhofüberführung, Neckarauer Übergang, Renzstraße und Schloßpark/Lindenhof. Die übrige Station an der Kurt Schuhmacher Brücke ergibt sich, wie bereits erklärt, wenn alle anderen 7 Dummy Variabeln 0 sind. Diese Vorgehensweise fürht zu einem Bestimmtheitsmaß von 81,44 \%, was sich gut anhört, wie aber bereits gezeigt, größtenteils auf Overfitting zurückzuführen ist.\\
+
+Möglicherweise hängt dies damit zu zusammen, dass die Stations Dummy Variabeln zwar Unterschiede erkennen, aber keinen ursächlichen Grund dafür finden. Wenn man aber Lageparameter als Fixed Effekt nutzt hätte man einen möglichen ursächlichen Grund für den Unterschied, die Lage. Da Lageparameter zeitlich auch konstant sind, lassen sich diese ebenfalls sehr gut als Fixed Effect nutzen. Im ersten Model nutzen wir dazu den Längengrad, sowie den quadrierten Längengrad, den Breitengrad, Längen und Breitengrad miteinander multipliziert (Intersektion) und den Abstand zur Universität Mannheim in uniMA dist. Auf den quadrierten Wert des Breitengrades verzichten wir, weil dies wiederum zu Multikollinearität führen würde und im Regressionsoutput ein Fehler auftauchen würde, wie sich zeigte. Auch führt eine Kombination aus Lageparametern und Standort Dummy Variabeln zu Fehlern im Regressionsoutput, weswegen wir beide Fixed Effects getrennt von einander nutzen.\\
+
+Obwohl wir bei dem Model mit den Lageparametern ein kleineres Bestimmtheitsmaß von nur 66,8 \% erhalten, entscheiden wir uns gegen das Model mit Standort Dummy Variabeln, wegen einer höheren externen Validität gemessen im Test Datensatz.
 
 \chapter{Fazit}
 
