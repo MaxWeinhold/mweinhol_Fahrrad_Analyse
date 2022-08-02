@@ -261,9 +261,6 @@ library(geosphere)
 
 	#Temperatur---
 
-
-
-
 	lufttemperatur$Zeit_neu	= as.POSIXct(lufttemperatur$Zeitstempel, format="%Y-%s-%b %H:%M:%S")
 	lufttemperatur$Datum	= as.POSIXct(lufttemperatur$Zeit_neu, format="%Y-%m-%d")			#Nur_Datum
 	lufttemperatur$Jahr	= format(as.Date(lufttemperatur$Zeit_neu, format="%Y-%m-%d"),"%Y") 	#Jahr
