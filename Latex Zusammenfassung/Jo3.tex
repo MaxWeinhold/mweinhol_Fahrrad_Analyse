@@ -7,6 +7,7 @@
 
 \usepackage[onehalfspacing]{setspace}
 
+\usepackage{adjustbox}
 \usepackage[ngerman]{babel}
 \usepackage[T1]{fontenc}
 \usepackage{amsfonts}
@@ -170,10 +171,6 @@ Zu Abweichungen des Fahrradverkehrs konnte es während Corona kommen, wo Teile d
 
 \section{DWD Daten}
 
-
-\chapter{Deskriptive Analyse}
-
-
 \begin{table}[!ht]
 	\centering
 	\begin{tabular}{rllllll}
@@ -210,12 +207,16 @@ Zu Abweichungen des Fahrradverkehrs konnte es während Corona kommen, wo Teile d
 
 Notiz für später: Am besten wertest du die Qualitätsdaten genauer aus.
 
+\chapter{Deskriptive Analyse}
+
+
+
 
 \section{Regressionsanalyse}
 
-Vorerst sind die gesammelten Daten trotz des Umfang recht nutzlos, da sie allein wenig Antworten geben. Durchschnitte und Standardabweichungen einzelner Variablen wie der Temperatur oder des Fahrrad Aufkommens, gäben durchaus Aufschluss nie aber in einem größeren Zusammenhang. Was wir vornehmlich in Erfahrung bringen möchten ist, was den Fahrradverkehr beeinflusst, um daraus folgend Vorhersagen treffen zu können. Dies mündet z.B. in der Frage welchen Einfluss der Regenfall auf den Fahrradverkehr ausübt, oder ob mehr Fahrradfahrer an Feiertagen auf Mannheims Straßen anzufinden sind. Dies wollen wir nicht nur qualitativ beantworten, sondern auch quantitativ.\\
+Vorerst sind die gesammelten Daten trotz des Umfang recht nutzlos, da sie allein wenig Antworten geben. Durchschnitte und Standardabweichungen einzelner Variablen wie der Temperatur oder des Fahrrad Aufkommens, gäben durchaus Aufschluss nie aber in einem größeren Zusammenhang. Was wir vornehmlich in Erfahrung bringen möchten ist, was den Fahrradverkehr beeinflusst. Dies mündet z.B. in der Frage welchen Einfluss der Regenfall auf den Fahrradverkehr ausübt, oder ob mehr Fahrradfahrer an Feiertagen auf Mannheims Straßen anzufinden sind. Dies wollen wir nicht nur qualitativ beantworten, sondern auch quantitativ.\\
 
-Ein Mittel um an diese Informationen zu kommen ist die Regressionsanalyse. Diese versucht den Zusammenhang zu messen, in dem zwei Variablen zu einander stehen. So könnte man zb versuchen zu messen, wie sehr die Lufttemperatur in zwei Meter Höhe das Aufkommen von Fahrrädern in Mannheim beeinflusst, dargestellt in der Darstellung \ref{fig:BSP}. Mithilfe der Regressionsanalyse kann man nun durch diese in diesem Fall sehr dichte Punktwolke jene Linie ziehen, die das Verhältnis mathematisch am besten repräsentiert. Natürlich verhält sich nicht alles linear zu einander. In der Darstellung sieht man bereits, dass das Fahrradaufkommen bis knapp über 20 °C steigt, danach aber wieder rapide sinkt, das es den Leuten schlicht zu heiß wird. Dies kann manchmal mit einer nicht linearen Funktion dargestellt werden. Aber wie man sieht, egal ob man einen linearen, quadratischen oder kubischen Zusammenhang sieht, die eingezeichneten Regressionslinien erwecken nicht den Eindruck, den wahren Zusammenhang widerzuspiegeln, denn die beobachteten Werte also die eingezeichneten Punkte liegen weit auseinander. Das bedeutet der Fit unseres Models ist gering, allein mit der Außentemperatur können wir die Variation im Fahrradverkehr selbstverständlich nicht erklären.\\
+Ein Mittel um an diese Informationen zu kommen ist die Regressionsanalyse. Diese versucht den Zusammenhang zu messen, in dem zwei Variablen zu einander stehen. So könnte man zb versuchen zu messen, wie sehr die Lufttemperatur in zwei Meter Höhe das Aufkommen von Fahrrädern in Mannheim beeinflusst, dargestellt in der Abbildung \ref{fig:BSP}. Mithilfe der Regressionsanalyse kann man nun durch diese in diesem Fall sehr dichte Punktwolke jene Linie ziehen, die das Verhältnis mathematisch am besten repräsentiert. Natürlich verhält sich nicht alles linear zu einander. In der Darstellung sieht man bereits, dass das Fahrradaufkommen bis knapp über 20 °C steigt, danach aber wieder rapide sinkt, das es den Leuten schlicht zu heiß wird. Dies kann manchmal mit einer nicht linearen Funktion dargestellt werden. Aber wie man sieht, egal ob man einen linearen, quadratischen oder kubischen Zusammenhang sieht, die eingezeichneten Regressionslinien erwecken nicht den Eindruck, den wahren Zusammenhang widerzuspiegeln, denn die beobachteten Werte also die eingezeichneten Punkte liegen weit auseinander. Das bedeutet der Fit unseres Models ist gering, allein mit der Außentemperatur können wir die Variation im Fahrradverkehr selbstverständlich nicht erklären.\\
 
 \begin{figure}[!ht]
 	\centering
@@ -226,7 +227,138 @@ Ein Mittel um an diese Informationen zu kommen ist die Regressionsanalyse. Diese
 	\label{fig:BSP}
 \end{figure}
 
-Nehmen wir weitere Variablen in das Regressionsmodel auf, die den Fahrradverkehr erklären können, wie z.B. Niederschlag oder Ferientage, dann steigt der Fit des Models. Das heißt wir können präzisere Vorhersagen treffen, weil wir uns ein mehrdimensionales Model schaffen. Dies nennt man dann auch die multiple Regressionsanalyse. Lässt man wiederum wichtige Variablen aus, dann kann das auch den die Aussage über die Kausalität verzerren. Deswegen ist es wichtig, die richtigen und sinnigen Variablen in das Model aufzunehmen. Jedoch wie geht man bei der Auswahl der Variablen vor?\\
+Nehmen wir weitere Variablen in das Regressionsmodel auf, die den Fahrradverkehr erklären können, wie z.B. Wetterbeobachtungen oder Ferien- und Feiertage, dann steigt der Fit des Models. Das heißt wir können präzisere Vorhersagen treffen, weil wir uns ein mehrdimensionales Model schaffen. Dies nennt man dann auch die multiple Regressionsanalyse. Lässt man wiederum wichtige Variablen aus, dann kann das auch die Aussage über die Kausalität verzerren durch den Bias einer ausgelassenen Variable. Deswegen ist es wichtig, die richtigen und sinnigen Variablen in das Model aufzunehmen. Im folgenden Model haben sind nicht nur Wetterdaten und Ferien- Feiertage mit inbegriffen. Zusätzlich verwenden wir eine Dummy Variable für die Sommer Monate und eine Dummy Variable für alle Zeiträume, die von Corona Kontaktbeschränkungen betroffen waren. Nicht direkt dargestellt in der Übersicht \ref{reg1}, sind Dummy Variablen, für die vollen Stunden, Wochentage, Monate und Jahre, sowie der den Namen der Station als Faktor, damit das Modell zwischen den verschiedenen Leveln der Zählstationen unterscheiden können, denn der Verkehr an den einzelnen Stationen weicht stark voneinander ab, wie man in der Darstellung \ref{BoxplotStationen} sieht.\\
+
+\begin{table}[!ht]
+	\centering
+	\caption{Log-Lineares Regressionsmodell}
+	\begin{tabular}[t]{lc lc lc lc lc lc}
+		\toprule
+		& Koeffizient & Std Abw & t-Wert & Pr(>|t|) & \\
+		\midrule
+		%Intercept & -0.184 & (0.015) &\\
+		Leichter Nieselregen & -0.184 & (0.015) & -12.12259 & 5.9389e-06 & ***\\
+		Starker Nieselregen & -0.249 & (0.012) & -20.60850 & 1.5899e-07 & ***\\
+		Leichter Regen & -0.331 & (0.021) & -15.84990 & 9.6482e-07 & ***\\
+		Moderater Regen & -0.353 & (0.019) & -18.79747 & 2.9962e-07 & ***\\
+		Starker Regen & -0.373 & (0.043) & -8.61747 & 5.6532e-05 & ***\\
+		Heftiger Regen & -0.209 & (0.051) & -4.05542 & 4.8375e-03 & **\\
+		Temperatur & 0.036 & (0.005) & 7.63981 & 1.2217e-04 & ***\\
+		Temperatur$^2$ & -0.0005 & (0.000) & -9.29870 & 3.4479e-05 & ***\\
+		Wind & -0.041 & (0.003) & -16.05586 & 8.8335e-07 & ***\\
+		rel. Feuchte & -0.004 & (0.001) & -3.51258 & 9.8253e-03 & **\\
+		Sonne & -0.0001 & (0.000) & -1.37325 & 2.1204e-01 & \\
+		Bedeckung & -0.009 & (0.001) & -8.05733 & 8.7084e-05 & ***\\
+		FeiertagBW & -0.460 & (0.081) & -5.69499 & 7.3917e-04 & ***\\
+		FeiertagRP & -0.414 & (0.059) & -7.00091 & 2.1138e-04 & ***\\
+		SchulferienBW & -0.139 & (0.020) & -6.84816 & 2.4239e-04 & ***\\
+		SemesterferienUM & -0.159 & (0.031) & -5.19710 & 1.2570e-03 & **\\
+		Sommer & 0.082 & (0.021) & 3.99890 & 5.1972e-03 & **\\
+		Kontaktbeschr & -0.133 & (0.027) & -5.01609 & 1.5372e-03 & **\\
+		\midrule
+		Num.Obs. & 410891& & RMSE & 0.62 & \\
+		R2 & 0.818& R2 Adj. & 0.818 &  & \\
+		\bottomrule
+		Fixed Effects & Standort & Stunde & Wochentag & Jahr & \\
+		Note: & *p<0.1; & **p<0.05; &***p<0.01 & &\\
+	\end{tabular}
+\label{reg1}
+\end{table}
+
+Interessant sind für uns in der Darstellung \ref{reg1} die Koeffizienten und die Signifikanzniveaus. Wobei wir berücksichtigen müssen, dass wir ein Log-Lineares Modell verwendet haben. Das heißt wir haben die abhängige Variable den Zählstand der Fahrradstation logarithmiert, um nicht lineare Einflüsse modellieren zu können. Die Signifikanzniveaus werden durch Sterne gekeinzeichnet. Drei Sterne markieren das höchste Sighnifikanzniveau, kein Stern bedeutet, der kausalen Einfluss eines Koeffizienten ist statistisch signifikant, also zu klein im Verhältnis zur Streuung der Daten. Die Vorzeichen der Koeffizienten zeigen uns, ob eine Variable dazu führt, ob weniger Leute Fahrrad fahren, wenn zb. Regen fällt, oder weniger.\\ 
+Den Regenfall haben wir kategorisiert, nach derselben Methode wie sie \cite{Wessel2020} verwendet. Auffällig ist, dass der heftige Regen wohl einen kleineren negativen Einfluss, als leichter Regen. Erklärbar wäre diese Beobachtung vielleicht dadurch, dass heftiger Regen oft plötzlich kommt und Fahrradfahrer überraschen kann. Auch der Mangel an Beobachtungen könnte dazu führen, denn heftiger Regen kommt selten vor, weshalb sein Signifikanzniveau auch geringer ist. Ansonsten sehen wir, dass zunehmender Regen einen zunehmend negativen Effekt hat. Für die Temperatur haben wir einen linearen und einen quadratischen Term in das Model aufgenommen, denn wie man in Darstellung \ref{fig:BSP} z.B. sieht, führen steigende Temperaturen nur solange zu mehr Fahrradverkehr, solange es nicht zu heiß wird. Die quadratische Funktion kann das gut repräsentieren. Allerdings sind alle anderen Wetterbeobachtung längst nicht so einflussreich wie der Regen. Die Sonneneinstrahlung ist sogar insignifikant.\\
+Einen recht starken Einfluss haben die Feiertage. Wobei wir unterschieden haben in Feiertage in Baden Württemberg und Rheinland Pfalz. Hierbei sind die Effekte der Feiertage interessanterweise negativ. Dies gibt uns einen Hinweis darauf, dass in Mannheim ein utillitaristischer Fahrradverkehr vorherrscht. Also ein Fahrradverkehr, der nicht der eigenen Unterhaltung und Erholung dient, sondern um einen Zweck zu erfüllen. In den meisten Fällen wird es sich hierbei also um Berufsverkehr handeln bzw. Verkehr hin zu den Bildungsstätten der Stadt. Darauf weisen auch die negativen Effekte für die Schulferien in Baden Württemberg und die Semesterferien der Universität Mannheim hin. Schulferien für Rheinlandpfalz befinden sich nicht im Modell, weil ich angenommen habe, dass Schüler aus Ludwigshafen auch grundsätzlich in Ludwigshafen zur Schule gehen würden.
+
+\section{negativ binomioale Regression}
+
+Wenn wir uns die abhängige Variable den Zählstand der Fahrradstationen ansehen, sehen wir, dass wir es hier naturgemäß immer mit ganzen Zahlen zu tuen haben. Das bietet den Vorteil, dass wir hier für eine so genannte negativ binomial Regression verwenden können. Diese geht zurück auf \cite{Hausman1984}, die in ihrem Model auf die Poisson Verteilung aufbauen.
+
+
+\begin{table}[!ht]
+	\centering
+	\caption{Negativ binomiales Regressionsmodell}
+	\begin{tabular}[t]{lc lc lc lc lc lc}
+		\toprule
+		& Koeffizient & Std Abw & t-Wert & Pr(>|t|) & \\
+		\midrule
+		%Intercept & -0.184 & (0.015) &\\
+		Leichter Nieselregen & -0.189047 & (0.010061) & -18.790256 & < 2.2e-16 & *** \\
+		Starker Nieselregen & -0.233913 & (0.007726) & -30.274180 & < 2.2e-16 & *** \\
+		Leichter Regen & -0.310315 & (0.011664) & -26.605631 & < 2.2e-16 & *** \\
+		Moderater Regen & -0.327817 & (0.011601) & -28.257201 & < 2.2e-16 & *** \\
+		Starker Regen & -0.305291 & (0.024972) & -12.225408 & < 2.2e-16 & *** \\
+		Heftiger Regen & -0.086290 & (0.052804) & -1.634136 & 1.0223e-01 & \\
+		Temperatur & 0.035417 & (0.002609) & 13.576529 & < 2.2e-16 & *** \\
+		Temperatur$^2$ & -0.000425 & (0.000045) & -9.433671 & < 2.2e-16 & *** \\
+		Wind & -0.037234 & (0.002592) & -14.364224 & < 2.2e-16 & *** \\
+		rel. Feuchte & -0.002813 & (0.000649) & -4.333943 & 1.4646e-05 & *** \\
+		Sonne & -0.000086 & (0.000093) & -0.927537 & 3.5365e-01 & \\
+		Bedeckung & -0.009645 & (0.000888) & -10.865248 & < 2.2e-16 & *** \\
+		FeiertagBW & -0.495062 & (0.068356) & -7.242427 & 4.4073e-13 & *** \\
+		FeiertagRP & -0.247711 & (0.031382) & -7.893448 & 2.9395e-15 & *** \\
+		SchulferienBW & -0.137121 & (0.013632) & -10.058793 & < 2.2e-16 & *** \\
+		SemesterferienUM & -0.127239 & (0.005794) & -21.962002 & < 2.2e-16 & *** \\
+		Sommer & 0.080012 & (0.008060) & 9.926549 & < 2.2e-16 & *** \\
+		Kontaktbeschr & -0.102099 & (0.024805) & -4.116008 & 3.8549e-05 & *** \\
+		\midrule
+		Num.Obs. & 410891& & RMSE & 49.86 & \\
+		psydo R2 & 0.164 & psydo R2 Adj. & 0.164 &  & \\
+		\bottomrule
+		Fixed Effects & Standort & Stunde & Wochentag & Jahr & \\
+		Note: & *p<0.1; & **p<0.05; &***p<0.01 & &\\
+	\end{tabular}
+\end{table}
+
+
+\section{Utilitaristischer und Freizeit Verkehr}
+
+Wie bereits bei Vorstellung des Standardsmodell angeschnitten, geben uns die Variablen für Feier- und Ferientage einen Hinsweis darauf, dass in Mannheim ein utilitaristischer Verkehr vorherrscht, also ein Verkehr hin zu den Arbeits- und Ausbildungstätten. Damit ist jedoch nicht unbedingt erwiesen, dass dies der Falle für alle Zählstationen der Fall ist. Wege die zu den Arbeits- und Ausbildungsstätten führen, können sehr wohl dem Berufsverkehr dienen, während andere Wege weiter abseits dem Freizeitverkehr dienen. Deswegen bilden wir für jede Zählstation ein Regressionsmodell, dass den Einfluss von Feier- und Ferientagen sowie Wochenenden untersucht.\\ 
+Dies fässt die Darstellung \ref{utilitarian} zusammen, die mithilfe einer R Bibliothek nach \cite{Hlavac2022} erstellt worden ist. Die dargestellten Stationen sind der Reihe nach die Renzstraße, die Jungbuschbrücke, die Konrad Adenauer Brücke, die Kurt Schuhmacher Brücke, die Lindenhofüberführung, der Neckarauer Übergang und der Schlosspark. Wir sehen auch hier, dass der utilitaristische Verkehr an allen Stationen überwiegt. Die Feiertage in Rheinland Pfalz spielen meist keine Rolle und sind insignifikant. Ansonsten führen Feiertage, Semesterferien und Wochenenden zu einer Abhnahme des Fahrradverkehr. Eine Ausnahme stellen die Schulferien da. An der Renzstraße, der Konrad Adenauer Brücke, der Kurt Schuhmacher Brücke und am Schlosspark, führen die Schulferien zu leichten Zunahmen des Fahrradverkehrs. Das könnte daran liegen, dass anders als die Studenten die Schüler mit ihren Schulen breiter über die Stadt verteilt sind, während die Zählstationen eher in der Nähe der Innenstadt und dem näherem Zentrum angesiedelt sind. Auch fahren Studenten innerhalb der Semesterferien häufiger nach Hause, und sind somit in der Stadt nicht mehr vorhanden. Den meisten Freizeit Verkehr findet man insgesamt an der Kurt Schuhmacher Brücke. Zumindestens sind hier die negativen Effekte der Koeffizienten am geringsten. Umgekehrt ist am Neckarauer Übergang der meiste utilitaristische Verkehr anzutreffen mit den größten negativen Effekten. Vergleicht man beide Stationen ist festzustellen, dass das Wetter den Freizeitverkehr stärker beeinträchtigt, während beim utilitaristischen Verkehr Radfahrer noch eher bei Regen, Wind und Wetter auf der Straße zu finden sind. Zu sehen ist dies in der Darstellung \ref{utilitarianvsFreizeit} im Anhang.
+
+% Table created by stargazer v.5.2.3 by Marek Hlavac, Social Policy Institute. E-mail: marek.hlavac at gmail.com
+% Date and time: Do, Aug 04, 2022 - 17:32:08
+\begin{table}[!htbp] \centering 
+	\caption{} 
+	\label{utilitarian} 
+	\begin{tabular}{@{\extracolsep{-8pt}}lcccccccc} 
+		\\[-1.8ex]\hline 
+		\hline \\[-1.8ex] 
+		\\[-1.8ex] & \multicolumn{8}{c}{log(Zaehlstand)} \\ 
+		\\[-1.8ex] & Renzs & JBusch & Adenauer & Kurpfalz & Schuhm & Lindenh & NeckarÜb & Schlossp\\ 
+		\hline \\[-1.8ex] 
+		FeiertagBW & $-$0.905 & $-$0.779 & $-$0.888 & $-$1.033 & $-$0.630 & $-$1.127 & $-$1.032 & $-$0.742 \\ 
+		& (0.057) & (0.048) & (0.070) & (0.053) & (0.068) & (0.068) & (0.064) & (0.078) \\ 
+		& $^{***}$ & $^{***}$ & $^{***}$ & $^{***}$ & $^{***}$ & $^{***}$ & $^{***}$ & $^{***}$ \\ 
+		FeiertagRP & $-$0.051 & $-$0.174 & $-$0.145 & $-$0.021 & 0.056 & $-$0.090 & 0.018 & $-$0.148 \\ 
+		& (0.059) & (0.050) & (0.073) & (0.056) & (0.071) & (0.071) & (0.067) & (0.082) \\ 
+		& & $^{***}$ & $^{**}$ & & & & & $^{*}$ \\ 
+		SchulfBW & 0.052 & $-$0.054 & 0.126 & 0.006 & 0.152 & $-$0.098 & $-$0.055 & 0.026 \\ 
+		& (0.007) & (0.006) & (0.008) & (0.006) & (0.008) & (0.010) & (0.010) & (0.012) \\ 
+		& $^{***}$ & $^{***}$ & $^{***}$ & & $^{***}$ & $^{***}$ & $^{***}$ & $^{***}$ \\ 
+		Semesterf & $-$0.266 & $-$0.059 & $-$0.125 & $-$0.098 & $-$0.041 & $-$0.135 & $-$0.077 & $-$0.122 \\ 
+		& (0.007) & (0.006) & (0.008) & (0.006) & (0.008) & (0.009) & (0.008) & (0.010) \\ 
+		& $^{***}$ & $^{***}$ & $^{***}$ & $^{***}$ & $^{***}$ & $^{***}$ & $^{***}$ & $^{***}$ \\ 
+		Wochenende & $-$0.829 & $-$0.804 & $-$0.791 & $-$0.691 & $-$0.451 & $-$0.883 & $-$0.823 & $-$0.776 \\ 
+		& (0.007) & (0.006) & (0.008) & (0.007) & (0.008) & (0.009) & (0.008) & (0.010) \\ 
+		& $^{***}$ & $^{***}$ & $^{***}$ & $^{***}$ & $^{***}$ & $^{***}$ & $^{***}$ & $^{***}$ \\ 
+		Constant & 5.128 & 4.133 & 4.272 & 5.655 & 1.321 & 3.647 & 4.038 & 4.246 \\ 
+		& (0.006) & (0.004) & (0.006) & (0.005) & (0.006) & (0.006) & (0.006) & (0.007) \\ 
+		& $^{***}$ & $^{***}$ & $^{***}$ & $^{***}$ & $^{***}$ & $^{***}$ & $^{***}$ & $^{***}$ \\ 
+		Observations & 90,269 & 59,209 & 44,793 & 60,359 & 44,649 & 36,788 & 37,438 & 37,386 \\ 
+		R$^{2}$ & 0.151 & 0.265 & 0.203 & 0.196 & 0.082 & 0.265 & 0.243 & 0.158 \\ 
+		Adjusted R$^{2}$ & 0.151 & 0.265 & 0.202 & 0.196 & 0.082 & 0.265 & 0.243 & 0.158 \\  
+		\hline \\[-1.8ex] 
+		\textit{Notes:} & \multicolumn{8}{l}{$^{***}$Significant at the 1 percent level.} \\ 
+		& \multicolumn{8}{l}{$^{**}$Significant at the 5 percent level.} \\ 
+		& \multicolumn{8}{l}{$^{*}$Significant at the 10 percent level.} \\ 
+	\end{tabular} 
+\end{table} 
+
+
+
+\chapter{Eigene Forschungsfrage}
+
+
 Zunächst muss man Variablen finden, von denen man argumentieren kann, dass sie die unabhängige Variable den Fahrradverkehr in unserem Fall beieinflussen. Eine Auflistung dieser findet sich in der Übersicht \ref{Tabelle1}. Nehmen wir nicht nur diese Variablen auf, sondern auch die quadratischen oder kubischen Werte oder Intersektionen der verschiedenen Variablen, haben wir einen großen Pool an Variablen, die wir wählen können. Eine naheliegende Vorgehensweise ist es, verschiedene Modelle zu erstellen, die verschiedene Variablen beinhalten und diese zu validieren, um im Vergleich das beste Model für seine Vorhersagen zu nehmen. Natürlich könnte man auch mittels Stepwise Selection das Model erstellen, dies ist ein maschineller Prozesse, der das Model Durchgang für Durchgang mit den Schätzern füllt, die den größten Fit mit sich bringen, ist jedoch auch sehr rechen intensiv, vor allem bei einem Datensatz dieser Größe.\\
 
 Stattdessen erstellen wir manuell 30 verschiedene Modelle. Danach zerlegen wir den Datensatz zufällig in einen Trainings Datensatz und in einen Test Datensatz. Der Trainings Datensatz dient dazu, die abhängigen Variablen des Models zu berechnen. Mithilfe des Test Datensatzes versuchen wir die externe Validität des Models zu prüfen, also ob das Model auch zutreffende Aussagen auf Beobachtungswerte treffen kann, mit denen das Model nicht berechnet worden ist. Zur Validierung der 30 Modelle nutzen wir das angepasste Bestimmtheitsmaß $adj R^2$. Das Bestimmtheitsmaß beschreibt wie hoch der Anteil der Streuung der Beobachtungsdaten ist, der durch das Model erklärt werden kann. Je näher das Bestimmtheitsmaß an 1 ist, desto besser fittet das Model, bzw desto besser erklärt das Model die Realität. Um die Modelle zu vergleichen schauen wir das Bestimmtheitsmaß der Modelle im Traininsg und Test Datensatz. Dabei kommt die Graphik \ref{ModelSelektion} zustande.
@@ -436,8 +568,64 @@ Obwohl wir bei dem Model mit den Lageparametern ein kleineres Bestimmtheitsmaß 
 	\label{fig:meine-grafik5}
 \end{figure}
 
+\begin{table}[!htbp] \centering 
+	\caption{Freizeit und Berufsverkehr im Vergleich} 
+	\label{utilitarianvsFreizeit} 
+	\begin{tabular}{@{\extracolsep{-5pt}}lccccc} 
+		\\[-1.8ex]\hline 
+		\hline \\[-1.8ex] 
+		%\\[-1.8ex] & \multicolumn{8}{c}{log(Zaehlstand)}  \\ 
+		\\[-1.8ex] & Freizeit & & & Utilitarist. & \\ 
+		\hline \\[-1.8ex] 
+		
+		Leichter Nieselregen & -0.208830$^{***}$ & (0.025861) & $<$ & -0.063944$^{***}$ & (0.013529)\\ 
+		
+		Starker Nieselregen & -0.242996$^{***}$ & (0.044008) & $<$ & -0.071652$^{**}$ & (0.023158)\\ 
+		
+		Leichter Regen & -0.350410$^{***}$ & (0.051344) & $<$ & -0.125781$^{***}$ & (0.025659)\\ 
+		
+		Moderater Regen & -0.318279$^{***}$ & (0.070454) & $<$ & -0.120595$^{**}$ & (0.037419)\\ 
+		
+		Starker Regen & -0.269545$^{*}$ & (0.127235) & $<$ & -0.128016 & (0.073305)\\ 
+		
+		Heftiger Regen & -0.055661 & (0.205122) & $>$ & -0.106119 & (0.137777)\\ 
+		
+		Temperatur & 0.050447$^{***}$ & (0.002065) & $>$ & 0.011108$^{***}$ & (0.001199)\\ 
+		
+		Temperatur$^2$ & -0.000884$^{***}$ & (0.000061) & $<$ & -0.000151$^{***}$ & (0.000040)\\ 
+		
+		Wind & -0.034832$^{***}$ & (0.003017) & $<$ & -0.012150$^{***}$ & (0.001781)\\ 
+		
+		rel. Feuchte & -0.002215$^{***}$ & (0.000390) & $<$ & -0.000288 & (0.000243)\\ 
+		
+		Sonne & -0.000013 & (0.000284) & $>$ & -0.000184 & (0.000183)\\ 
+		
+		Bedeckung & -0.007426$^{***}$ & (0.001721) & $<$ & -0.002814$^{*}$ & (0.001122)\\ 
+		
+		FeiertagBW & -0.140294 & (0.111894) & $>$ & -0.207367$^{***}$ & (0.053588)\\ 
+		
+		FeiertagRP & -0.369612$^{**}$ & (0.115990) & $<$ & -0.085082 & (0.056197)\\ 
+		
+		SchulferienBW & -0.065830$^{***}$ & (0.010924) & $<$ & -0.065506$^{***}$ & (0.007072)\\ 
+		
+		SemesterferienUM & -0.068875$^{***}$ & (0.010248) & $<$ & -0.028236$^{***}$ & (0.006324)\\ 
+		
+		Sommer & 0.076692$^{***}$ & (0.014095) & $>$ & 0.029047$^{***}$ & (0.008655)\\ 
+		
+		Kontaktbeschr & -0.084528$^{***}$ & (0.014799) & $<$ & -0.036209$^{***}$ & (0.008175)\\ 
+		
+		Observations & 44,649 & & & 37,438 & \\ 
+		Adjusted psydo R$^{2}$ & 0.093052 & & & 0.041806 & \\  
+		\hline \\[-1.8ex] 
+		%\textit{Notes:} & \multicolumn{8}{l}{$^{***}$Significant at the 1 percent level.} \\ 
+		%& \multicolumn{8}{l}{$^{**}$Significant at the 5 percent level.} \\ 
+		%& \multicolumn{8}{l}{$^{*}$Significant at the 10 percent level.} \\ 
+	\end{tabular} 
+\end{table} 
+
 \newpage
 \addcontentsline{toc}{chapter}{Literaturverzeichnis}
 \bibliography{bib1}
 
 \end{document}
+

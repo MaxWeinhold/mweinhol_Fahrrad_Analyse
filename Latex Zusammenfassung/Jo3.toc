@@ -6,6 +6,9 @@
 \contentsline {section}{\numberline {3.2}DWD Daten}{7}{section.3.2}%
 \contentsline {chapter}{\numberline {4.}Deskriptive Analyse}{11}{chapter.4}%
 \contentsline {section}{\numberline {4.1}Regressionsanalyse}{11}{section.4.1}%
-\contentsline {chapter}{\numberline {5.}Fazit}{22}{chapter.5}%
-\contentsline {chapter}{\numberline {6.}Anhang}{23}{chapter.6}%
-\contentsline {chapter}{Literaturverzeichnis}{27}{figure.6.3}%
+\contentsline {section}{\numberline {4.2}negativ binomioale Regression}{15}{section.4.2}%
+\contentsline {section}{\numberline {4.3}Utilitaristischer und Freizeit Verkehr}{16}{section.4.3}%
+\contentsline {chapter}{\numberline {5.}Eigene Forschungsfrage}{18}{chapter.5}%
+\contentsline {chapter}{\numberline {6.}Fazit}{27}{chapter.6}%
+\contentsline {chapter}{\numberline {7.}Anhang}{28}{chapter.7}%
+\contentsline {chapter}{Literaturverzeichnis}{32}{table.7.1}%

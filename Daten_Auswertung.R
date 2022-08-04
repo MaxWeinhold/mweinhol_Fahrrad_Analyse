@@ -88,6 +88,130 @@ names(datensatz)
 
 	names(datensatz)
 
+#Niederschlag kategoresieren nach Wessel
+
+	# Wessel (2020)
+	datensatz$niederschlag_factor_wes <- NULL
+      datensatz$niederschlag_factor_wes <- "Kein Regen"
+      datensatz$niederschlag_factor_wes[datensatz$WertRR > 0 & datensatz$WertRR < 0.5] <- "Leichter Nieselregen"
+      datensatz$niederschlag_factor_wes[datensatz$WertRR >= 0.5 & datensatz$WertRR < 1] <- "Starker Nieselregen"
+      datensatz$niederschlag_factor_wes[datensatz$WertRR >= 1 & datensatz$WertRR < 2] <- "Leichter Regen"
+      datensatz$niederschlag_factor_wes[datensatz$WertRR >= 2 & datensatz$WertRR < 5] <- "Moderater Regen"
+      datensatz$niederschlag_factor_wes[datensatz$WertRR >= 5 & datensatz$WertRR < 10] <- "Starker Regen"
+      datensatz$niederschlag_factor_wes[datensatz$WertRR >= 10] <- "Heftiger Regen"
+	datensatz$niederschlag_factor_wes <- factor(datensatz$niederschlag_factor_wes, levels = c("Kein Regen", "Leichter Nieselregen", "Starker Nieselregen", "Leichter Regen", "Moderater Regen", "Starker Regen", "Heftiger Regen"))
+
+#Standardmodell
+
+	LinLog <- feols(log(Zaehlstand) ~ niederschlag_factor_wes + WertT2M + WertT2M2 +
+		WertF + WertRF + WertSD + WertN + FeiertagBW + FeiertagRP + SchulferienBW + 
+		SemesterferionUM + Sommer + Kontaktbeschr | Standort + Stunde + Wochentag + Jahr, data = datensatz)
+
+	summary(LinLog)
+	
+	#install.packages("modelsummary") 
+	library(modelsummary)
+
+	modelsummary(LinLog, output = "table1.tex")
+
+
+#Negativ-binomiales Regressionsmodell 
+
+	regression_negbin= femlm(Zaehlstand ~ niederschlag_factor_wes + WertT2M + WertT2M2 +
+		WertF + WertRF + WertSD + WertN + FeiertagBW + FeiertagRP + SchulferienBW + 
+		SemesterferionUM + Sommer + Kontaktbeschr | Standort + Stunde + Wochentag + Jahr, data = datensatz,
+		family = "negbin")
+
+	summary(regression_negbin)
+
+	modelsummary(regression_negbin, output = "table2.tex")
+
+#Utilitaristische Verkehre vs. Freizeitverkehre
+
+	names(datensatz)
+
+	levels(as.factor(datensatz$Standort))
+
+	#Subsets nach Stationen bilden
+
+	ds_Renzstrasse = datensatz %>%
+		filter(Standort == "Renzstraße")
+	ds_Jungbuschbr = datensatz %>%
+		filter(Standort == "Jungbuschbrücke")
+	ds_KAdenauerbr = datensatz %>%
+		filter(Standort == "Konrad-Adenauer-Brücke (Süd)")
+	ds_Kurpfalzbru = datensatz %>%
+		filter(Standort == "Kurpfalzbrücke gesamt")
+	ds_KSchuhmache = datensatz %>%
+		filter(Standort == "Kurt-Schumacher-Brücke Süd (Hafenstr.)")
+	ds_Lindenhofbr = datensatz %>%
+		filter(Standort == "Lindenhofüberführung")
+	ds_NeckarauerU = datensatz %>%
+		filter(Standort == "Neckarauer Übergang -Schwetzinger Str.")
+	ds_Schlosspark = datensatz %>%
+		filter(Standort == "Schlosspark Lindenhof (Richtung Jugendherberge)")
+
+	#Rgressionssysteme bilden und vergleichen
+
+	reg_Renzstrasse = lm(log(Zaehlstand) ~ FeiertagBW + FeiertagRP + SchulferienBW + 
+		SemesterferionUM + Wochenende, data = ds_Renzstrasse)	
+	summary(reg_Renzstrasse)
+
+	reg_Jungbuschbr = lm(log(Zaehlstand) ~ FeiertagBW + FeiertagRP + SchulferienBW + 
+		SemesterferionUM + Wochenende, data = ds_Jungbuschbr)	
+	summary(reg_Jungbuschbr)
+
+	reg_KAdenauerbr = lm(log(Zaehlstand) ~ FeiertagBW + FeiertagRP + SchulferienBW + 
+		SemesterferionUM + Wochenende, data = ds_KAdenauerbr)	
+	summary(reg_KAdenauerbr)
+
+	reg_Kurpfalzbru = lm(log(Zaehlstand) ~ FeiertagBW + FeiertagRP + SchulferienBW + 
+		SemesterferionUM + Wochenende, data = ds_Kurpfalzbru)	
+	summary(reg_Kurpfalzbru)
+
+	reg_KSchuhmache = lm(log(Zaehlstand) ~ FeiertagBW + FeiertagRP + SchulferienBW + 
+		SemesterferionUM + Wochenende, data = ds_KSchuhmache)	
+	summary(reg_KSchuhmache)
+
+	reg_Lindenhofbr = lm(log(Zaehlstand) ~ FeiertagBW + FeiertagRP + SchulferienBW + 
+		SemesterferionUM + Wochenende, data = ds_Lindenhofbr)	
+	summary(reg_Lindenhofbr)
+
+	reg_NeckarauerU = lm(log(Zaehlstand) ~ FeiertagBW + FeiertagRP + SchulferienBW + 
+		SemesterferionUM + Wochenende, data = ds_NeckarauerU)	
+	summary(reg_NeckarauerU)
+
+	reg_Schlosspark = lm(log(Zaehlstand) ~ FeiertagBW + FeiertagRP + SchulferienBW + 
+		SemesterferionUM + Wochenende, data = ds_Schlosspark)	
+	summary(reg_Schlosspark)
+
+	library(stargazer)
+	stargazer(reg_Renzstrasse, reg_Jungbuschbr, reg_KAdenauerbr, reg_Kurpfalzbru, reg_KSchuhmache,
+		reg_Lindenhofbr, reg_NeckarauerU, reg_Schlosspark, type = "latex", style = "aer", 
+		column.separate = 100)
+
+	#Vergleiche das Wetter eines Utilitaristischen Verkehrs mit einem Freizeitmodell.
+
+	#Kurt Schuhmacher Br�cke l�sst sich noch am ehesten in den Freizeitverkehr einordnen, mit den kleinsten negativen Effekten.
+
+	Freizeit <- femlm(log(Zaehlstand) ~ niederschlag_factor_wes + WertT2M + WertT2M2 +
+		WertF + WertRF + WertSD + WertN + FeiertagBW + FeiertagRP + SchulferienBW + 
+		SemesterferionUM + Sommer + Kontaktbeschr | Standort + Stunde + Wochentag + Jahr, data = ds_KSchuhmache)
+
+	summary(Freizeit)
+
+	#Neckarauer hat die gr��ten negativ. Gutes Beispiel f�r utilitaristischen Verkehr
+
+	Utilitarian <- femlm(log(Zaehlstand) ~ niederschlag_factor_wes + WertT2M + WertT2M2 +
+		WertF + WertRF + WertSD + WertN + FeiertagBW + FeiertagRP + SchulferienBW + 
+		SemesterferionUM + Sommer + Kontaktbeschr | Standort + Stunde + Wochentag + Jahr, data = ds_NeckarauerU)
+
+	summary(Utilitarian)
+
+
+
+
+
 #Feature Selection via Validation
 
 	# Split the data into training and test set
@@ -446,12 +570,12 @@ names(datensatz)
 	#install.packages("fixest")
 	library(fixest)
 
-	Lin <- feols(Zaehlstand ~ WertT2M + WertT2M2 + WertT2M3 + WertRR + WertRR2 + WertRR3 + 
+	Lin <- feols(log(Zaehlstand) ~ WertT2M + WertT2M2 + WertT2M3 + WertRR + WertRR2 + WertRR3 + 
 		WertF + WertF2 + WertF3 + WertRF + WertRF2 + WertRF3 + WertSD + WertSD2 + WertSD3 + 
 		WertN + WertN2 + WertN3 + FeiertagBW + FeiertagRP + SchulferienBW + SemesterferionUM + Sommer + 
 		breitengrad + FeiertagBWRP + laengenbreitengrad +
 		as.numeric(Jahr3) + 
-		uniMA_dist + Stunde + Wochentag, data = train.data)
+		uniMA_dist | Stunde + Wochentag, data = train.data)
 
 	summary(Lin)
 
@@ -464,7 +588,7 @@ names(datensatz)
 		WertN + WertN2 + WertN3 + FeiertagBW + FeiertagRP + SchulferienBW + SemesterferionUM + Sommer + 
 		breitengrad + FeiertagBWRP + laengenbreitengrad +
 		as.numeric(Jahr3) + 
-		uniMA_dist + Stunde + Wochentag, data = train.data, family = "negbin")
+		uniMA_dist | Stunde + Wochentag, data = train.data, family = "negbin")
 
 	summary(regression_negbin)
 	

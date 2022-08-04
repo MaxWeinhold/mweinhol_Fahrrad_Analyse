@@ -1,5 +1,16 @@
 \begin{thebibliography}{}
 
+\bibitem[Hausman et~al., 1984]{Hausman1984}
+Hausman, J., Hall, B.~H., and Griliches, Z. (1984).
+\newblock Econometric models for count data with an application to the
+  patents-r and d relationship.
+\newblock {\em Econometrica}, 52(4):909--938.
+
+\bibitem[Hlavac, 2022]{Hlavac2022}
+Hlavac, M. (2022).
+\newblock stargazer: Well-formatted regression and summary statistics tables.
+\newblock {\em R package version 5.2.3.}
+
 \bibitem[Hong~J, 2022]{Hong2022}
 Hong~J, McArthur~DP, S. J. K.~C. (2022).
 \newblock Did air pollution continue to affect bike share usage in seoul during
@@ -21,6 +32,7 @@ Nobis, C. (2019).
 Prati, G., Pietrantoni, L., and Fraboni, F. (2017).
 \newblock Using data mining techniques to predict the severity of bicycle
   crashes.
+\newblock {\em Accident Analysis & Prevention}, 101:44--54.
 
 \bibitem[Wessel, 2020]{Wessel2020}
 Wessel, J. (2020).
