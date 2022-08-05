@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (MiKTeX 22.3) (preloaded format=pdflatex 2022.6.8)  4 AUG 2022 19:02
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (MiKTeX 22.3) (preloaded format=pdflatex 2022.6.8)  5 AUG 2022 12:31
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -922,6 +922,9 @@ Package uniquecounter Info: New unique counter `rerunfilecheck' on input line 2
 )
 (Jo3.aux
 
+LaTeX Warning: Label `utilitarianvsFreizeit' multiply defined.
+
+
 LaTeX Warning: Label `fig:meine-grafik5' multiply defined.
 
 
@@ -1158,10 +1161,15 @@ File: Plots/Taegliche_Temperatur_Niederschläge.png Graphic file (type png)
 Package pdftex.def Info: Plots/Taegliche_Temperatur_Niederschläge.png  used on
  input line 564.
 (pdftex.def)             Requested size: 390.0pt x 257.3279pt.
+
+Overfull \hbox (14.71678pt too wide) in paragraph at lines 635--692
+ [][] 
+ []
+
 [28
 
-] (Jo3.bbl [29 <./Plots/Corr_Plot.pdf>] [30 <./Plots/Monatliche_Temperatur_Nied
-erschläge.png>] [31 <./Plots/Taegliche_Temperatur_Niederschläge.png>]
+] [29] [30 <./Plots/Corr_Plot.pdf>] (Jo3.bbl [31 <./Plots/Monatliche_Temperatur
+_Niederschläge.png>] [32 <./Plots/Taegliche_Temperatur_Niederschläge.png>]
 ! Misplaced alignment tab character &.
 l.35 \newblock {\em Accident Analysis &
                                         Prevention}, 101:44--54.
@@ -1172,19 +1180,19 @@ up above has ended a previous alignment prematurely,
 you're probably due for more error messages, and you
 might try typing `S' now just to see what is salvageable.
 
-) [32
+) [33
 
 ] (Jo3.aux)
 
 LaTeX Warning: There were multiply-defined labels.
 
 Package rerunfilecheck Info: File `Jo3.out' has not changed.
-(rerunfilecheck)             Checksum: 11EFA9BDC3FCE2F8E5C129ED7E92BFBF;1829.
+(rerunfilecheck)             Checksum: CE804E450CC4B8FF0F0B994A50966F7C;1829.
  ) 
 Here is how much of TeX's memory you used:
- 26096 strings out of 478582
- 482258 string characters out of 2854160
- 786020 words of memory out of 3000000
+ 26098 strings out of 478582
+ 482274 string characters out of 2854160
+ 786042 words of memory out of 3000000
  43719 multiletter control sequences out of 15000+600000
  484394 words of font info for 65 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
@@ -1204,9 +1212,9 @@ We\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecrm1440.pk> <C:\Use
 rs\MaxWe\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecrm2074.pk><C
 :/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi12.pfb><C:/Program Fi
 les/MiKTeX/fonts/type1/public/amsfonts/cm/cmr8.pfb>
-Output written on Jo3.pdf (32 pages, 1059308 bytes).
+Output written on Jo3.pdf (33 pages, 1063767 bytes).
 PDF statistics:
- 748 PDF objects out of 1000 (max. 8388607)
- 68 named destinations out of 1000 (max. 500000)
+ 757 PDF objects out of 1000 (max. 8388607)
+ 70 named destinations out of 1000 (max. 500000)
  157 words of extra memory for PDF output out of 10000 (max. 10000000)
 

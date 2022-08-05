@@ -617,11 +617,83 @@ Obwohl wir bei dem Model mit den Lageparametern ein kleineres Bestimmtheitsmaß 
 		Observations & 44,649 & & & 37,438 & \\ 
 		Adjusted psydo R$^{2}$ & 0.093052 & & & 0.041806 & \\  
 		\hline \\[-1.8ex] 
-		%\textit{Notes:} & \multicolumn{8}{l}{$^{***}$Significant at the 1 percent level.} \\ 
-		%& \multicolumn{8}{l}{$^{**}$Significant at the 5 percent level.} \\ 
-		%& \multicolumn{8}{l}{$^{*}$Significant at the 10 percent level.} \\ 
+		\textit{Fixed Effects:} & \multicolumn{5}{l}{Standort: 8;Stunde: 18;Wochentag: 7;Jahr: 9} \\ 
+		\textit{Notes:} & \multicolumn{5}{l}{$^{***}$Significant at the 1 percent level.} \\ 
+		& \multicolumn{5}{l}{$^{**}$Significant at the 5 percent level.} \\ 
+		& \multicolumn{5}{l}{$^{*}$Significant at the 10 percent level.} \\ 
 	\end{tabular} 
 \end{table} 
+
+
+
+
+
+
+\begin{table}[!htbp] \centering 
+	\caption{Wetterdaten als täglichen Niederschlag und Höchsttemperatur} 
+	\label{utilitarianvsFreizeit} 
+	\begin{tabular}{@{\extracolsep{-5pt}}lccccc} 
+		\\[-1.8ex]\hline 
+		\hline \\[-1.8ex] 
+		%\\[-1.8ex] & \multicolumn{8}{c}{log(Zaehlstand)}  \\ 
+		\\[-1.8ex] & Standardmodell & & & taeglWetter & \\ 
+		\hline \\[-1.8ex] 
+		
+		Leichter Nieselregen & -0.183609$^{***}$ & (0.015146) &  &  & \\ 
+		
+		Starker Nieselregen & -0.248702$^{***}$ & (0.012068) &  &  & \\ 
+		
+		Leichter Regen & -0.331162$^{***}$ & (0.020894) &  &  & \\ 
+		
+		Moderater Regen & -0.353010$^{***}$ & (0.018780) &  &  & \\ 
+		
+		Starker Regen & -0.373162$^{***}$ & (0.043303) &  &  & \\ 
+		
+		Heftiger Regen & -0.208576$^{**}$ & (0.051431) &  &  & \\ 
+		
+		Täglicher Regen &  &  &  & -0.001410$^{***}$ & (0.000094)\\ 
+		
+		Temperatur & 0.036044$^{***}$ & (0.004718) & & \\ 
+		
+		Temperatur$^2$ & -0.000482$^{***}$ & (0.000052) &  &  & \\ 
+		
+		TagesHöcshttemp & &  &  & 0.034072$^{***}$ & (0.005517)\\ 
+		
+		TagesHöcshttemp$^2$ &  &  &  & -0.000353$^{**}$ & (0.000081)\\ 
+		
+		Wind & -0.040923$^{***}$ & (0.002549) & $<$ & -0.035015$^{***}$ & (0.002136)\\ 
+		
+		rel. Feuchte & -0.003787$^{**}$ & (0.001078) & $>$ & -0.004337$^{**}$ & (0.000948)\\ 
+		
+		Sonne & -0.000118 & (0.000086) & $>$ & 0.000179 & (0.000115)\\ 
+		
+		Bedeckung & -0.008657$^{***}$ & (0.001074) & $<$ & -0.000208 & (0.000694)\\ 
+		
+		FeiertagBW & -0.459770$^{***}$ & (0.080732) & $<$ & -0.444115$^{**}$ & (0.085660)\\ 
+		
+		FeiertagRP & -0.414345$^{***}$ & (0.059184) & $>$ & -0.427126$^{***}$ & (0.065291)\\ 
+		
+		SchulferienBW & -0.138772$^{***}$ & (0.020264) & $<$ & -0.138865$^{***}$ & (0.020478)\\ 
+		
+		SemesterferienUM & -0.159223$^{**}$ & (0.030637) & $<$ & -0.150810$^{**}$ & (0.036192)\\ 
+		
+		Sommer & 0.082386$^{**}$ & (0.020602) & $>$ & 0.072395$^{*}$ & (0.022105)\\ 
+		
+		Kontaktbeschr & -0.133188$^{**}$ & (0.026552) & $>$ & -0.139072$^{**}$ & (0.026333)\\ 
+		
+		Observations & 410,891 & & & 410,891 & \\ 
+		Adjusted R$^{2}$ & 0.817542 & & & 0.817554 & \\  
+		\hline \\[-1.8ex] 
+		\textit{Fixed Effects:} & \multicolumn{5}{l}{Standort: 8;Stunde: 18;Wochentag: 7;Jahr: 9} \\ 
+		\textit{Notes:} & \multicolumn{5}{l}{$^{***}$Significant at the 1 percent level.} \\ 
+		& \multicolumn{5}{l}{$^{**}$Significant at the 5 percent level.} \\ 
+		& \multicolumn{5}{l}{$^{*}$Significant at the 10 percent level.} \\ 
+	\end{tabular} 
+\end{table} 
+
+Zwar steigt das Bestimmtheitsmaß und die Übersichtlichkeit des Modells nimmt zu, da die Anzahl der Koeffizienten abnimmt, allerdings verwirrt es mich, dass Feiertage in Badenwürttemberg eine niedrigere Signifikanz haben sollen, als in Rheinlandpfalz. Auch dass die Sommer Variable an Signifikanz weiter verliert, macht mich eher skeptisch.
+
+
 
 \newpage
 \addcontentsline{toc}{chapter}{Literaturverzeichnis}

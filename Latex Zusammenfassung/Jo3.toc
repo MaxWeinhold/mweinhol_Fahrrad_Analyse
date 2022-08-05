@@ -11,4 +11,4 @@
 \contentsline {chapter}{\numberline {5.}Eigene Forschungsfrage}{18}{chapter.5}%
 \contentsline {chapter}{\numberline {6.}Fazit}{27}{chapter.6}%
 \contentsline {chapter}{\numberline {7.}Anhang}{28}{chapter.7}%
-\contentsline {chapter}{Literaturverzeichnis}{32}{table.7.1}%
+\contentsline {chapter}{Literaturverzeichnis}{33}{table.7.2}%

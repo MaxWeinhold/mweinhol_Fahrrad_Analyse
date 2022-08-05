@@ -208,9 +208,97 @@ names(datensatz)
 
 	summary(Utilitarian)
 
+#Tageshoechsttemperatur und taeglicher Niederschlag Regression
+
+	names(datensatz)
+	
+	#Tageshoechsttemperatur
+
+	tageshoechsttemp=NULL
+	
+	tageshoechsttemp = datensatz %>%
+		group_by(Datum) %>%
+			slice(which.max(WertT2M))
 
 
+	plot(tageshoechsttemp$WertT2M)
 
+	tageshoechsttemp <- tageshoechsttemp %>%
+     		dplyr::select(Datum, WertT2M)
+
+	names(tageshoechsttemp)[2]="tageshoechst_temp"
+
+	datensatz = merge(x = datensatz,y = tageshoechsttemp,
+		by = c("Datum"),
+		all = TRUE)
+
+	plot(datensatz$tageshoechst_temp)
+
+	#taeglicher Niederschlag
+
+	taglNiederschlag = NULL
+
+	taglNiederschlag = datensatz %>%
+		group_by(Datum) %>%
+			summarise(taeglRegen = sum(WertRR))
+
+	plot(taglNiederschlag$taeglRegen)
+
+	taglNiederschlag <- taglNiederschlag %>%
+     		dplyr::select(Datum, taeglRegen)
+
+	datensatz = merge(x = datensatz,y = taglNiederschlag,
+		by = c("Datum"),
+		all = TRUE)
+
+	#Regression bilden
+
+	WetterReg <- feols(log(Zaehlstand) ~ taeglRegen + tageshoechst_temp + tageshoechst_temp^2 +
+		WertF + WertRF + WertSD + WertN + FeiertagBW + FeiertagRP + SchulferienBW + 
+		SemesterferionUM + Sommer + Kontaktbeschr | Standort + Stunde + Wochentag + Jahr, data = datensatz)
+
+	summary(WetterReg)
+
+#Vorhersagen
+
+	datensatz$WertSD[1:100]
+	mean(datensatz$WertSD)
+
+	ds_Test=datensatz[1:3,]
+	names(ds_Test)
+	
+	ds_Test$WertT2M=c(28,4,12)#Temperatur
+	ds_Test$WertRR=c(0,3,3)#Niederschlag
+	ds_Test$WertN=c(1,2,8)#Bedeckungsgrad
+	ds_Test$WertF=c(1,3,4)#Windgeschwindigkeit
+	ds_Test$WertRF=c(75,85,71)#Luftfeuchtigkeit
+	ds_Test$WertSD=mean(datensatz$WertSD)
+	ds_Test$FeiertagBW=c(0,1,0)#FeiertagBW
+	ds_Test$FeiertagRP=c(0,1,0)#FeiertagRP
+	ds_Test$SchulferienBW=c(0,1,0)#Schulferien
+	ds_Test$SemesterferionUM=c(1,0,0)#Semesterferien
+	ds_Test$Stunde=c("16","11","15")#Uhrzeit
+	ds_Test$Tag=c("So","Fr","Mi")#Wochentag
+	ds_Test$Monat=c("08","11","06")#Monat
+	ds_Test$Jahr=c("2018","2018","2018")#Jahr
+	ds_Test$Sommer=c("1","0","1")
+	ds_Test$Standort=c("Renzstraße","Renzstraße","Renzstraße")
+	ds_Test = ds_Test %>%
+		mutate(Wochenende = ifelse(Wochenende == "Wochenende",1,0))
+	ds_Test$WertT2M2 = ds_Test$WertT2M^2
+	# Wessel (2020)
+      ds_Test$niederschlag_factor_wes <- "Kein Regen"
+      ds_Test$niederschlag_factor_wes[ds_Test$WertRR > 0 & ds_Test$WertRR < 0.5] <- "Leichter Nieselregen"
+      ds_Test$niederschlag_factor_wes[ds_Test$WertRR >= 0.5 & ds_Test$WertRR < 1] <- "Starker Nieselregen"
+      ds_Test$niederschlag_factor_wes[ds_Test$WertRR >= 1 & ds_Test$WertRR < 2] <- "Leichter Regen"
+      ds_Test$niederschlag_factor_wes[ds_Test$WertRR >= 2 & ds_Test$WertRR < 5] <- "Moderater Regen"
+      ds_Test$niederschlag_factor_wes[ds_Test$WertRR >= 5 & ds_Test$WertRR < 10] <- "Starker Regen"
+      ds_Test$niederschlag_factor_wes[ds_Test$WertRR >= 10] <- "Heftiger Regen"
+	ds_Test$niederschlag_factor_wes <- factor(ds_Test$niederschlag_factor_wes, levels = c("Kein Regen", "Leichter Nieselregen", "Starker Nieselregen", "Leichter Regen", "Moderater Regen", "Starker Regen", "Heftiger Regen"))
+
+	mean(datensatz$Zaehlstand)
+	
+	exp(predict(LinLog,newdata = ds_Test))
 
 #Feature Selection via Validation
 
