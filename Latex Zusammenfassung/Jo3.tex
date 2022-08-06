@@ -421,6 +421,9 @@ Das Standardmodell kann man nun dazu verwenden, Vorhersagen zu machen. Für drei
 
 Im vorrangegangen Kapitell haben wir verschiedene Regressions Modelle vorgestellt zur Erklärung des Fahrradaufkommens an den Fahrradzählstationen in Mannheim. Nun kann man die Vorhersage Qualität dieser Modelle am Bestimmtheitsmaß messen. Das Bestimmtheitsmaß beschreibt wie hoch der Anteil der Streuung der Beobachtungsdaten ist, der durch das Model erklärt werden kann. Je näher das Bestimmtheitsmaß an 1 ist, desto besser fittet das Model, bzw desto besser erklärt das Model die Realität. Jedoch ermittelt man damit nur die interne Validität, als das Maß dafür, wie gut das Model die Daten beschreibt, die man schon kennt und mit denen man das Modell berechnet hat. Was ist aber, wenn man ein Modell entwickeln möchte, dass nicht nur Vorhersagen machen soll, für bereits bekannte Variablen, sondern auch für Variablen, die in der Zukunft liegen, oder vielleicht außerhalb des Rahmens der bereits bekannten Fahrradstationen?\\
 Teilen wir diese Fragen auf. Zunächst wollen wir es schaffen zeitliche Prognosen für die Zukunft an den Zählstationen selbst zu machen. Im nächsten Schritt wollen wir übergreifende Vorhersagen machen, die nicht nur an den Zählstationen selbst gemacht werden, sondern andern beliebigen Standorten.\\
+
+\section{Model Selektion}
+
 Allgemein müssen wir unseren Datensatz aufteilen, in einen Trainings und Test Datensatz. Dies birgt den Vorteil, dass wir nicht nur die interne sondern auch die externe Validität messen können, in dem wir das Model nur mit dem Trainingsdatensaz berechnen und mit dem Test Datensatz ein zusätzliches Bestimmtheitsmaß des Models berechnen. Als Bestimmtheitsmaß nutzen wir den justiereten $R^2$ Wert. Die Trainings und Test Set werden zufällig aus dem bestehenden Datensatz gezogen bei einem Split von 80 zu 20 aufgeteilt, sodass das Test Set 20 \% des ursprünglichen Datensatzes umfasst.\\
 Eine naheliegende Vorgehensweise wäre es, verschiedene Modelle zu erstellen, die verschiedene Variablen beinhalten und diese zu validieren, um im Vergleich das beste Model für seine Vorhersagen zu nehmen. Natürlich könnte man auch mittels Stepwise Selection das Model erstellen. Dies ist ein maschineller Prozesse, der das Model Durchgang für Durchgang mit den Koeffizienten füllt, die die größte Validität mit sich bringen, ist jedoch auch sehr rechen intensiv, vor allem bei einem Datensatz dieser Größe. Stattdessen erstellen wir manuell 30 verschiedene Modelle. Wir fügen dabei der Reihe weise nach neue Variablen zu jedem Modell dazu. Es beginnt mit den Wettervariablen. Dann tauschen wir für den reinen Niederschlag die kategorisierung des Niederschlags aus. Danach fügen wir die restlichen Variablen hinzu, wobei das Jahr nicht mehr faktorisiert wird, weil wir ja auch den Effekt für zukünftige Jahre berechnen wollen. Auch verwenden wir zunächst den Standort nicht sondern Lageparameter stattdessen. Dann fügen wir quadratische und kubische Effekte hinzu und zum Schluss berechnen wir drei Modelle mit dem faktorierten Standort, als Lageparameter. Um die Modelle zu vergleichen schauen wir das Bestimmtheitsmaß der Modelle im Traininsg und Test Datensatz. Dabei kommt die Graphik \ref{ModelSelektion} zustande.
 
@@ -528,9 +531,6 @@ Was löst in unserem Fall das Overfitting aus? Dazu vergleichen wir den Regressi
 	\end{longtable}
 
 
-
-
-
 Beide Modelle unterscheiden sich im wesentlichen in der Wahl der Fixed Effects. Fixed Effects sind all jene Schätzer, die über die Zeit nicht variieren, also fix sind und nur zwischen den Entitäten variieren. In diesem konkreten Fall heißt das, ein Fixed Effect ist eine Variable die zeitlich konstant bleibt, sich aber zwischen den Fahrradzählstationen unterscheidet. Das dient dazu, die Unterschiede zwischen diesen Stationen zu messen und im Model mit aufzunehmen. Denn wenn wir uns die Graphik \ref{BoxplotStationen} anschauen, sehen wir, dass die Stationen untereinander recht stark variieren. Z.B. sehen wir, dass auf der Kurpfalzbrücke, die von der Innenstadt über den Neckar führt, grundsätzlich mehr Radverkehr herrscht. Nehmen wir jetzt z.B. eine Dummy Variable in das Model auf, die 1 ist, wenn ein Beobachtungswert von der Kurpfalzbrücke stammte und 0 ist, wenn der Beobachtungswert von einer anderen Station stammte, dann erklärt diese Variable den Unterschied zwischen der Kurpfalzbrücke und den anderen Stationen im Model, ohne den Ursächlichen Grund dafür zu kennen, erhöht aber den Fit des Models, denn nun können die anderen Variablen ihren Einfluss präziser schätzen.\\ 
 
 Eine solche Dummy Variable können wir für 7 von 8 Stationen in das Model aufnehmen. Bei der achten reicht es, wenn alle anderen Dummy Variablen 0 sind. Andernfalls bekämen wir ein multikollineares Model, also ein Model in dem mindestens zwei Variablen linear abhängig von einander sind. Genau auf diese Weise sind wir im zweiten Model vorgegangen. Dieses beinhaltet eine Dummy Variable Kurpfalzbrücke, Lindenhofüberführung, Neckarauer Übergang, Renzstraße und Schloßpark/Lindenhof. Die übrige Station an der Kurt Schuhmacher Brücke ergibt sich, wie bereits erklärt, wenn alle anderen 7 Dummy Variabeln 0 sind. Diese Vorgehensweise fürht zu einem Bestimmtheitsmaß von 81,44 \%, was sich gut anhört, wie aber bereits gezeigt, größtenteils auf Overfitting zurückzuführen ist.\\
@@ -538,6 +538,18 @@ Eine solche Dummy Variable können wir für 7 von 8 Stationen in das Model aufne
 Möglicherweise hängt dies damit zu zusammen, dass die Stations Dummy Variabeln zwar Unterschiede erkennen, aber keinen ursächlichen Grund dafür finden. Wenn man aber Lageparameter als Fixed Effekt nutzt hätte man einen möglichen ursächlichen Grund für den Unterschied, die Lage. Da Lageparameter zeitlich auch konstant sind, lassen sich diese ebenfalls sehr gut als Fixed Effect nutzen. Im ersten Model nutzen wir dazu den Längengrad, sowie den quadrierten Längengrad, den Breitengrad, Längen und Breitengrad miteinander multipliziert (Intersektion) und den Abstand zur Universität Mannheim in uniMA dist. Auf den quadrierten Wert des Breitengrades verzichten wir, weil dies wiederum zu Multikollinearität führen würde und im Regressionsoutput ein Fehler auftauchen würde, wie sich zeigte. Auch führt eine Kombination aus Lageparametern und Standort Dummy Variabeln zu Fehlern im Regressionsoutput, weswegen wir beide Fixed Effects getrennt von einander nutzen.\\
 
 Obwohl wir bei dem Model mit den Lageparametern ein kleineres Bestimmtheitsmaß von nur 66,8 \% erhalten, entscheiden wir uns gegen das Model mit Standort Dummy Variabeln, wegen einer höheren externen Validität gemessen im Test Datensatz.
+
+\section{Fahrrad Topographie}
+
+\begin{figure}[!ht]
+	\centering
+	\includegraphics[width=\textwidth]{Plots/HeatmapFinal1.pdf}
+	\captionsource{}{
+		Fahrrad Topographie Mannheims an einem vergangenen Tag
+	}
+	\label{fig:meine-grafik5}
+\end{figure}
+
 
 \chapter{Fazit}
 

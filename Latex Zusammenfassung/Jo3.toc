@@ -9,6 +9,8 @@
 \contentsline {section}{\numberline {4.2}negativ binomiale Regression}{16}{section.4.2}%
 \contentsline {section}{\numberline {4.3}Utilitaristischer und Freizeit Verkehr}{17}{section.4.3}%
 \contentsline {chapter}{\numberline {5.}Eigene Forschungsfrage}{20}{chapter.5}%
-\contentsline {chapter}{\numberline {6.}Fazit}{27}{chapter.6}%
-\contentsline {chapter}{\numberline {7.}Anhang}{28}{chapter.7}%
-\contentsline {chapter}{Literaturverzeichnis}{33}{table.7.2}%
+\contentsline {section}{\numberline {5.1}Model Selektion}{20}{section.5.1}%
+\contentsline {section}{\numberline {5.2}Fahrrad Topographie}{27}{section.5.2}%
+\contentsline {chapter}{\numberline {6.}Fazit}{28}{chapter.6}%
+\contentsline {chapter}{\numberline {7.}Anhang}{29}{chapter.7}%
+\contentsline {chapter}{Literaturverzeichnis}{34}{table.7.2}%
