@@ -311,6 +311,8 @@ names(datensatz)
 
 #Erstelle verschiedene Modelle, die du gegeneinander testest
 
+	names(datensatz)
+
 	model1 <- lm(log(Zaehlstand) ~ WertT2M, data = train.data)
 
 	model2 <- lm(log(Zaehlstand) ~ WertT2M + WertRR, data = train.data)
@@ -319,136 +321,141 @@ names(datensatz)
 
 	model4 <- lm(log(Zaehlstand) ~ WertT2M + WertRR + WertF + WertRF, data = train.data)
 
-	model5 <- lm(log(Zaehlstand) ~ WertT2M + WertRR + WertF + WertRF + WertSD, data = train.data)
+	model5 <- lm(log(Zaehlstand) ~ WertT2M + WertRR + WertF + WertRF + WertN , data = train.data)
 
-	model6 <- lm(log(Zaehlstand) ~ WertT2M + WertRR + WertF + WertRF + WertSD + WertN , data = train.data)
+	model5 <- lm(log(Zaehlstand) ~ WertT2M + niederschlag_factor_wes + WertF + WertRF + WertN , data = train.data)
 
-	model7 <- lm(log(Zaehlstand) ~ WertT2M + WertRR + WertF + WertRF + WertSD + WertN + FeiertagBW + SemesterferionUM, data = train.data)
+	model6 <- lm(log(Zaehlstand) ~ WertT2M + niederschlag_factor_wes + WertF + WertRF + WertN 
+		+ SemesterferionUM, data = train.data)
 
-	model8 <- lm(log(Zaehlstand) ~ WertT2M + WertRR + WertF + WertRF + WertSD + WertN + FeiertagBW + SemesterferionUM + 
-	SchulferienBW, data = train.data)
+	model7 <- lm(log(Zaehlstand) ~ WertT2M + niederschlag_factor_wes + WertF + WertRF + WertN 
+		+ SemesterferionUM + SchulferienBW, data = train.data)
 
-	model9 <- lm(log(Zaehlstand) ~ WertT2M + WertRR + WertF + WertRF + WertSD + WertN + FeiertagBW + SemesterferionUM + 
-		SchulferienBW + Sommer, data = train.data)
+	model8 <- lm(log(Zaehlstand) ~ WertT2M + niederschlag_factor_wes + WertF + WertRF + WertN 
+		+ SemesterferionUM + SchulferienBW + FeiertagBW , data = train.data)
 
-	model10 <- lm(log(Zaehlstand) ~ WertT2M + WertRR + WertF + WertRF + WertSD + WertN + FeiertagBW + SemesterferionUM + 
-		SchulferienBW + Sommer + as.numeric(Jahr), data = train.data)
+	model9 <- lm(log(Zaehlstand) ~ WertT2M + niederschlag_factor_wes + WertF + WertRF + WertN 
+		+ SemesterferionUM + SchulferienBW + FeiertagBW + FeiertagRP, data = train.data)
 
-	model11 <- lm(log(Zaehlstand) ~ WertT2M + WertRR + WertF + WertRF + WertSD + WertN + FeiertagBW + SemesterferionUM + 
-		SchulferienBW + Sommer + as.numeric(Jahr) + Stunde, data = train.data)
+	model10 <- lm(log(Zaehlstand) ~ WertT2M + niederschlag_factor_wes + WertF + WertRF + WertN 
+		+ SemesterferionUM + SchulferienBW + FeiertagBW + FeiertagRP + Sommer, data = train.data)
 
-	model12 <- lm(log(Zaehlstand) ~ WertT2M + WertRR + WertF + WertRF + WertSD + WertN + FeiertagBW + SemesterferionUM + 
-		SchulferienBW + Sommer + as.numeric(Jahr) + Stunde + Wochentag, data = train.data)
+	model11 <- lm(log(Zaehlstand) ~ WertT2M + niederschlag_factor_wes + WertF + WertRF + WertN 
+		+ SemesterferionUM + SchulferienBW + FeiertagBW + FeiertagRP + Sommer
+		+ as.numeric(Jahr), data = train.data)
 
-	model13 <- lm(log(Zaehlstand) ~ WertT2M + WertRR + WertF + WertRF + WertSD + WertN +
-		FeiertagBW + SchulferienBW + SemesterferionUM + Sommer + 
-		as.numeric(Jahr) + uniMA_dist + Stunde + Wochentag, data = train.data)
+	model12 <- lm(log(Zaehlstand) ~ WertT2M + niederschlag_factor_wes + WertF + WertRF + WertN 
+		+ SemesterferionUM + SchulferienBW + FeiertagBW + FeiertagRP + Sommer
+		+ as.numeric(Jahr) + Stunde, data = train.data)
 
-	model14 <- lm(log(Zaehlstand) ~ WertT2M + WertRR + WertF + WertRF + WertSD + WertN +
-		FeiertagBW + SchulferienBW + SemesterferionUM + Sommer + laengengrad + 
-		as.numeric(Jahr) + uniMA_dist + Stunde + Wochentag, data = train.data)
+	model13 <- lm(log(Zaehlstand) ~ WertT2M + niederschlag_factor_wes + WertF + WertRF + WertN 
+		+ SemesterferionUM + SchulferienBW + FeiertagBW + FeiertagRP + Sommer
+		+ as.numeric(Jahr) + Stunde + Wochentag, data = train.data)
 
-	model15 <- lm(log(Zaehlstand) ~ WertT2M + WertRR + WertF + WertRF + WertSD + WertN +
-		FeiertagBW + SchulferienBW + SemesterferionUM + Sommer + laengengrad + breitengrad + 
-		as.numeric(Jahr) + uniMA_dist + Stunde + Wochentag, data = train.data)
+	model14 <- lm(log(Zaehlstand) ~ WertT2M + niederschlag_factor_wes + WertF + WertRF + WertN 
+		+ SemesterferionUM + SchulferienBW + FeiertagBW + FeiertagRP + Sommer
+		+ uniMA_dist
+		+ as.numeric(Jahr) + Stunde + Wochentag, data = train.data)
 
-	model16 <- lm(log(Zaehlstand) ~ WertT2M + WertRR + WertF + WertRF + WertSD + WertN +
-		FeiertagBW + FeiertagRP + FeiertagBWRP + SemesterferionUM + SchulferienBW + Sommer + laengengrad + breitengrad + 
-		as.numeric(Jahr) + uniMA_dist + Stunde + Wochentag, data = train.data)
+	model15 <- lm(log(Zaehlstand) ~ WertT2M + niederschlag_factor_wes + WertF + WertRF + WertN 
+		+ SemesterferionUM + SchulferienBW + FeiertagBW + FeiertagRP + Sommer
+		+ laengengrad + breitengrad
+		+ as.numeric(Jahr) + Stunde + Wochentag, data = train.data)
 
-	model17 <- lm(log(Zaehlstand) ~ WertT2M + WertT2M2 + WertRR + WertF + 
-		WertRF + WertSD + WertN +
-		FeiertagBW + FeiertagRP + FeiertagBWRP + SemesterferionUM + SchulferienBW + Sommer + 
-		laengengrad + breitengrad + 
-		as.numeric(Jahr) + uniMA_dist + Stunde + Wochentag, data = train.data)
+	model16 <- lm(log(Zaehlstand) ~ WertT2M + niederschlag_factor_wes + WertF + WertRF + WertN 
+		+ SemesterferionUM + SchulferienBW + FeiertagBW + FeiertagRP + Sommer
+		+ laengengrad + breitengrad + uniMA_dist
+		+ as.numeric(Jahr) + Stunde + Wochentag, data = train.data)
 
-	model18 <- lm(log(Zaehlstand) ~ WertT2M + WertT2M2 + WertRR + WertRR2 + WertF + 
-		WertRF + WertSD + WertN +
-		FeiertagBW + FeiertagRP + FeiertagBWRP + SchulferienBW + SemesterferionUM + Sommer + 
-		laengengrad + breitengrad + laengenbreitengrad + 
-		as.numeric(Jahr) + uniMA_dist + Stunde + Wochentag, data = train.data)
+	model17 <- lm(log(Zaehlstand) ~ WertT2M + niederschlag_factor_wes + WertF + WertRF + WertN 
+		+ SemesterferionUM + SchulferienBW + FeiertagBW + FeiertagRP + FeiertagBWRP + Sommer
+		+ laengengrad + breitengrad + uniMA_dist
+		+ as.numeric(Jahr) + Stunde + Wochentag, data = train.data)
 
-	model19 <- lm(log(Zaehlstand) ~ WertT2M + WertT2M2 + WertRR + WertRR2 + WertF + WertF2 + 
-		WertRF + WertSD + WertN +
-		FeiertagBW + FeiertagRP + FeiertagBWRP + SchulferienBW + SemesterferionUM + Sommer + 
-		laengengrad + breitengrad + laengenbreitengrad + 
-		as.numeric(Jahr) + uniMA_dist + Stunde + Wochentag, data = train.data)
+	model18 <- lm(log(Zaehlstand) ~ WertT2M + niederschlag_factor_wes + WertF + WertRF + WertN 
+		+ SemesterferionUM + SchulferienBW + FeiertagBW + FeiertagRP + FeiertagBWRP + Sommer
+		+ laengengrad + breitengrad + uniMA_dist + Corona
+		+ as.numeric(Jahr) + Stunde + Wochentag, data = train.data)
 
-	model20 <- lm(log(Zaehlstand) ~ WertT2M + WertT2M2 + WertRR + WertRR2 + WertF + WertF2 + 
-		WertRF + WertRF2 + WertSD + WertN +
-		FeiertagBW + FeiertagRP + FeiertagBWRP + SchulferienBW + SemesterferionUM + Sommer + 
-		laengengrad + breitengrad + laengenbreitengrad + 
-		as.numeric(Jahr) + uniMA_dist + Stunde + Wochentag, data = train.data)
+	model19 <- lm(log(Zaehlstand) ~ WertT2M + niederschlag_factor_wes + WertF + WertRF + WertN 
+		+ SemesterferionUM + SchulferienBW + FeiertagBW + FeiertagRP + FeiertagBWRP + Sommer
+		+ laengengrad + breitengrad + uniMA_dist + Corona + Kontaktbeschr
+		+ as.numeric(Jahr) + Stunde + Wochentag, data = train.data)
 
-	model21 <- lm(log(Zaehlstand) ~ WertT2M + WertT2M2 + WertRR + WertRR2 + WertF + WertF2 + 
-		WertRF + WertRF2 + WertSD + WertSD2 + WertN +
-		FeiertagBW + FeiertagRP + FeiertagBWRP + SchulferienBW + SemesterferionUM + Sommer + 
-		laengengrad + breitengrad + laengenbreitengrad + 
-		as.numeric(Jahr) + uniMA_dist + Stunde + Wochentag, data = train.data)
+	model20 <- lm(log(Zaehlstand) ~ WertT2M + WertT2M2 + niederschlag_factor_wes + WertF + WertRF + WertN 
+		+ SemesterferionUM + SchulferienBW + FeiertagBW + FeiertagRP + FeiertagBWRP + Sommer
+		+ laengengrad + breitengrad + uniMA_dist + Corona + Kontaktbeschr
+		+ as.numeric(Jahr) + Stunde + Wochentag, data = train.data)
 
-	model22 <- lm(log(Zaehlstand) ~ WertT2M + WertT2M2 + WertRR + WertRR2 + WertF + WertF2 + 
-		WertRF + WertRF2 + WertSD + WertSD2 + WertN + WertN2 +
-		FeiertagBW + FeiertagRP + FeiertagBWRP + SchulferienBW + SemesterferionUM + Sommer + 
-		laengengrad + breitengrad + laengenbreitengrad + 
-		as.numeric(Jahr) + uniMA_dist + Stunde + Wochentag, data = train.data)
+	model21 <- lm(log(Zaehlstand) ~ WertT2M + WertT2M2 + niederschlag_factor_wes + WertF + WertF2 
+		+ WertRF + WertN 
+		+ SemesterferionUM + SchulferienBW + FeiertagBW + FeiertagRP + FeiertagBWRP + Sommer
+		+ laengengrad + breitengrad + uniMA_dist + Corona + Kontaktbeschr
+		+ as.numeric(Jahr) + Stunde + Wochentag, data = train.data)
 
-	model23 <- lm(log(Zaehlstand) ~ WertT2M + WertT2M2 + WertRR + WertRR2 + WertF + WertF2 + 
-		WertRF + WertRF2 + WertSD + WertSD2 + WertN + WertN2 +
-		FeiertagBW + FeiertagRP + FeiertagBWRP + SchulferienBW + SemesterferionUM + Sommer + 
-		laengengrad + laengengrad2 + breitengrad + laengenbreitengrad + 
-		as.numeric(Jahr) + uniMA_dist + Stunde + Wochentag, data = train.data)
+	model22 <- lm(log(Zaehlstand) ~ WertT2M + WertT2M2 + niederschlag_factor_wes + WertF + WertF2 
+		+ WertRF + WertRF2 + WertN 
+		+ SemesterferionUM + SchulferienBW + FeiertagBW + FeiertagRP + FeiertagBWRP + Sommer
+		+ laengengrad + breitengrad + uniMA_dist + Corona + Kontaktbeschr
+		+ as.numeric(Jahr) + Stunde + Wochentag, data = train.data)
 
-	model24 <- lm(log(Zaehlstand) ~ WertT2M + WertT2M2 + WertRR + WertRR2 + WertF + WertF2 + 
-		WertRF + WertRF2 + WertSD + WertSD2 + WertN + WertN2 +
-		FeiertagBW + FeiertagRP + FeiertagBWRP + SchulferienBW + SemesterferionUM + Sommer + 
-		laengengrad + laengengrad2 + breitengrad + laengenbreitengrad + 
-		as.numeric(Jahr) + uniMA_dist  + Stunde + Wochentag, data = train.data)
+	model23 <- lm(log(Zaehlstand) ~ WertT2M + WertT2M2 + niederschlag_factor_wes + WertF + WertF2 
+		+ WertRF + WertRF2 + WertN + WertN2
+		+ SemesterferionUM + SchulferienBW + FeiertagBW + FeiertagRP + FeiertagBWRP + Sommer
+		+ laengengrad + breitengrad + uniMA_dist + Corona + Kontaktbeschr
+		+ as.numeric(Jahr) + Stunde + Wochentag, data = train.data)
 
-	model25 <- lm(log(Zaehlstand) ~ WertT2M + WertT2M2 + WertRR + WertRR2 + WertF + WertF2 + 
-		WertRF + WertRF2 + WertSD + WertSD2 + WertN + WertN2 +
-		FeiertagBW + FeiertagRP + FeiertagBWRP + SchulferienBW + SemesterferionUM + Sommer + 
-		laengengrad + laengengrad2 + breitengrad + laengenbreitengrad + 
-		as.numeric(Jahr) + as.numeric(Jahr2) + uniMA_dist + Stunde + Wochentag, data = train.data)
+	model24 <- lm(log(Zaehlstand) ~ WertT2M + WertT2M2 + niederschlag_factor_wes + WertF + WertF2 
+		+ WertRF + WertRF2 + WertN + WertN2
+		+ SemesterferionUM + SchulferienBW + FeiertagBW + FeiertagRP + FeiertagBWRP + Sommer
+		+ laengengrad + breitengrad + laengenbreitengrad + uniMA_dist + Corona + Kontaktbeschr
+		+ as.numeric(Jahr) + Stunde + Wochentag, data = train.data)
 
-	model26 <- lm(log(Zaehlstand) ~ WertT2M + WertT2M2 + WertRR + WertRR2 + WertF + WertF2 + 
-		WertRF + WertRF2 + WertSD + WertSD2 + WertN + WertN2 +
-		FeiertagBW + FeiertagRP + FeiertagBWRP + SchulferienBW + SemesterferionUM + Sommer + 
-		laengengrad + laengengrad2 + breitengrad + laengenbreitengrad + 
-		as.numeric(Jahr) + as.numeric(Jahr2) + uniMA_dist+ Stunde + Wochentag, data = train.data)
+	model25 <- lm(log(Zaehlstand) ~ WertT2M + WertT2M2 + niederschlag_factor_wes + WertF + WertF2 
+		+ WertRF + WertRF2 + WertN + WertN2
+		+ SemesterferionUM + SchulferienBW + FeiertagBW + FeiertagRP + FeiertagBWRP + Sommer
+		+ laengengrad + breitengrad + laengenbreitengrad
+		+ uniMA_dist + Corona + Kontaktbeschr
+		+ as.numeric(Jahr) + Stunde + Wochentag, data = train.data)
 
-	model27 <- lm(log(Zaehlstand) ~ WertT2M + WertT2M2 + WertT2M3 + WertRR + WertRR2 + WertRR3 + 
-		WertF + WertF2 + WertF3 + WertRF + WertRF2 + WertRF3 + WertSD + WertSD2 + WertSD3 + 
-		WertN + WertN2 + WertN3 + FeiertagBW + FeiertagRP + FeiertagRP*FeiertagBW + SchulferienBW + SemesterferionUM + Sommer + 
-		laengengrad + laengengrad2 + laengengrad3 + breitengrad + breitengrad3 + laengenbreitengrad + 
-		as.numeric(Jahr) + as.numeric(Jahr2) + as.numeric(Jahr3) + 
-		uniMA_dist + Stunde + Wochentag, data = train.data)
+	model26 <- lm(log(Zaehlstand) ~ WertT2M + WertT2M2 + niederschlag_factor_wes + WertF + WertF2 
+		+ WertRF + WertRF2 + WertN + WertN2
+		+ SemesterferionUM + SchulferienBW + FeiertagBW + FeiertagRP + FeiertagBWRP + Sommer
+		+ laengengrad + breitengrad + laengenbreitengrad
+		+ uniMA_dist + Corona + Kontaktbeschr
+		+ as.numeric(Jahr) + as.numeric(Jahr2) + Stunde + Wochentag, data = train.data)
 
-	model28 <- lm(log(Zaehlstand) ~ WertT2M + WertT2M2 + WertT2M3 + WertRR + WertRR2 + WertRR3 + 
-		WertF + WertF2 + WertF3 + WertRF + WertRF2 + WertRF3 + WertSD + WertSD2 + WertSD3 + 
-		WertN + WertN2 + WertN3 + FeiertagBW + FeiertagRP + FeiertagRP*FeiertagBW + SchulferienBW + SemesterferionUM + Sommer + 
-		laengengrad + laengengrad2 + laengengrad3 + breitengrad + breitengrad3 + laengenbreitengrad + 
-		as.numeric(Jahr) + as.numeric(Jahr2) + as.numeric(Jahr3) + 
-		uniMA_dist + Stunde + Wochentag + Standort, data = train.data)
+	model27 <- lm(log(Zaehlstand) ~ WertT2M + WertT2M2 + WertT2M3 + niederschlag_factor_wes + WertF + WertF2 + WertF3
+		+ WertRF + WertRF2 + WertRF3 + WertN + WertN2 + WertN3
+		+ SemesterferionUM + SchulferienBW + FeiertagBW + FeiertagRP + FeiertagBWRP + Sommer
+		+ laengengrad + breitengrad + laengenbreitengrad + laengengrad3
+		+ uniMA_dist + Corona + Kontaktbeschr
+		+ as.numeric(Jahr) + as.numeric(Jahr2) + as.numeric(Jahr3) + Stunde + Wochentag, data = train.data)
 
-	model29 <- lm(log(Zaehlstand) ~ WertT2M + WertT2M2 + WertT2M3 + WertRR + WertRR2 + WertRR3 + 
-		WertF + WertF2 + WertF3 + WertRF + WertRF2 + WertRF3 + WertSD + WertSD2 + WertSD3 + 
-		WertN + WertN2 + WertN3 + FeiertagBW + FeiertagRP + FeiertagRP*FeiertagBW + SchulferienBW + SemesterferionUM + Sommer + 
-		laengengrad + laengengrad2 + laengengrad3 + breitengrad + breitengrad3 + laengenbreitengrad + 
-		as.numeric(Jahr) + as.numeric(Jahr2) + as.numeric(Jahr3) + 
-		uniMA_dist + Stunde + Wochentag + Standort + QualitaetRR + QualitaetT2M +
-		QualitaetF + QualitaetSD + QualitaetN, data = train.data)
+	model28 <- lm(log(Zaehlstand) ~ WertT2M + WertT2M2 + WertT2M3 + niederschlag_factor_wes + WertF + WertF2 + WertF3
+		+ WertRF + WertRF2 + WertRF3 + WertN + WertN2 + WertN3
+		+ SemesterferionUM + SchulferienBW + FeiertagBW + FeiertagRP + FeiertagBWRP + Sommer
+		+ Standort
+		+ uniMA_dist + Corona + Kontaktbeschr
+		+ as.numeric(Jahr) + as.numeric(Jahr2) + as.numeric(Jahr3) + Stunde + Wochentag, data = train.data)
 
-	model30 <- lm(log(Zaehlstand) ~ WertT2M + WertT2M2 + WertT2M3 + WertRR + WertRR2 + WertRR3 + 
-		WertF + WertF2 + WertF3 + WertRF + WertRF2 + WertRF3 + WertSD + WertSD2 + WertSD3 + 
-		WertN + WertN2 + WertN3 + FeiertagBW + FeiertagRP + FeiertagRP*FeiertagBW + SchulferienBW + SemesterferionUM + Sommer + 
-		laengengrad + laengengrad2 + laengengrad3 + breitengrad + breitengrad3 + laengenbreitengrad + 
-		as.numeric(Jahr) + as.numeric(Jahr2) + as.numeric(Jahr3) + 
-		uniMA_dist + Stunde + Wochentag + Standort + QualitaetRR + QualitaetT2M +
-		QualitaetF + QualitaetSD + QualitaetN + uniMA_dist2, data = train.data)
+	model29 <- lm(log(Zaehlstand) ~ WertT2M + WertT2M2 + WertT2M3 + niederschlag_factor_wes + WertF + WertF2 + WertF3
+		+ WertRF + WertRF2 + WertRF3 + WertN + WertN2 + WertN3
+		+ SemesterferionUM + SchulferienBW + FeiertagBW + FeiertagRP + FeiertagBWRP + Sommer
+		+ Standort + QualitaetRR + QualitaetT2M + QualitaetF + QualitaetSD + QualitaetN
+		+ uniMA_dist + Corona + Kontaktbeschr
+		+ as.numeric(Jahr) + as.numeric(Jahr2) + as.numeric(Jahr3) + Stunde + Wochentag, data = train.data)
 
-	summary(model25)
+	model30 <- lm(log(Zaehlstand) ~ WertT2M + WertT2M2 + WertT2M3 + niederschlag_factor_wes + WertF + WertF2 + WertF3
+		+ WertRF + WertRF2 + WertRF3 + WertN + WertN2 + WertN3
+		+ SemesterferionUM + SchulferienBW + FeiertagBW + FeiertagRP + FeiertagBWRP + Sommer
+		+ Standort + QualitaetRR + QualitaetT2M + QualitaetF + QualitaetSD + QualitaetN
+		+ uniMA_dist + Corona + Kontaktbeschr + uniMA_dist + uniMA_dist2
+		+ as.numeric(Jahr) + as.numeric(Jahr2) + as.numeric(Jahr3) + Stunde + Wochentag, data = train.data)
+
 	summary(model26)
 	summary(model27)
+	summary(model28)
 
 #Vergleiche den Fit der Modelle
 
@@ -625,62 +632,16 @@ names(datensatz)
 	#Unser ausgewähltes Model ist:
 	summary(model27)
 
-#Negativ-binomiales Regressionsmodell 
+	stargazer(model27,model28,type="latex",
+          font.size = "small",
+	    single.row = TRUE,
+          #align = TRUE,
+          omit.stat=c("f", "ser"),
+          column.sep.width = "-15pt" # Well... you can tweak this
+	)
 
-	regression_negbin= femlm(Zaehlstand ~ WertT2M + WertRR + 
-		WertF + WertRF + WertSD + 
-		WertN + FeiertagBW + FeiertagRP + SchulferienBW + SemesterferionUM + Sommer + 
-		laengengrad + breitengrad + 
-		as.numeric(Jahr) + 
-		Stunde + Wochentag, data = train.data,
-		family = "negbin")
 
-	
 
-	Lin <- lm(Zaehlstand ~ WertT2M + WertRR + WertRR2 + WertRR3 + 
-		WertF + WertF2 + WertF3 + WertRF + WertRF2 + WertRF3 + WertSD + WertSD2 + WertSD3 + 
-		WertN + WertN2 + WertN3 + FeiertagBW + FeiertagRP + SchulferienBW + SemesterferionUM + Sommer + 
-		laengengrad + laengengrad2 + breitengrad + laengenbreitengrad +
-		as.numeric(Jahr) + as.numeric(Jahr2) + as.numeric(Jahr3) + 
-		uniMA_dist + Stunde + Wochentag + FeiertagBWRP, data = train.data)
-
-	summary(Lin)
-
-	Lin <- lm(Zaehlstand ~ WertT2M + WertT2M2 + WertT2M3 + WertRR + WertRR2 + WertRR3 + 
-		WertF + WertF2 + WertF3 + WertRF + WertRF2 + WertRF3 + WertSD + WertSD2 + WertSD3 + 
-		WertN + WertN2 + WertN3 + FeiertagBW + FeiertagRP + SchulferienBW + SemesterferionUM + Sommer + 
-		laengengrad + breitengrad + FeiertagBWRP + laengenbreitengrad +
-		as.numeric(Jahr) + as.numeric(Jahr3) + 
-		uniMA_dist + Stunde + Wochentag, data = train.data)
-
-	summary(Lin)
-	
-	#install.packages("fixest")
-	library(fixest)
-
-	Lin <- feols(log(Zaehlstand) ~ WertT2M + WertT2M2 + WertT2M3 + WertRR + WertRR2 + WertRR3 + 
-		WertF + WertF2 + WertF3 + WertRF + WertRF2 + WertRF3 + WertSD + WertSD2 + WertSD3 + 
-		WertN + WertN2 + WertN3 + FeiertagBW + FeiertagRP + SchulferienBW + SemesterferionUM + Sommer + 
-		breitengrad + FeiertagBWRP + laengenbreitengrad +
-		as.numeric(Jahr3) + 
-		uniMA_dist | Stunde + Wochentag, data = train.data)
-
-	summary(Lin)
-
-	#plot(as.numeric(train.data$Jahr),train.data$laengengrad)
-
-	collinearity(Lin)
-
-	regression_negbin <- femlm(Zaehlstand ~ WertT2M + WertT2M2 + WertT2M3 + WertRR + WertRR2 + WertRR3 + 
-		WertF + WertF2 + WertF3 + WertRF + WertRF2 + WertRF3 + WertSD + WertSD2 + WertSD3 + 
-		WertN + WertN2 + WertN3 + FeiertagBW + FeiertagRP + SchulferienBW + SemesterferionUM + Sommer + 
-		breitengrad + FeiertagBWRP + laengenbreitengrad +
-		as.numeric(Jahr3) + 
-		uniMA_dist | Stunde + Wochentag, data = train.data, family = "negbin")
-
-	summary(regression_negbin)
-	
-	collinearity(res_1)
 
 
 

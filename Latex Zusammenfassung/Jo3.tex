@@ -97,10 +97,14 @@ connection/.style={thick, dotted},
 \onehalfspacing	
 \thispagestyle{empty}	
 \tableofcontents
-%\begingroup
-%\let\clearpage\relax
-%\listoffigures
-%\endgroup
+
+\newpage
+
+\begingroup
+\let\clearpage\relax
+\listoffigures
+\listoftables
+\endgroup
 
 %\newpage
 
@@ -267,9 +271,9 @@ Nehmen wir weitere Variablen in das Regressionsmodel auf, die den Fahrradverkehr
 
 Interessant sind für uns in der Darstellung \ref{reg1} die Koeffizienten und die Signifikanzniveaus. Wobei wir berücksichtigen müssen, dass wir ein Log-Lineares Modell verwendet haben. Das heißt wir haben die abhängige Variable den Zählstand der Fahrradstation logarithmiert, um nicht lineare Einflüsse modellieren zu können. Die Signifikanzniveaus werden durch Sterne gekeinzeichnet. Drei Sterne markieren das höchste Sighnifikanzniveau, kein Stern bedeutet, der kausalen Einfluss eines Koeffizienten ist statistisch signifikant, also zu klein im Verhältnis zur Streuung der Daten. Die Vorzeichen der Koeffizienten zeigen uns, ob eine Variable dazu führt, ob weniger Leute Fahrrad fahren, wenn zb. Regen fällt, oder weniger.\\ 
 Den Regenfall haben wir kategorisiert, nach derselben Methode wie sie \cite{Wessel2020} verwendet. Auffällig ist, dass der heftige Regen wohl einen kleineren negativen Einfluss, als leichter Regen. Erklärbar wäre diese Beobachtung vielleicht dadurch, dass heftiger Regen oft plötzlich kommt und Fahrradfahrer überraschen kann. Auch der Mangel an Beobachtungen könnte dazu führen, denn heftiger Regen kommt selten vor, weshalb sein Signifikanzniveau auch geringer ist. Ansonsten sehen wir, dass zunehmender Regen einen zunehmend negativen Effekt hat. Für die Temperatur haben wir einen linearen und einen quadratischen Term in das Model aufgenommen, denn wie man in Darstellung \ref{fig:BSP} z.B. sieht, führen steigende Temperaturen nur solange zu mehr Fahrradverkehr, solange es nicht zu heiß wird. Die quadratische Funktion kann das gut repräsentieren. Allerdings sind alle anderen Wetterbeobachtung längst nicht so einflussreich wie der Regen. Die Sonneneinstrahlung ist sogar insignifikant.\\
-Einen recht starken Einfluss haben die Feiertage. Wobei wir unterschieden haben in Feiertage in Baden Württemberg und Rheinland Pfalz. Hierbei sind die Effekte der Feiertage interessanterweise negativ. Dies gibt uns einen Hinweis darauf, dass in Mannheim ein utillitaristischer Fahrradverkehr vorherrscht. Also ein Fahrradverkehr, der nicht der eigenen Unterhaltung und Erholung dient, sondern um einen Zweck zu erfüllen. In den meisten Fällen wird es sich hierbei also um Berufsverkehr handeln bzw. Verkehr hin zu den Bildungsstätten der Stadt. Darauf weisen auch die negativen Effekte für die Schulferien in Baden Württemberg und die Semesterferien der Universität Mannheim hin. Schulferien für Rheinlandpfalz befinden sich nicht im Modell, weil ich angenommen habe, dass Schüler aus Ludwigshafen auch grundsätzlich in Ludwigshafen zur Schule gehen würden.
+Einen recht starken Einfluss haben die Feiertage. Wobei wir unterschieden haben in Feiertage in Baden Württemberg und Rheinland Pfalz. Hierbei sind die Effekte der Feiertage interessanterweise negativ. Dies gibt uns einen Hinweis darauf, dass in Mannheim ein utillitaristischer Fahrradverkehr vorherrscht. Also ein Fahrradverkehr, der nicht der eigenen Unterhaltung und Erholung dient, sondern um einen Zweck zu erfüllen. In den meisten Fällen wird es sich hierbei also um Berufsverkehr handeln bzw. Verkehr hin zu den Bildungsstätten der Stadt. Darauf weisen auch die negativen Effekte für die Schulferien in Baden Württemberg und die Semesterferien der Universität Mannheim hin. Schulferien für Rheinlandpfalz befinden sich nicht im Modell, weil ich angenommen habe, dass Schüler aus Ludwigshafen auch grundsätzlich in Ludwigshafen zur Schule gehen würden.\\
 
-\section{negativ binomioale Regression}
+\section{negativ binomiale Regression}
 
 Wenn wir uns die abhängige Variable den Zählstand der Fahrradstationen ansehen, sehen wir, dass wir es hier naturgemäß immer mit ganzen Zahlen zu tuen haben. Das bietet den Vorteil, dass wir hier für eine so genannte negativ binomial Regression verwenden können. Diese geht zurück auf \cite{Hausman1984}, die in ihrem Model auf die Poisson Verteilung aufbauen.
 
@@ -313,7 +317,8 @@ Wenn wir uns die abhängige Variable den Zählstand der Fahrradstationen ansehen
 \section{Utilitaristischer und Freizeit Verkehr}
 
 Wie bereits bei Vorstellung des Standardsmodell angeschnitten, geben uns die Variablen für Feier- und Ferientage einen Hinsweis darauf, dass in Mannheim ein utilitaristischer Verkehr vorherrscht, also ein Verkehr hin zu den Arbeits- und Ausbildungstätten. Damit ist jedoch nicht unbedingt erwiesen, dass dies der Falle für alle Zählstationen der Fall ist. Wege die zu den Arbeits- und Ausbildungsstätten führen, können sehr wohl dem Berufsverkehr dienen, während andere Wege weiter abseits dem Freizeitverkehr dienen. Deswegen bilden wir für jede Zählstation ein Regressionsmodell, dass den Einfluss von Feier- und Ferientagen sowie Wochenenden untersucht.\\ 
-Dies fässt die Darstellung \ref{utilitarian} zusammen, die mithilfe einer R Bibliothek nach \cite{Hlavac2022} erstellt worden ist. Die dargestellten Stationen sind der Reihe nach die Renzstraße, die Jungbuschbrücke, die Konrad Adenauer Brücke, die Kurt Schuhmacher Brücke, die Lindenhofüberführung, der Neckarauer Übergang und der Schlosspark. Wir sehen auch hier, dass der utilitaristische Verkehr an allen Stationen überwiegt. Die Feiertage in Rheinland Pfalz spielen meist keine Rolle und sind insignifikant. Ansonsten führen Feiertage, Semesterferien und Wochenenden zu einer Abhnahme des Fahrradverkehr. Eine Ausnahme stellen die Schulferien da. An der Renzstraße, der Konrad Adenauer Brücke, der Kurt Schuhmacher Brücke und am Schlosspark, führen die Schulferien zu leichten Zunahmen des Fahrradverkehrs. Das könnte daran liegen, dass anders als die Studenten die Schüler mit ihren Schulen breiter über die Stadt verteilt sind, während die Zählstationen eher in der Nähe der Innenstadt und dem näherem Zentrum angesiedelt sind. Auch fahren Studenten innerhalb der Semesterferien häufiger nach Hause, und sind somit in der Stadt nicht mehr vorhanden. Den meisten Freizeit Verkehr findet man insgesamt an der Kurt Schuhmacher Brücke. Zumindestens sind hier die negativen Effekte der Koeffizienten am geringsten. Umgekehrt ist am Neckarauer Übergang der meiste utilitaristische Verkehr anzutreffen mit den größten negativen Effekten. Vergleicht man beide Stationen ist festzustellen, dass das Wetter den Freizeitverkehr stärker beeinträchtigt, während beim utilitaristischen Verkehr Radfahrer noch eher bei Regen, Wind und Wetter auf der Straße zu finden sind. Zu sehen ist dies in der Darstellung \ref{utilitarianvsFreizeit} im Anhang.
+Dies fässt die Darstellung \ref{utilitarian} zusammen, die mithilfe einer R Bibliothek nach \cite{Hlavac2022} erstellt worden ist. Die dargestellten Stationen sind der Reihe nach die Renzstraße, die Jungbuschbrücke, die Konrad Adenauer Brücke, die Kurt Schuhmacher Brücke, die Lindenhofüberführung, der Neckarauer Übergang und der Schlosspark. Wir sehen auch hier, dass der utilitaristische Verkehr an allen Stationen überwiegt. Die Feiertage in Rheinland Pfalz spielen meist keine Rolle und sind insignifikant. Ansonsten führen Feiertage, Semesterferien und Wochenenden zu einer Abhnahme des Fahrradverkehr. Eine Ausnahme stellen die Schulferien da. An der Renzstraße, der Konrad Adenauer Brücke, der Kurt Schuhmacher Brücke und am Schlosspark, führen die Schulferien zu leichten Zunahmen des Fahrradverkehrs. Das könnte daran liegen, dass anders als die Studenten die Schüler mit ihren Schulen breiter über die Stadt verteilt sind, während die Zählstationen eher in der Nähe der Innenstadt und dem näherem Zentrum angesiedelt sind. Auch fahren Studenten innerhalb der Semesterferien häufiger nach Hause, und sind somit in der Stadt nicht mehr vorhanden. Den meisten Freizeit Verkehr findet man insgesamt an der Kurt Schuhmacher Brücke. Zumindestens sind hier die negativen Effekte der Koeffizienten am geringsten. Umgekehrt ist am Neckarauer Übergang der meiste utilitaristische Verkehr anzutreffen mit den größten negativen Effekten. Vergleicht man beide Stationen ist festzustellen, dass das Wetter den Freizeitverkehr stärker beeinträchtigt, während beim utilitaristischen Verkehr Radfahrer noch eher bei Regen, Wind und Wetter auf der Straße zu finden sind. Zu sehen ist dies in der Darstellung \ref{utilitarianvsFreizeit}.\\
+Das Standardmodell kann man nun dazu verwenden, Vorhersagen zu machen. Für drei unterschiedliche Beispiel Szenarios findet man Vorhersagen in der Abbildung \ref{ForecastsExample}. Ausführlicher werden aber mögliche Vorhersagen und ihre Treffsicherheit im anschließenden Kapitel behandelt.
 
 % Table created by stargazer v.5.2.3 by Marek Hlavac, Social Policy Institute. E-mail: marek.hlavac at gmail.com
 % Date and time: Do, Aug 04, 2022 - 17:32:08
@@ -354,219 +359,6 @@ Dies fässt die Darstellung \ref{utilitarian} zusammen, die mithilfe einer R Bib
 	\end{tabular} 
 \end{table} 
 
-
-
-\chapter{Eigene Forschungsfrage}
-
-
-Zunächst muss man Variablen finden, von denen man argumentieren kann, dass sie die unabhängige Variable den Fahrradverkehr in unserem Fall beieinflussen. Eine Auflistung dieser findet sich in der Übersicht \ref{Tabelle1}. Nehmen wir nicht nur diese Variablen auf, sondern auch die quadratischen oder kubischen Werte oder Intersektionen der verschiedenen Variablen, haben wir einen großen Pool an Variablen, die wir wählen können. Eine naheliegende Vorgehensweise ist es, verschiedene Modelle zu erstellen, die verschiedene Variablen beinhalten und diese zu validieren, um im Vergleich das beste Model für seine Vorhersagen zu nehmen. Natürlich könnte man auch mittels Stepwise Selection das Model erstellen, dies ist ein maschineller Prozesse, der das Model Durchgang für Durchgang mit den Schätzern füllt, die den größten Fit mit sich bringen, ist jedoch auch sehr rechen intensiv, vor allem bei einem Datensatz dieser Größe.\\
-
-Stattdessen erstellen wir manuell 30 verschiedene Modelle. Danach zerlegen wir den Datensatz zufällig in einen Trainings Datensatz und in einen Test Datensatz. Der Trainings Datensatz dient dazu, die abhängigen Variablen des Models zu berechnen. Mithilfe des Test Datensatzes versuchen wir die externe Validität des Models zu prüfen, also ob das Model auch zutreffende Aussagen auf Beobachtungswerte treffen kann, mit denen das Model nicht berechnet worden ist. Zur Validierung der 30 Modelle nutzen wir das angepasste Bestimmtheitsmaß $adj R^2$. Das Bestimmtheitsmaß beschreibt wie hoch der Anteil der Streuung der Beobachtungsdaten ist, der durch das Model erklärt werden kann. Je näher das Bestimmtheitsmaß an 1 ist, desto besser fittet das Model, bzw desto besser erklärt das Model die Realität. Um die Modelle zu vergleichen schauen wir das Bestimmtheitsmaß der Modelle im Traininsg und Test Datensatz. Dabei kommt die Graphik \ref{ModelSelektion} zustande.
-
-\begin{figure}[]
-	\centering
-	\includegraphics[width=\textwidth]{Plots/ModelSelektion1.pdf}
-	\captionsource{Fahrrad Daten Mannheim und DWD}{
-		Graphisches Beispiel einer Regression
-	}
-	\label{ModelSelektion}
-\end{figure}
-
-Auf der Y-Achse der Graphik \ref{ModelSelektion} abgetragen sehen wir die Höhe des Bestimmtheitsmaß. Auf der X Achse sehen wir die Anzahl der Koeffizienten. Mit jedem weiteren Model haben wir weitere Variablen hinzugefügt, angefangen mit den Wetter Variablen, Feiertage, Ferien, Zeitliche Variablen, wie das Jahr, Sommer oder Tageszeit bis hin zur geographischen Lage. Wir sehen, dass das Bestimmtheitsmaß, also die Genauigkeit der Vorhersage des Models, zu nimmt je mehr Variablen wir hinzufügen, bis zu einem Punkt, an dem das Bestimmtheitsmaß im Trainingsdatensatz zwar nochmals bedeutend zu nimmt, im Test Datensatz aber abnimmt. Hier geraten wir ins Overfitting. Das heißt, das Model, das hier entwickelt wurde, kann zwar die Daten, mit denen es trainiert wurde, extrem gut erklären, sobald wir aber mithilfe des Models vorhersagen treffen wollen, aufgrundlage neuer Daten, ist die Genauigkeit der Daten schlechter, als sie sein müsste. Das wollen wir verhindern. Denn wenn wir mit unserem Model Overfitting haben, kann es der Fall sein, dass wir in den Variablen Zusammenhänge sehen, die sich nicht replizieren lassen.\\
-
-Was löst in unserem Fall das Overfitting aus? Dazu vergleichen wir den Regressions Output zweier Modelle in der Tabele \ref{ZweiModelle}. Das zweite Model ist jenes, in dem erstmals Overfitting auftritt. Das erste Model ist das Model vor diesem, in dem noch kein Overfitting auftritt.
-
-% Table created by stargazer v.5.2.3 by Marek Hlavac, Social Policy Institute. E-mail: marek.hlavac at gmail.com
-% Date and time: So, Jul 24, 2022 - 12:23:05
-	
-	%\scalebox{0.9}{
-	\begin{longtable}{@{\extracolsep{-5pt}}lcc} 
-		\caption{Log-Lineare Modele} 
-		\label{ZweiModelle}
-		\\[-1.8ex]\hline 
-		\hline \\[-1.8ex] 
-		& \multicolumn{2}{c}{\textit{Dependent variable:}} \\ 
-		\cline{2-3} 
-		\\[-1.8ex] & \multicolumn{2}{c}{log(Zaehlstand)} \\ 
-		\\[-1.8ex] & (1) & (2)\\ 
-		\hline \\[-1.8ex] 
-		WertT2M & 0.027$^{***}$ & 0.027$^{***}$ \\ 
-		& (0.001) & (0.001) \\ 
-		WertT2M2 & 0.001$^{***}$ & 0.001$^{***}$ \\ 
-		& (0.0001) & (0.0001) \\ 
-		WertT2M3 & $-$0.00003$^{***}$ & $-$0.00002$^{***}$ \\ 
-		& (0.00000) & (0.00000) \\ 
-		WertRR & $-$0.231$^{***}$ & $-$0.229$^{***}$ \\ 
-		& (0.007) & (0.005) \\ 
-		WertRR2 & 0.029$^{***}$ & 0.029$^{***}$ \\ 
-		& (0.001) & (0.001) \\ 
-		WertRR3 & $-$0.001$^{***}$ & $-$0.001$^{***}$ \\ 
-		& (0.00004) & (0.00003) \\ 
-		WertF & $-$0.073$^{***}$ & $-$0.077$^{***}$ \\ 
-		& (0.006) & (0.005) \\ 
-		WertF2 & 0.008$^{***}$ & 0.009$^{***}$ \\ 
-		& (0.002) & (0.001) \\ 
-		WertF3 & $-$0.001$^{***}$ & $-$0.001$^{***}$ \\ 
-		& (0.0001) & (0.0001) \\ 
-		WertRF & 0.003 & 0.002 \\ 
-		& (0.002) & (0.002) \\ 
-		WertRF2 & $-$0.0001$^{***}$ & $-$0.0001$^{***}$ \\ 
-		& (0.00003) & (0.00003) \\ 
-		WertRF3 & 0.00000$^{***}$ & 0.00000$^{***}$ \\ 
-		& (0.00000) & (0.00000) \\ 
-		WertSD & 0.0005 & 0.0005 \\ 
-		& (0.001) & (0.001) \\ 
-		WertSD2 & $-$0.00000 & 0.00001 \\ 
-		& (0.00004) & (0.00003) \\ 
-		WertSD3 & $-$0.00000 & $-$0.00000 \\ 
-		& (0.00000) & (0.00000) \\ 
-		WertN & 0.010 & 0.008$^{*}$ \\ 
-		& (0.006) & (0.005) \\ 
-		WertN2 & $-$0.005$^{***}$ & $-$0.005$^{***}$ \\ 
-		& (0.002) & (0.001) \\ 
-		WertN3 & 0.0003$^{**}$ & 0.0004$^{***}$ \\ 
-		& (0.0001) & (0.0001) \\ 
-		FeiertagBW & $-$0.402$^{***}$ & $-$0.389$^{***}$ \\ 
-		& (0.026) & (0.019) \\ 
-		FeiertagRP & 0.035 & 0.043 \\ 
-		& (0.162) & (0.122) \\ 
-		SchulferienBW & $-$0.155$^{***}$ & $-$0.145$^{***}$ \\ 
-		& (0.004) & (0.003) \\ 
-		SemesterferionUM & $-$0.131$^{***}$ & $-$0.142$^{***}$ \\ 
-		& (0.003) & (0.003) \\ 
-		Sommer & 0.031$^{***}$ & 0.024$^{***}$ \\ 
-		& (0.005) & (0.004) \\ 
-		laengengrad & 3,000,977.000$^{***}$ &  \\ 
-		& (14,623.910) &  \\ 
-		laengengrad2 & $-$7,155.153$^{***}$ &  \\ 
-		& (34.176) &  \\ 
-		breitengrad & 493,372.000$^{***}$ &  \\ 
-		& (2,544.529) &  \\ 
-		laengenbreitengrad & $-$58,179.300$^{***}$ &  \\ 
-		& (300.081) &  \\ 
-		as.numeric(Jahr) & 31,617.400$^{***}$ & 2,480.775 \\ 
-		& (2,353.575) & (1,764.690) \\ 
-		as.numeric(Jahr2) & $-$15.658$^{***}$ & $-$1.216 \\ 
-		& (1.166) & (0.874) \\ 
-		as.numeric(Jahr3) & 0.003$^{***}$ & 0.0002 \\ 
-		& (0.0002) & (0.0001) \\ 
-		uniMA\_dist & $-$0.013$^{***}$ &  \\ 
-		& (0.0001) &  \\ 
-		Stunde06 & 0.404$^{***}$ & 0.404$^{***}$ \\ 
-		& (0.008) & (0.006) \\ 
-		Stunde07 & 0.929$^{***}$ & 0.926$^{***}$ \\ 
-		& (0.008) & (0.006) \\ 
-		Stunde08 & 1.078$^{***}$ & 1.072$^{***}$ \\ 
-		& (0.009) & (0.006) \\ 
-		Stunde09 & 0.921$^{***}$ & 0.915$^{***}$ \\ 
-		& (0.009) & (0.006) \\ 
-		Stunde10 & 0.817$^{***}$ & 0.811$^{***}$ \\ 
-		& (0.009) & (0.007) \\ 
-		Stunde11 & 0.882$^{***}$ & 0.874$^{***}$ \\ 
-		& (0.009) & (0.007) \\ 
-		Stunde12 & 0.997$^{***}$ & 0.990$^{***}$ \\ 
-		& (0.009) & (0.007) \\ 
-		Stunde13 & 1.118$^{***}$ & 1.112$^{***}$ \\ 
-		& (0.009) & (0.007) \\ 
-		Stunde14 & 1.172$^{***}$ & 1.165$^{***}$ \\ 
-		& (0.009) & (0.007) \\ 
-		Stunde15 & 1.304$^{***}$ & 1.297$^{***}$ \\ 
-		& (0.009) & (0.007) \\ 
-		Stunde16 & 1.466$^{***}$ & 1.458$^{***}$ \\ 
-		& (0.009) & (0.007) \\ 
-		Stunde17 & 1.470$^{***}$ & 1.465$^{***}$ \\ 
-		& (0.009) & (0.007) \\ 
-		Stunde18 & 1.283$^{***}$ & 1.281$^{***}$ \\ 
-		& (0.009) & (0.006) \\ 
-		Stunde19 & 1.005$^{***}$ & 1.002$^{***}$ \\ 
-		& (0.009) & (0.006) \\ 
-		Stunde20 & 0.698$^{***}$ & 0.698$^{***}$ \\ 
-		& (0.009) & (0.006) \\ 
-		Stunde21 & 0.635$^{***}$ & 0.628$^{***}$ \\ 
-		& (0.050) & (0.037) \\ 
-		Stunde22 & 0.548$^{***}$ & 0.534$^{***}$ \\ 
-		& (0.049) & (0.037) \\ 
-		WochentagDo & $-$0.007 & $-$0.005 \\ 
-		& (0.006) & (0.004) \\ 
-		WochentagFr & $-$0.084$^{***}$ & $-$0.083$^{***}$ \\ 
-		& (0.006) & (0.004) \\ 
-		WochentagMi & $-$0.001 & $-$0.002 \\ 
-		& (0.006) & (0.004) \\ 
-		WochentagMo & $-$0.050$^{***}$ & $-$0.046$^{***}$ \\ 
-		& (0.006) & (0.004) \\ 
-		WochentagSa & $-$0.626$^{***}$ & $-$0.626$^{***}$ \\ 
-		& (0.006) & (0.004) \\ 
-		WochentagSo & $-$0.970$^{***}$ & $-$0.968$^{***}$ \\ 
-		& (0.006) & (0.004) \\ 
-		Adenauer-Brücke &  & 0.185$^{***}$ \\ 
-		&  & (0.004) \\ 
-		Kurpfalzbrücke &  & 1.549$^{***}$ \\ 
-		&  & (0.004) \\ 
-		K-Schumacher-Brücke &  & $-$2.609$^{***}$ \\ 
-		&  & (0.004) \\ 
-		Lindenhofüberführung &  & $-$0.507$^{***}$ \\ 
-		&  & (0.005) \\ 
-		Neckarauer Übergang &  & $-$0.039$^{***}$ \\ 
-		&  & (0.005) \\ 
-		Renzstraße &  & 0.861$^{***}$ \\ 
-		&  & (0.004) \\ 
-		Schlosspark Lindenhof &  & 0.180$^{***}$ \\ 
-		&  & (0.005) \\ 
-		FeiertagBW:FeiertagRP & $-$0.519$^{***}$ & $-$0.535$^{***}$ \\ 
-		& (0.164) & (0.123) \\ 
-		Constant & $-$46,216,015.000$^{***}$ & $-$1,687,396.000 \\ 
-		& (1,582,933.000) & (1,187,073.000) \\ 
-		\hline \\[-1.8ex] 
-		Observations & 328,715 & 328,715 \\ 
-		R$^{2}$ & 0.668 & 0.814 \\ 
-		Adjusted R$^{2}$ & 0.668 & 0.814 \\ 
-		Residual Std. Error & 0.842 (df = 328659) & 0.631 (df = 328657) \\ 
-		F Statistic & 12,043.5$^{***}$  & 25,194.4$^{***}$ \\ 
-		&(df = 55; 328659)& (df = 57; 328657)\\
-		\hline 
-		\hline \\[-1.8ex] 
-		\textit{Note:}  & \multicolumn{2}{r}{$^{*}$p$<$0.1; $^{**}$p$<$0.05; $^{***}$p$<$0.01} \\ 
-	\end{longtable}
-	%}
-
-Beide Modelle unterscheiden sich im wesentlichen in der Wahl der Fixed Effects. Fixed Effects sind all jene Schätzer, die über die Zeit nicht variieren, also fix sind und nur zwischen den Entitäten variieren. In diesem konkreten Fall heißt das, ein Fixed Effect ist eine Variable die zeitlich konstant bleibt, sich aber zwischen den Fahrradzählstationen unterscheidet. Das dient dazu, die Unterschiede zwischen diesen Stationen zu messen und im Model mit aufzunehmen. Denn wenn wir uns die Graphik \ref{BoxplotStationen} anschauen, sehen wir, dass die Stationen untereinander recht stark variieren. Z.B. sehen wir, dass auf der Kurpfalzbrücke, die von der Innenstadt über den Neckar führt, grundsätzlich mehr Radverkehr herrscht. Nehmen wir jetzt z.B. eine Dummy Variable in das Model auf, die 1 ist, wenn ein Beobachtungswert von der Kurpfalzbrücke stammte und 0 ist, wenn der Beobachtungswert von einer anderen Station stammte, dann erklärt diese Variable den Unterschied zwischen der Kurpfalzbrücke und den anderen Stationen im Model, ohne den Ursächlichen Grund dafür zu kennen, erhöht aber den Fit des Models, denn nun können die anderen Variablen ihren Einfluss präziser schätzen.\\ 
-
-Eine solche Dummy Variable können wir für 7 von 8 Stationen in das Model aufnehmen. Bei der achten reicht es, wenn alle anderen Dummy Variablen 0 sind. Andernfalls bekämen wir ein multikollineares Model, also ein Model in dem mindestens zwei Variablen linear abhängig von einander sind. Genau auf diese Weise sind wir im zweiten Model vorgegangen. Dieses beinhaltet eine Dummy Variable Kurpfalzbrücke, Lindenhofüberführung, Neckarauer Übergang, Renzstraße und Schloßpark/Lindenhof. Die übrige Station an der Kurt Schuhmacher Brücke ergibt sich, wie bereits erklärt, wenn alle anderen 7 Dummy Variabeln 0 sind. Diese Vorgehensweise fürht zu einem Bestimmtheitsmaß von 81,44 \%, was sich gut anhört, wie aber bereits gezeigt, größtenteils auf Overfitting zurückzuführen ist.\\
-
-Möglicherweise hängt dies damit zu zusammen, dass die Stations Dummy Variabeln zwar Unterschiede erkennen, aber keinen ursächlichen Grund dafür finden. Wenn man aber Lageparameter als Fixed Effekt nutzt hätte man einen möglichen ursächlichen Grund für den Unterschied, die Lage. Da Lageparameter zeitlich auch konstant sind, lassen sich diese ebenfalls sehr gut als Fixed Effect nutzen. Im ersten Model nutzen wir dazu den Längengrad, sowie den quadrierten Längengrad, den Breitengrad, Längen und Breitengrad miteinander multipliziert (Intersektion) und den Abstand zur Universität Mannheim in uniMA dist. Auf den quadrierten Wert des Breitengrades verzichten wir, weil dies wiederum zu Multikollinearität führen würde und im Regressionsoutput ein Fehler auftauchen würde, wie sich zeigte. Auch führt eine Kombination aus Lageparametern und Standort Dummy Variabeln zu Fehlern im Regressionsoutput, weswegen wir beide Fixed Effects getrennt von einander nutzen.\\
-
-Obwohl wir bei dem Model mit den Lageparametern ein kleineres Bestimmtheitsmaß von nur 66,8 \% erhalten, entscheiden wir uns gegen das Model mit Standort Dummy Variabeln, wegen einer höheren externen Validität gemessen im Test Datensatz.
-
-\chapter{Fazit}
-
-\chapter{Anhang}
-
-\begin{figure}[!ht]
-	\centering
-	\includegraphics[width=\textwidth]{Plots/Corr_Plot.pdf}
-	\captionsource{Korrelations Plot}{
-		Korrelation zwischen den verschiedenen Variablen
-	}
-	\label{fig:meine-grafik5}
-\end{figure}
-
-\begin{figure}[!ht]
-	\centering
-	\includegraphics[width=\textwidth]{Plots/Monatliche_Temperatur_Niederschläge.png}
-	\captionsource{Monatliche Durchschnittliche Temperaturen und maximale Niederschläge nach Tageszeiten in 2018}{
-		DWD, eigene Darstellung
-	}
-	\label{fig:meine-grafik5}
-\end{figure}
-
-\begin{figure}[!ht]
-	\centering
-	\includegraphics[width=\textwidth]{Plots/Taegliche_Temperatur_Niederschläge.png}
-	\captionsource{Tägliche Durchschnitts Temperaturen und monatliche maximale Niederschläge nach Tageszeiten in 2018}{
-		DWD, eigene Darstellung
-	}
-	\label{fig:meine-grafik5}
-\end{figure}
 
 \begin{table}[!htbp] \centering 
 	\caption{Freizeit und Berufsverkehr im Vergleich} 
@@ -625,13 +417,167 @@ Obwohl wir bei dem Model mit den Lageparametern ein kleineres Bestimmtheitsmaß 
 \end{table} 
 
 
+\chapter{Eigene Forschungsfrage}
+
+Im vorrangegangen Kapitell haben wir verschiedene Regressions Modelle vorgestellt zur Erklärung des Fahrradaufkommens an den Fahrradzählstationen in Mannheim. Nun kann man die Vorhersage Qualität dieser Modelle am Bestimmtheitsmaß messen. Das Bestimmtheitsmaß beschreibt wie hoch der Anteil der Streuung der Beobachtungsdaten ist, der durch das Model erklärt werden kann. Je näher das Bestimmtheitsmaß an 1 ist, desto besser fittet das Model, bzw desto besser erklärt das Model die Realität. Jedoch ermittelt man damit nur die interne Validität, als das Maß dafür, wie gut das Model die Daten beschreibt, die man schon kennt und mit denen man das Modell berechnet hat. Was ist aber, wenn man ein Modell entwickeln möchte, dass nicht nur Vorhersagen machen soll, für bereits bekannte Variablen, sondern auch für Variablen, die in der Zukunft liegen, oder vielleicht außerhalb des Rahmens der bereits bekannten Fahrradstationen?\\
+Teilen wir diese Fragen auf. Zunächst wollen wir es schaffen zeitliche Prognosen für die Zukunft an den Zählstationen selbst zu machen. Im nächsten Schritt wollen wir übergreifende Vorhersagen machen, die nicht nur an den Zählstationen selbst gemacht werden, sondern andern beliebigen Standorten.\\
+Allgemein müssen wir unseren Datensatz aufteilen, in einen Trainings und Test Datensatz. Dies birgt den Vorteil, dass wir nicht nur die interne sondern auch die externe Validität messen können, in dem wir das Model nur mit dem Trainingsdatensaz berechnen und mit dem Test Datensatz ein zusätzliches Bestimmtheitsmaß des Models berechnen. Als Bestimmtheitsmaß nutzen wir den justiereten $R^2$ Wert. Die Trainings und Test Set werden zufällig aus dem bestehenden Datensatz gezogen bei einem Split von 80 zu 20 aufgeteilt, sodass das Test Set 20 \% des ursprünglichen Datensatzes umfasst.\\
+Eine naheliegende Vorgehensweise wäre es, verschiedene Modelle zu erstellen, die verschiedene Variablen beinhalten und diese zu validieren, um im Vergleich das beste Model für seine Vorhersagen zu nehmen. Natürlich könnte man auch mittels Stepwise Selection das Model erstellen. Dies ist ein maschineller Prozesse, der das Model Durchgang für Durchgang mit den Koeffizienten füllt, die die größte Validität mit sich bringen, ist jedoch auch sehr rechen intensiv, vor allem bei einem Datensatz dieser Größe. Stattdessen erstellen wir manuell 30 verschiedene Modelle. Wir fügen dabei der Reihe weise nach neue Variablen zu jedem Modell dazu. Es beginnt mit den Wettervariablen. Dann tauschen wir für den reinen Niederschlag die kategorisierung des Niederschlags aus. Danach fügen wir die restlichen Variablen hinzu, wobei das Jahr nicht mehr faktorisiert wird, weil wir ja auch den Effekt für zukünftige Jahre berechnen wollen. Auch verwenden wir zunächst den Standort nicht sondern Lageparameter stattdessen. Dann fügen wir quadratische und kubische Effekte hinzu und zum Schluss berechnen wir drei Modelle mit dem faktorierten Standort, als Lageparameter. Um die Modelle zu vergleichen schauen wir das Bestimmtheitsmaß der Modelle im Traininsg und Test Datensatz. Dabei kommt die Graphik \ref{ModelSelektion} zustande.
+
+\begin{figure}[]
+	\centering
+	\includegraphics[width=\textwidth]{Plots/ModelSelektion1.pdf}
+	\captionsource{Fahrrad Daten Mannheim und DWD}{
+		Graphisches Beispiel einer Regression
+	}
+	\label{ModelSelektion}
+\end{figure}
+
+Auf der Y-Achse der Graphik \ref{ModelSelektion} abgetragen sehen wir die Höhe des Bestimmtheitsmaß. Auf der X Achse sehen wir die Anzahl der Koeffizienten. Mit jedem weiteren Model haben wir weitere Variablen hinzugefügt, angefangen mit den Wetter Variablen, Feiertage, Ferien, Zeitliche Variablen, wie das Jahr, Sommer oder Tageszeit bis hin zur geographischen Lage. Wir sehen, dass das Bestimmtheitsmaß, also die Genauigkeit der Vorhersage des Models, zu nimmt je mehr Variablen wir hinzufügen, bis zu einem Punkt, an dem das Bestimmtheitsmaß im Trainingsdatensatz zwar nochmals bedeutend zu nimmt, im Test Datensatz aber abnimmt. Hier geraten wir ins Overfitting. Das heißt, das Model, das hier entwickelt wurde, kann zwar die Daten, mit denen es trainiert wurde, extrem gut erklären, sobald wir aber mithilfe des Models vorhersagen treffen wollen, aufgrundlage neuer Daten, ist die Genauigkeit der Daten schlechter, als sie sein müsste. Das wollen wir verhindern. Denn wenn wir mit unserem Model Overfitting haben, kann es der Fall sein, dass wir in den Variablen Zusammenhänge sehen, die sich nicht replizieren lassen.\\
+
+Was löst in unserem Fall das Overfitting aus? Dazu vergleichen wir den Regressions Output zweier Modelle in der Tabele \ref{ZweiModelle}. Das zweite Model ist jenes, in dem erstmals Overfitting auftritt. Das erste Model ist das Model vor diesem, in dem noch kein Overfitting auftritt.
+
+
+% Table created by stargazer v.5.2.3 by Marek Hlavac, Social Policy Institute. E-mail: marek.hlavac at gmail.com
+% Date and time: Sa, Aug 06, 2022 - 12:27:57
+%\scalebox{0.9}{
+	\begin{longtable}{@{\extracolsep{-5pt}}lcc} 
+		\caption{Log-Lineare Modele} 
+		\label{ZweiModelle}
+	\small 
+		\\[-1.8ex]\hline 
+		\hline \\[-1.8ex] 
+		& \multicolumn{2}{c}{\textit{Dependent variable:}} \\ 
+		\cline{2-3} 
+		\\[-1.8ex] & \multicolumn{2}{c}{log(Zaehlstand)} \\ 
+		\\[-1.8ex] & (1) & (2)\\ 
+		\hline \\[-1.8ex] 
+		WertT2M & 0.028$^{***}$ (0.001) & 0.028$^{***}$ (0.001) \\ 
+		WertT2M2 & 0.0004$^{***}$ (0.0001) & 0.0005$^{***}$ (0.0001) \\ 
+		WertT2M3 & $-$0.00002$^{***}$ (0.00000) & $-$0.00002$^{***}$ (0.00000) \\ 
+		Leichter Nieselregen & $-$0.188$^{***}$ (0.007) & $-$0.187$^{***}$ (0.005) \\ 
+		Starker Nieselregen & $-$0.269$^{***}$ (0.012) & $-$0.263$^{***}$ (0.009) \\ 
+		Leichter Regen & $-$0.305$^{***}$ (0.013) & $-$0.307$^{***}$ (0.010) \\ 
+		Moderater Regen & $-$0.356$^{***}$ (0.020) & $-$0.353$^{***}$ (0.015) \\ 
+		Starker Regen & $-$0.384$^{***}$ (0.043) & $-$0.361$^{***}$ (0.032) \\ 
+		Heftiger Regen & $-$0.270$^{***}$ (0.078) & $-$0.232$^{***}$ (0.058) \\ 
+		WertF & $-$0.066$^{***}$ (0.006) & $-$0.070$^{***}$ (0.005) \\ 
+		WertF2 & 0.008$^{***}$ (0.002) & 0.008$^{***}$ (0.001) \\ 
+		WertF3 & $-$0.001$^{***}$ (0.0001) & $-$0.001$^{***}$ (0.0001) \\ 
+		WertRF & 0.0003 (0.002) & $-$0.001 (0.002) \\ 
+		WertRF2 & $-$0.0001$^{***}$ (0.00003) & $-$0.0001$^{***}$ (0.00003) \\ 
+		WertRF3 & 0.00000$^{***}$ (0.00000) & 0.00000$^{***}$ (0.00000) \\ 
+		WertN & 0.003 (0.006) & 0.002 (0.005) \\ 
+		WertN2 & $-$0.003 (0.002) & $-$0.003$^{*}$ (0.001) \\ 
+		WertN3 & 0.0001 (0.0001) & 0.0002$^{*}$ (0.0001) \\ 
+		SemesterferionUM & $-$0.129$^{***}$ (0.003) & $-$0.142$^{***}$ (0.003) \\ 
+		SchulferienBW & $-$0.156$^{***}$ (0.004) & $-$0.145$^{***}$ (0.003) \\ 
+		FeiertagBW & $-$0.388$^{***}$ (0.026) & $-$0.383$^{***}$ (0.019) \\ 
+		FeiertagRP & 0.062 (0.162) & 0.076 (0.121) \\ 
+		FeiertagBWRP & $-$0.553$^{***}$ (0.164) & $-$0.568$^{***}$ (0.123) \\ 
+		Sommer & 0.053$^{***}$ (0.005) & 0.047$^{***}$ (0.004) \\ 
+		laengengrad & 2,939,930.000$^{***}$ (14,714.250) &  \\ 
+		breitengrad & 493,297.900$^{***}$ (2,540.769) &  \\ 
+		LängengxBreiteng & $-$58,170.540$^{***}$ (299.637) &  \\ 
+		laengengrad3 & $-$281.543$^{***}$ (1.343) &  \\ 
+		Konrad-Adenauer-Br. &  & 0.182$^{***}$ (0.004) \\ 
+		Kurpfalzbrücke &  & 1.549$^{***}$ (0.004) \\ 
+		K. Schumacher-Br. &  & $-$2.612$^{***}$ (0.004) \\ 
+		Lindenhofüberf. &  & $-$0.509$^{***}$ (0.005) \\ 
+		Neckarauer Überg. &  & $-$0.042$^{***}$ (0.005) \\ 
+		Renzstraße &  & 0.863$^{***}$ (0.004) \\ 
+		Schlosspark Lind. &  & 0.178$^{***}$ (0.005) \\ 
+		uniMA\_dist & $-$0.013$^{***}$ (0.0001) &  \\ 
+		Corona & 0.015$^{**}$ (0.006) & $-$0.021$^{***}$ (0.005) \\ 
+		Kontaktbeschr & $-$0.122$^{***}$ (0.005) & $-$0.119$^{***}$ (0.004) \\ 
+		Jahr & 24,671.730$^{***}$ (2,362.121) & $-$5,005.576$^{***}$ (1,768.591) \\ 
+		Jahr2 & $-$12.216$^{***}$ (1.170) & 2.492$^{***}$ (0.876) \\ 
+		Jahr3 & 0.002$^{***}$ (0.0002) & $-$0.0004$^{***}$ (0.0001) \\ 
+		Stunde06 & 0.406$^{***}$ (0.008) & 0.406$^{***}$ (0.006) \\ 
+		Stunde07 & 0.929$^{***}$ (0.008) & 0.927$^{***}$ (0.006) \\ 
+		Stunde08 & 1.082$^{***}$ (0.008) & 1.076$^{***}$ (0.006) \\ 
+		Stunde09 & 0.929$^{***}$ (0.009) & 0.922$^{***}$ (0.006) \\ 
+		Stunde10 & 0.825$^{***}$ (0.009) & 0.819$^{***}$ (0.006) \\ 
+		Stunde11 & 0.893$^{***}$ (0.009) & 0.885$^{***}$ (0.007) \\ 
+		Stunde12 & 1.010$^{***}$ (0.009) & 1.003$^{***}$ (0.007) \\ 
+		Stunde13 & 1.132$^{***}$ (0.009) & 1.126$^{***}$ (0.007) \\ 
+		Stunde14 & 1.188$^{***}$ (0.009) & 1.180$^{***}$ (0.007) \\ 
+		Stunde15 & 1.319$^{***}$ (0.009) & 1.311$^{***}$ (0.007) \\ 
+		Stunde16 & 1.479$^{***}$ (0.009) & 1.471$^{***}$ (0.007) \\ 
+		Stunde17 & 1.483$^{***}$ (0.009) & 1.477$^{***}$ (0.007) \\ 
+		Stunde18 & 1.297$^{***}$ (0.009) & 1.293$^{***}$ (0.006) \\ 
+		Stunde19 & 1.019$^{***}$ (0.008) & 1.015$^{***}$ (0.006) \\ 
+		Stunde20 & 0.712$^{***}$ (0.008) & 0.710$^{***}$ (0.006) \\ 
+		Stunde21 & 0.624$^{***}$ (0.050) & 0.601$^{***}$ (0.037) \\ 
+		Stunde22 & 0.550$^{***}$ (0.049) & 0.521$^{***}$ (0.037) \\ 
+		WochentagDo & $-$0.009$^{*}$ (0.006) & $-$0.007$^{*}$ (0.004) \\ 
+		WochentagFr & $-$0.084$^{***}$ (0.006) & $-$0.083$^{***}$ (0.004) \\ 
+		WochentagMi & $-$0.003 (0.005) & $-$0.004 (0.004) \\ 
+		WochentagMo & $-$0.049$^{***}$ (0.006) & $-$0.045$^{***}$ (0.004) \\ 
+		WochentagSa & $-$0.627$^{***}$ (0.006) & $-$0.627$^{***}$ (0.004) \\ 
+		WochentagSo & $-$0.969$^{***}$ (0.006) & $-$0.967$^{***}$ (0.004) \\ 
+		Constant & $-$41,369,101.000$^{***}$ & 3,351,009.000$^{***}$  \\ 
+		 & (1,588,755.000) & (1,189,707.000) \\ 
+		\hline \\[-1.8ex] 
+		Observations & 328,715 & 328,715 \\ 
+		R$^{2}$ & 0.669 & 0.815 \\ 
+		Adjusted R$^{2}$ & 0.669 & 0.815 \\ 
+		\hline 
+		\hline \\[-1.8ex] 
+		\textit{Note:}  & \multicolumn{2}{r}{$^{*}$p$<$0.1; $^{**}$p$<$0.05; $^{***}$p$<$0.01} \\ 
+	\end{longtable}
+
+
+
+
+
+Beide Modelle unterscheiden sich im wesentlichen in der Wahl der Fixed Effects. Fixed Effects sind all jene Schätzer, die über die Zeit nicht variieren, also fix sind und nur zwischen den Entitäten variieren. In diesem konkreten Fall heißt das, ein Fixed Effect ist eine Variable die zeitlich konstant bleibt, sich aber zwischen den Fahrradzählstationen unterscheidet. Das dient dazu, die Unterschiede zwischen diesen Stationen zu messen und im Model mit aufzunehmen. Denn wenn wir uns die Graphik \ref{BoxplotStationen} anschauen, sehen wir, dass die Stationen untereinander recht stark variieren. Z.B. sehen wir, dass auf der Kurpfalzbrücke, die von der Innenstadt über den Neckar führt, grundsätzlich mehr Radverkehr herrscht. Nehmen wir jetzt z.B. eine Dummy Variable in das Model auf, die 1 ist, wenn ein Beobachtungswert von der Kurpfalzbrücke stammte und 0 ist, wenn der Beobachtungswert von einer anderen Station stammte, dann erklärt diese Variable den Unterschied zwischen der Kurpfalzbrücke und den anderen Stationen im Model, ohne den Ursächlichen Grund dafür zu kennen, erhöht aber den Fit des Models, denn nun können die anderen Variablen ihren Einfluss präziser schätzen.\\ 
+
+Eine solche Dummy Variable können wir für 7 von 8 Stationen in das Model aufnehmen. Bei der achten reicht es, wenn alle anderen Dummy Variablen 0 sind. Andernfalls bekämen wir ein multikollineares Model, also ein Model in dem mindestens zwei Variablen linear abhängig von einander sind. Genau auf diese Weise sind wir im zweiten Model vorgegangen. Dieses beinhaltet eine Dummy Variable Kurpfalzbrücke, Lindenhofüberführung, Neckarauer Übergang, Renzstraße und Schloßpark/Lindenhof. Die übrige Station an der Kurt Schuhmacher Brücke ergibt sich, wie bereits erklärt, wenn alle anderen 7 Dummy Variabeln 0 sind. Diese Vorgehensweise fürht zu einem Bestimmtheitsmaß von 81,44 \%, was sich gut anhört, wie aber bereits gezeigt, größtenteils auf Overfitting zurückzuführen ist.\\
+
+Möglicherweise hängt dies damit zu zusammen, dass die Stations Dummy Variabeln zwar Unterschiede erkennen, aber keinen ursächlichen Grund dafür finden. Wenn man aber Lageparameter als Fixed Effekt nutzt hätte man einen möglichen ursächlichen Grund für den Unterschied, die Lage. Da Lageparameter zeitlich auch konstant sind, lassen sich diese ebenfalls sehr gut als Fixed Effect nutzen. Im ersten Model nutzen wir dazu den Längengrad, sowie den quadrierten Längengrad, den Breitengrad, Längen und Breitengrad miteinander multipliziert (Intersektion) und den Abstand zur Universität Mannheim in uniMA dist. Auf den quadrierten Wert des Breitengrades verzichten wir, weil dies wiederum zu Multikollinearität führen würde und im Regressionsoutput ein Fehler auftauchen würde, wie sich zeigte. Auch führt eine Kombination aus Lageparametern und Standort Dummy Variabeln zu Fehlern im Regressionsoutput, weswegen wir beide Fixed Effects getrennt von einander nutzen.\\
+
+Obwohl wir bei dem Model mit den Lageparametern ein kleineres Bestimmtheitsmaß von nur 66,8 \% erhalten, entscheiden wir uns gegen das Model mit Standort Dummy Variabeln, wegen einer höheren externen Validität gemessen im Test Datensatz.
+
+\chapter{Fazit}
+
+\chapter{Anhang}
+
+\begin{figure}[!ht]
+	\centering
+	\includegraphics[width=\textwidth]{Plots/Corr_Plot.pdf}
+	\captionsource{Korrelations Plot}{
+		Korrelation zwischen den verschiedenen Variablen
+	}
+	\label{fig:meine-grafik5}
+\end{figure}
+
+\begin{figure}[!ht]
+	\centering
+	\includegraphics[width=\textwidth]{Plots/Monatliche_Temperatur_Niederschläge.png}
+	\captionsource{Monatliche Durchschnittliche Temperaturen und maximale Niederschläge nach Tageszeiten in 2018}{
+		DWD, eigene Darstellung
+	}
+	\label{fig:meine-grafik5}
+\end{figure}
+
+\begin{figure}[!ht]
+	\centering
+	\includegraphics[width=\textwidth]{Plots/Taegliche_Temperatur_Niederschläge.png}
+	\captionsource{Tägliche Durchschnitts Temperaturen und monatliche maximale Niederschläge nach Tageszeiten in 2018}{
+		DWD, eigene Darstellung
+	}
+	\label{fig:meine-grafik5}
+\end{figure}
+
+
 
 
 
 
 \begin{table}[!htbp] \centering 
 	\caption{Wetterdaten als täglichen Niederschlag und Höchsttemperatur} 
-	\label{utilitarianvsFreizeit} 
+	\label{ExtraWetter} 
 	\begin{tabular}{@{\extracolsep{-5pt}}lccccc} 
 		\\[-1.8ex]\hline 
 		\hline \\[-1.8ex] 
@@ -693,7 +639,35 @@ Obwohl wir bei dem Model mit den Lageparametern ein kleineres Bestimmtheitsmaß 
 
 Zwar steigt das Bestimmtheitsmaß und die Übersichtlichkeit des Modells nimmt zu, da die Anzahl der Koeffizienten abnimmt, allerdings verwirrt es mich, dass Feiertage in Badenwürttemberg eine niedrigere Signifikanz haben sollen, als in Rheinlandpfalz. Auch dass die Sommer Variable an Signifikanz weiter verliert, macht mich eher skeptisch.
 
-
+\begin{table}[!htbp] \centering 
+	\caption{Beispielhafte Vorhersagen} 
+	\label{ForecastsExample} 
+	\begin{tabular}{@{\extracolsep{-5pt}}lccccc} 
+		\\[-1.8ex]\hline 
+		\hline \\[-1.8ex] 
+		%\\[-1.8ex] & \multicolumn{8}{c}{log(Zaehlstand)}  \\ 
+		Beobachtungen: & (1) & (2) & (3) \\ 
+		\hline \\[-1.8ex] 
+		Temperatur & 28°C & 4°C & 12°C\\
+		Niederschlag & 0 mm & 3 mm &  3 mm\\
+		Bedeckungsgrad & 1/8 & 2/8 & 8/8\\
+		Windgeschwindigkeit &  1 m/s & 3 m/s & 4 m/s\\
+		Luftfeuchtigkeit &  75 \% & 85 \% & 71 \% \\
+		Sonne & 19.22 & 19.22 & 19.22\\
+		Feiertag BW & Nein & Ja & Nein \\
+		Feiertag RP & Nein & Ja & Nein \\
+		Schulferien BW & Nein & Ja & Nein \\
+		Semesterferien & Ja & Nein & Nein \\
+		Uhrzeit & 16:00 & 11:00 & 15:00 \\
+		Wochentag & Sonntag & Freitag & Mittwoch \\
+		Monat & August & November & Juni \\
+		Jahr & 2018 & 2018 & 2018 \\
+		Kontakteinschr & Nein & Nein & Nein \\
+		\hline \\[-1.8ex]
+		Vorhersagen: & 356 & 32 & 162 \\ 
+		\hline \\[-1.8ex] 
+	\end{tabular} 
+\end{table} 
 
 \newpage
 \addcontentsline{toc}{chapter}{Literaturverzeichnis}
