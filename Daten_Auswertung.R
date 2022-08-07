@@ -706,13 +706,17 @@ names(datensatz)
 	nrow(datensatz)
 	ncollect =260400
 
-	testzeitraum=c(25033,25035,25037,25039,25041,25043,25045,25047,25049,25051,25053,25055,25057,25059,25061,25063)
-	
-	#testzeitraum=testzeitraum-500
+	levels(as.factor(datensatz$Stunde))
+
+	testzeitraum=c(25033,25035,25037,25039,25041,25043,25045,25047,25049,25051,25053,25055,25057,25059,25061,25063,
+		25065,25067,25069,25071,25073,25075,25077,25079,25081,25083,25085,25087,25089,25091,25093,25095,
+		25097,25099,25101,25103,25105,25107,25109,25111,25113,25115,25117,25119,25121,25123,25125,25127,
+		25129,25131,25133,25135,25137,25129,25141,25143,25145,25147,25149,25151,25153,25155,25157,25159,
+		25161,25163,25165,25167,25169,25171,25173,25175,25177,25179,25181,25183,25185,25187,25189,25191)
 
 	paste("Fahradfahrer am ", datensatz$Tag[ncollect],".", datensatz$Monat[ncollect],".", datensatz$Jahr[ncollect], " um ",datensatz$Stunde[ncollect], " Uhr", sep="")
 	
-	strassen$Jahr=datensatz$Jahr[ncollect]
+	strassen$Jahr=as.numeric(datensatz$Jahr[ncollect])+7
 	strassen$Monat=datensatz$Monat[ncollect]
 	strassen$Tag=datensatz$Tag[ncollect]
 	strassen$Stunde=datensatz$Stunde[ncollect]
@@ -791,6 +795,14 @@ names(datensatz)
 	summary(exp(prediction_fuer_strassen27))
 
 	#Wie man sieht, kommen ab Model 24 unrealistische Werte heraus. Deswegen w‰hlen wir noch Model 23
+	
+	stargazer(model23,type="latex",
+          font.size = "small",
+	    single.row = TRUE,
+          #align = TRUE,
+          omit.stat=c("f", "ser"),
+          column.sep.width = "-15pt" # Well... you can tweak this
+	)
 	
 	prediction_fuer_strassen <- model23 %>% predict(strassen)
 	plot(exp(prediction_fuer_strassen))
@@ -1126,16 +1138,8 @@ strassen$Jahr3=as.numeric(strassen$Jahr)^3
 strassen$laengengrad3=strassen$laengengrad^3
 strassen$breitengrad3=strassen$breitengrad^3
 
-prediction_fuer_strassen <- model25 %>% predict(strassen)
+prediction_fuer_strassen <- model23 %>% predict(strassen)
 strassen$Zaehlstand=exp(prediction_fuer_strassen)
-
-#strassen$Zaehlstand=if_else(strassen$Zaehlstand > max(datensatz$Zaehlstand)
-#	, max(datensatz$Zaehlstand) + (strassen$Zaehlstand-max(datensatz$Zaehlstand))*0.01
-#	, strassen$Zaehlstand)
-
-#strassen$Zaehlstand=if_else(strassen$Zaehlstand > 1200
-#	, 1200
-#	, strassen$Zaehlstand)
 
 strassen$Zaehlstand=if_else(strassen$Zaehlstand < 0
 	, 0
@@ -1268,8 +1272,8 @@ zeit=datensatz$Stunde[ncollect]
 jahr=datensatz$Jahr[ncollect]
 d = subset(datensatz, Monat == monat & Tag == tag & Stunde == zeit & Jahr == jahr)
 
-mid <- 600
-mid = min(strassen$Zaehlstand) +(max(strassen$Zaehlstand)-min(strassen$Zaehlstand))/2
+mid <- 400
+#mid = min(strassen$Zaehlstand) +(max(strassen$Zaehlstand)-min(strassen$Zaehlstand))/2
 myMap <- get_stamenmap(bbox=myLocation, maptype="toner-lite", zoom=15)
 map = ggmap(myMap)+
 ggtitle(paste("Fahradfahrer am ", strassen$Tag[1],".", strassen$Monat[1],".", strassen$Jahr[1], " um ",strassen$Stunde[1], " Uhr", sep="")) +
@@ -1393,10 +1397,88 @@ geom_line(aes(x=laengengrad, y=breitengrad, color = Zaehlstand), data=strassenAB
 geom_line(aes(x=laengengrad, y=breitengrad, color = Zaehlstand), data=strassenAB117, size = 2) +
 geom_line(aes(x=laengengrad, y=breitengrad, color = Zaehlstand), data=strassenAB118, size = 2) +
 geom_point(aes(x=laengengrad, y=breitengrad, color = Zaehlstand), data=d, size = 6) + 
- scale_color_gradient2(midpoint = mid, low = "green", mid = "red",
-                            high = "blue", limits = c(0, 40000), space = "Lab" )
+	scale_color_gradient2(midpoint = mid, low = "green", mid = "red",
+      	high = "blue", limits = c(0, 800), space = "Lab" )
 map
-save(map, file = paste("HeatMaps/HeatMap", i, ".Rdata", sep=""))
+#save(map, file = paste("HeatMaps/HeatMap", i, ".Rdata", sep=""))
 ggsave(plot = map,filename = paste("HeatMaps/HeatMap", i, ".png", sep=""))
 }
 
+
+#Vergleich mit der Renzstrasse
+
+
+	load("datensatz_RSAusfall.rdata")
+	datensatz_RSAusfall=datensatz_RSAusfall
+	nrow(datensatz_RSAusfall)
+	names(datensatz_RSAusfall)
+
+	#Data Set Preparation
+
+	datensatz_RSAusfall = datensatz_RSAusfall %>%
+		filter(as.numeric(Stunde) %in% c(5:22))
+
+	datensatz_RSAusfall = datensatz_RSAusfall %>%
+		mutate(Zaehlstand = ifelse(Zaehlstand == 0,1,Zaehlstand))
+
+	datensatz_RSAusfall = datensatz_RSAusfall %>%
+		mutate(Wochenende = ifelse(Wochenende == "Wochenende",1,0))
+
+	#Nonlinear effects and intercepts
+
+	datensatz_RSAusfall$WertT2M2 = datensatz_RSAusfall$WertT2M^2
+	datensatz_RSAusfall$WertRR2 = datensatz_RSAusfall$WertRR^2
+	datensatz_RSAusfall$WertF2 = datensatz_RSAusfall$WertF^2
+	datensatz_RSAusfall$WertRF2 = datensatz_RSAusfall$WertRF^2
+	datensatz_RSAusfall$WertSD2 = datensatz_RSAusfall$WertSD^2
+	datensatz_RSAusfall$WertN2 = datensatz_RSAusfall$WertN^2
+	datensatz_RSAusfall$Jahr2 = as.numeric(datensatz_RSAusfall$Jahr)^2
+	datensatz_RSAusfall$uniMA_dist2 = datensatz_RSAusfall$uniMA_dist^2
+	datensatz_RSAusfall$laengengrad2 = datensatz_RSAusfall$laengengrad^2
+	datensatz_RSAusfall$breitengrad2 = datensatz_RSAusfall$breitengrad^2
+	datensatz_RSAusfall$laengenbreitengrad = datensatz_RSAusfall$laengengrad*datensatz_RSAusfall$breitengrad
+	datensatz_RSAusfall$FeiertagBWRP = datensatz_RSAusfall$FeiertagBW*datensatz_RSAusfall$FeiertagRP
+	datensatz_RSAusfall$WertT2M3 = datensatz_RSAusfall$WertT2M^3
+	datensatz_RSAusfall$WertRR3 = datensatz_RSAusfall$WertRR^3
+	datensatz_RSAusfall$WertF3 = datensatz_RSAusfall$WertF^3
+	datensatz_RSAusfall$WertRF3 = datensatz_RSAusfall$WertRF^3
+	datensatz_RSAusfall$WertSD3 = datensatz_RSAusfall$WertSD^3
+	datensatz_RSAusfall$WertN3 = datensatz_RSAusfall$WertN^3
+	datensatz_RSAusfall$Jahr3 = as.numeric(datensatz_RSAusfall$Jahr)^3
+	datensatz_RSAusfall$uniMA_dist3 = datensatz_RSAusfall$uniMA_dist^3
+	datensatz_RSAusfall$laengengrad3 = datensatz_RSAusfall$laengengrad^3
+	datensatz_RSAusfall$breitengrad3 = datensatz_RSAusfall$breitengrad^3
+
+	names(datensatz)
+
+	#Niederschlag kategoresieren nach Wessel
+
+	# Wessel (2020)
+	datensatz_RSAusfall$niederschlag_factor_wes <- NULL
+      datensatz_RSAusfall$niederschlag_factor_wes <- "Kein Regen"
+      datensatz_RSAusfall$niederschlag_factor_wes[datensatz_RSAusfall$WertRR > 0 & datensatz_RSAusfall$WertRR < 0.5] <- "Leichter Nieselregen"
+      datensatz_RSAusfall$niederschlag_factor_wes[datensatz_RSAusfall$WertRR >= 0.5 & datensatz_RSAusfall$WertRR < 1] <- "Starker Nieselregen"
+      datensatz_RSAusfall$niederschlag_factor_wes[datensatz_RSAusfall$WertRR >= 1 & datensatz_RSAusfall$WertRR < 2] <- "Leichter Regen"
+      datensatz_RSAusfall$niederschlag_factor_wes[datensatz_RSAusfall$WertRR >= 2 & datensatz_RSAusfall$WertRR < 5] <- "Moderater Regen"
+      datensatz_RSAusfall$niederschlag_factor_wes[datensatz_RSAusfall$WertRR >= 5 & datensatz_RSAusfall$WertRR < 10] <- "Starker Regen"
+      datensatz_RSAusfall$niederschlag_factor_wes[datensatz_RSAusfall$WertRR >= 10] <- "Heftiger Regen"
+	datensatz_RSAusfall$niederschlag_factor_wes <- factor(datensatz_RSAusfall$niederschlag_factor_wes, levels = c("Kein Regen", "Leichter Nieselregen", "Starker Nieselregen", "Leichter Regen", "Moderater Regen", "Starker Regen", "Heftiger Regen"))
+
+	#Vorhersagen
+
+	prediction_model27 <- exp(model27 %>% predict(datensatz_RSAusfall))
+	prediction_model24 <- exp(model24 %>% predict(datensatz_RSAusfall))
+	prediction_linlog <- exp(LinLog %>% predict(datensatz_RSAusfall))
+	prediction_negbin <- exp(regression_negbin %>% predict(datensatz_RSAusfall))
+
+	plot(prediction_model27)
+
+	ggplot() +
+		geom_line(aes(x = datensatz_RSAusfall$Datum, y = prediction_model24, color = "Model23")) +
+		geom_line(aes(x = datensatz_RSAusfall$Datum, y = datensatz_RSAusfall$Zaehlstand, color = "EcoCounter")) +
+		#geom_line(aes(x = datensatz_RSAusfall$Datum, y = prediction_model27, color = "Model27")) +
+		#geom_line(aes(x = datensatz_RSAusfall$Datum, y = prediction_linlog, color = "LogLin")) +
+		#geom_line(aes(x = variables, y = adjR2_test, color = "Test")) +
+  		#scale_color_manual(values = c("blue4", "darkorange1")) +
+  		theme_classic() + ggtitle("Renzstraﬂe") +
+  		xlab("Zeit") + ylab("Z‰hlstand der Fahrradstation")

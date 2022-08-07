@@ -420,7 +420,7 @@ Das Standardmodell kann man nun dazu verwenden, Vorhersagen zu machen. Für drei
 \chapter{Eigene Forschungsfrage}
 
 Im vorrangegangen Kapitell haben wir verschiedene Regressions Modelle vorgestellt zur Erklärung des Fahrradaufkommens an den Fahrradzählstationen in Mannheim. Nun kann man die Vorhersage Qualität dieser Modelle am Bestimmtheitsmaß messen. Das Bestimmtheitsmaß beschreibt wie hoch der Anteil der Streuung der Beobachtungsdaten ist, der durch das Model erklärt werden kann. Je näher das Bestimmtheitsmaß an 1 ist, desto besser fittet das Model, bzw desto besser erklärt das Model die Realität. Jedoch ermittelt man damit nur die interne Validität, als das Maß dafür, wie gut das Model die Daten beschreibt, die man schon kennt und mit denen man das Modell berechnet hat. Was ist aber, wenn man ein Modell entwickeln möchte, dass nicht nur Vorhersagen machen soll, für bereits bekannte Variablen, sondern auch für Variablen, die in der Zukunft liegen, oder vielleicht außerhalb des Rahmens der bereits bekannten Fahrradstationen?\\
-Teilen wir diese Fragen auf. Zunächst wollen wir es schaffen zeitliche Prognosen für die Zukunft an den Zählstationen selbst zu machen. Im nächsten Schritt wollen wir übergreifende Vorhersagen machen, die nicht nur an den Zählstationen selbst gemacht werden, sondern andern beliebigen Standorten.\\
+Teilen wir diese Fragen auf. Zunächst wollen wir es schaffen zeitliche Prognosen für die Zukunft an den Zählstationen selbst zu machen. Im nächsten Schritt wollen wir übergreifende Vorhersagen machen, die nicht nur an den Zählstationen selbst gemacht werden, sondern andeern beliebigen Standorten.\\
 
 \section{Model Selektion}
 
@@ -496,29 +496,6 @@ Was löst in unserem Fall das Overfitting aus? Dazu vergleichen wir den Regressi
 		Jahr & 24,671.730$^{***}$ (2,362.121) & $-$5,005.576$^{***}$ (1,768.591) \\ 
 		Jahr2 & $-$12.216$^{***}$ (1.170) & 2.492$^{***}$ (0.876) \\ 
 		Jahr3 & 0.002$^{***}$ (0.0002) & $-$0.0004$^{***}$ (0.0001) \\ 
-		Stunde06 & 0.406$^{***}$ (0.008) & 0.406$^{***}$ (0.006) \\ 
-		Stunde07 & 0.929$^{***}$ (0.008) & 0.927$^{***}$ (0.006) \\ 
-		Stunde08 & 1.082$^{***}$ (0.008) & 1.076$^{***}$ (0.006) \\ 
-		Stunde09 & 0.929$^{***}$ (0.009) & 0.922$^{***}$ (0.006) \\ 
-		Stunde10 & 0.825$^{***}$ (0.009) & 0.819$^{***}$ (0.006) \\ 
-		Stunde11 & 0.893$^{***}$ (0.009) & 0.885$^{***}$ (0.007) \\ 
-		Stunde12 & 1.010$^{***}$ (0.009) & 1.003$^{***}$ (0.007) \\ 
-		Stunde13 & 1.132$^{***}$ (0.009) & 1.126$^{***}$ (0.007) \\ 
-		Stunde14 & 1.188$^{***}$ (0.009) & 1.180$^{***}$ (0.007) \\ 
-		Stunde15 & 1.319$^{***}$ (0.009) & 1.311$^{***}$ (0.007) \\ 
-		Stunde16 & 1.479$^{***}$ (0.009) & 1.471$^{***}$ (0.007) \\ 
-		Stunde17 & 1.483$^{***}$ (0.009) & 1.477$^{***}$ (0.007) \\ 
-		Stunde18 & 1.297$^{***}$ (0.009) & 1.293$^{***}$ (0.006) \\ 
-		Stunde19 & 1.019$^{***}$ (0.008) & 1.015$^{***}$ (0.006) \\ 
-		Stunde20 & 0.712$^{***}$ (0.008) & 0.710$^{***}$ (0.006) \\ 
-		Stunde21 & 0.624$^{***}$ (0.050) & 0.601$^{***}$ (0.037) \\ 
-		Stunde22 & 0.550$^{***}$ (0.049) & 0.521$^{***}$ (0.037) \\ 
-		WochentagDo & $-$0.009$^{*}$ (0.006) & $-$0.007$^{*}$ (0.004) \\ 
-		WochentagFr & $-$0.084$^{***}$ (0.006) & $-$0.083$^{***}$ (0.004) \\ 
-		WochentagMi & $-$0.003 (0.005) & $-$0.004 (0.004) \\ 
-		WochentagMo & $-$0.049$^{***}$ (0.006) & $-$0.045$^{***}$ (0.004) \\ 
-		WochentagSa & $-$0.627$^{***}$ (0.006) & $-$0.627$^{***}$ (0.004) \\ 
-		WochentagSo & $-$0.969$^{***}$ (0.006) & $-$0.967$^{***}$ (0.004) \\ 
 		Constant & $-$41,369,101.000$^{***}$ & 3,351,009.000$^{***}$  \\ 
 		 & (1,588,755.000) & (1,189,707.000) \\ 
 		\hline \\[-1.8ex] 
@@ -528,6 +505,7 @@ Was löst in unserem Fall das Overfitting aus? Dazu vergleichen wir den Regressi
 		\hline 
 		\hline \\[-1.8ex] 
 		\textit{Note:}  & \multicolumn{2}{r}{$^{*}$p$<$0.1; $^{**}$p$<$0.05; $^{***}$p$<$0.01} \\ 
+		\textit{Fixed Effects:}  & \multicolumn{2}{r}{Stunde, Wochentag} \\
 	\end{longtable}
 
 
@@ -541,17 +519,134 @@ Obwohl wir bei dem Model mit den Lageparametern ein kleineres Bestimmtheitsmaß 
 
 \section{Fahrrad Topographie}
 
+Wir haben nun ein Modell, dass auf Lagekoordinaten und den Abstand zur Universität Mannheim in Metern zurückgreift, um seine Vorhersagen zu berechnen. Was passiert, wenn wir in dieses Model Lageparameter eingeben, die gar nicht von den Zählstationen selbst stammten, sondern von einem beliebigen Straßenpunkt.\\
+Dazu habe ich Ein Netz von Koordinaten über die Straßen Mannheims gelegt und mit einander so verbunden, dass wir ein Straßennetz erhalten. Auf dieses wenden wir unser Vorhersagen an. Allerdings ist das modelierte Straßennetz nicht vollumfänglich, sondern beinhaltet nur eine persönliche Auswahl an Straßen, die meiner persönlichen Ortskenntnis, die meiste Relevanz haben. Beim Testen des Models fällt auf, dass das Model, welches im vorherigen Kapitel ausgewählt worden ist, extreme Ausreißer vorhersagt, wie wir in Darstellung \ref{ForecastDistribution} sehen. 
+
+\begin{table}[!htbp] \centering 
+	\caption{Verteilung der Vorhersagen} 
+	\label{ForecastDistribution} 
+	\begin{tabular}{@{\extracolsep{-5pt}}lccccc} 
+		\\[-1.8ex]\hline 
+		\hline \\[-1.8ex] 
+		%\\[-1.8ex] & \multicolumn{8}{c}{log(Zaehlstand)}  \\ 
+		\\[-1.8ex] & Min & Median & Mean & Max\\ 
+		\hline \\[-1.8ex] 
+		Datensatz & 1 & 63 & 108.3 & 955 \\ 
+		Vorhersagen von Model 21	 & 12.5 & 101.2 & 123.1 & 509 \\ 
+		Vorhersagen von Model 22	 & 12.5 & 101.9 & 123.8 & 507.6 \\ 
+		Vorhersagen von Model 23	 & 12.5 & 101.3 & 123.3 & 509.6 \\ 
+		Vorhersagen von Model 24	 & 0 & 318.1 & 22604.4 & 514502.8\\ 
+		Vorhersagen von Model 25	 & 0 & 318.1 & 22604.4 & 514502.8\\ 
+		Vorhersagen von Model 26	 & 0 & 285.5 & 19143.1 & 425675.6\\ 
+		Vorhersagen von Model 27	 & 0 & 168 & 2943.41 & 36717.38\\ 
+		\hline \\[-1.8ex] 
+	\end{tabular} 
+\end{table} 
+
+Ein Grund für die extremen Ausreißer ist die Einführung der Intersektionsvariablen $LaengengradxBreitengrad$. Das ist jedoch nicht weiter dramatisch, da wir problemlos ohne große Verluste auf das Model 23 zurückgreifen können, welches wir in der Übersicht \ref{FinalFinalModel} sehen. Wenden wir genaue dieses Model auf das angelegte Straßennetz Mannheims an, dann kommen wir zu der Vorhersage in der Graphik \ref{Topography1}. Zudem ist eine animierte Vorhersage auf YouTube verfügbar (Link: \url{https://www.youtube.com/watch?v=nqP-_xEMWok}). Beidem Darstellungen kann man entnehmen, dass der Verkehr im Westen der Stadt stärker sei, vor allem im Nordwesten. Es gibt jedoch keine Möglichkeiten diese Aussagen weiter zu prüfen, als durch bloße ungefähre subjektive Ortskenntnis des Verkehrs.\\
+Zudem ist die berechnete Topographie sehr genau. Anlaufzentren wie der Bahnhof sollten stärker hervor treten. Außerdem je weiter die Vorhersage vom Stadtzentrum entfernt ist, desto weniger ist sie verlässlich, denn die Beobachtungspunkte auf denen unser Model zur Vorhersage aufbaut, liegen alle sehr nah am Zentrum. Mit nur acht Beobachtungspunkten auf ein räumliches Model zu schließen, ist zu gewagt, um daraus überzeugende Schlussfolgerungen zu ziehen. Vielmehr dienlich war die Topographie um zu zeigen, wie weit Overfitting in unseren Modellen vorhanden war, denn auch wenn Model 24 bis 27 in der Darstellung \ref{ModelSelektion} keinen Hinweis auf Overfitting gaben, zeigte sich in der Anwendung der Modelle außerhalb der geographischen Lageparameter des vorhandenen Datensatzes unrealistische Vorhersagen mit extremen Ausreißern.
+
+
+% Table created by stargazer v.5.2.3 by Marek Hlavac, Social Policy Institute. E-mail: marek.hlavac at gmail.com
+% Date and time: So, Aug 07, 2022 - 09:59:14
+\begin{table}[!htbp] \centering 
+	\caption{Model 24} 
+	\label{FinalFinalModel} 
+	\small 
+	\begin{tabular}{@{\extracolsep{-15pt}}lc} 
+		\\[-1.8ex]\hline 
+		\hline \\[-1.8ex] 
+		& \multicolumn{1}{c}{\textit{Dependent variable:}} \\ 
+		\cline{2-2} 
+		\\[-1.8ex] & log(Zaehlstand) \\ 
+		\hline \\[-1.8ex] 
+		WertT2M & 0.034$^{***}$ (0.001) \\ 
+		WertT2M2 & $-$0.0004$^{***}$ (0.00003) \\ 
+		niederschlag\_factor\_wesLeichter Nieselregen & $-$0.183$^{***}$ (0.009) \\ 
+		niederschlag\_factor\_wesStarker Nieselregen & $-$0.271$^{***}$ (0.015) \\ 
+		niederschlag\_factor\_wesLeichter Regen & $-$0.301$^{***}$ (0.016) \\ 
+		niederschlag\_factor\_wesModerater Regen & $-$0.351$^{***}$ (0.024) \\ 
+		niederschlag\_factor\_wesStarker Regen & $-$0.347$^{***}$ (0.051) \\ 
+		niederschlag\_factor\_wesHeftiger Regen & $-$0.192$^{**}$ (0.093) \\ 
+		WertF & $-$0.031$^{***}$ (0.004) \\ 
+		WertF2 & $-$0.001$^{***}$ (0.0004) \\ 
+		WertRF & $-$0.006$^{***}$ (0.001) \\ 
+		WertRF2 & 0.00001$^{**}$ (0.00000) \\ 
+		WertN & 0.001 (0.003) \\ 
+		WertN2 & $-$0.001$^{***}$ (0.0004) \\ 
+		SemesterferionUM & $-$0.201$^{***}$ (0.004) \\ 
+		SchulferienBW & $-$0.077$^{***}$ (0.004) \\ 
+		FeiertagBW & $-$0.458$^{***}$ (0.031) \\ 
+		FeiertagRP & $-$0.344$^{*}$ (0.195) \\ 
+		FeiertagBWRP & $-$0.077 (0.197) \\ 
+		Sommer & 0.045$^{***}$ (0.006) \\ 
+		laengengrad & 123.791$^{***}$ (0.314) \\ 
+		breitengrad & 93.715$^{***}$ (0.350) \\ 
+		uniMA\_dist & $-$0.001$^{***}$ (0.00001) \\ 
+		Corona & $-$0.250$^{***}$ (0.006) \\ 
+		Kontaktbeschr & $-$0.089$^{***}$ (0.006) \\ 
+		as.numeric(Jahr) & 0.040$^{***}$ (0.002) \\ 
+		Constant & $-$5,761.069$^{***}$ (20.485) \\ 
+		\hline \\[-1.8ex] 
+		Observations & 328,715 \\ 
+		R$^{2}$ & 0.523 \\ 
+		Adjusted R$^{2}$ & 0.523 \\ 
+		\hline 
+		\hline \\[-1.8ex] 
+		\textit{Note:}  & \multicolumn{1}{r}{$^{*}$p$<$0.1; $^{**}$p$<$0.05; $^{***}$p$<$0.01} \\ 
+		\textit{Fixed Effects:}  & \multicolumn{1}{r}{Stunde, Wochentag} \\
+	\end{tabular} 
+\end{table} 
+
 \begin{figure}[!ht]
 	\centering
 	\includegraphics[width=\textwidth]{Plots/HeatmapFinal1.pdf}
 	\captionsource{}{
 		Fahrrad Topographie Mannheims an einem vergangenen Tag
 	}
-	\label{fig:meine-grafik5}
+	\label{Topography1}
 \end{figure}
 
+\section{Vorhersagevergleich}
+
+Laut der Verwaltung der Stadt Mannheim war die Zählstation an der Renzstraße vom Dezember 2020 bis zum Dezember 2021 defekt. Mittels eines wissenschaftlichen Hochrechnungsverfahren wurden diese fehlenden Daten geschätzt.\\ 
+Aufgrund dessen wurden die Daten in diesem Zeitraum von dieser Station aus dem Datensatz ausgelassen, um meine eigenen Modelle nicht zu verzerren. Abschließend können wir unsere Vorhersagen mit den Horchrechnungen vergleichen, zu sehen in Darstellung \ref{Forecast2}.
+
+
+\begin{figure}[!ht]
+	\centering
+	\includegraphics[width=\textwidth]{Plots/Renzstrasse.pdf}
+	\captionsource{}{
+		Fahrrad Topographie Mannheims an einem vergangenen Tag
+	}
+	\label{Forecast2}
+\end{figure}
 
 \chapter{Fazit}
+
+Diese Hausarbeit bestand im wesentlich aus zwei Teilen. Im ersten Teil beschäftigten wir uns mit der Frage, ob wir aufgrundlage von verschiedenen Parametern das Aufkommen von Fahrradfahrern an den beobachteten Zählstation erklären könnten.\\
+Dazu suchten wir nach Daten, die man nutzen könnte und fanden Wetterdaten sowie Daten über Ferien- und Feiertage die ein relativ solides Model ergaben. Diesen Modellen nach sind Niederschlag sowie Ferien- und Feiertage die ausschlaggebensten Variablen, bei der Entscheidung Fahrrad zu fahren in Mannheim. Wir sahen auch, dass in Mannheim ein utilitaristischer Verkehr vorherrschend ist.\\
+Im zweiten Teil versuchten wir ein Model zu berechnen, dass nicht nur dazu dienen sollte, beobachtetes Verhalten zu erklären, sondern es auch vorhersagen zu können Die Frage war, ob wir unser Model extrapolieren könnten, um eine Ansicht der Topographie des Fahrradverkehrs in Mannheim zu erstellen. Dazu berechneten wir 30 verschiedene Modelle und verfolgten bei der Auswahl des richtigen Models Hinweise auf Overfitting zu beachten. Dennoch stießen wir bei den ersten Berechnungen mit dem ausgewählten Model auf Overfitting, und mussten auf ein Model zurückgreifen, dass weniger Variablen verwendete. Auch, wenn der Aussagewert der berechneten Topographie angezweifelt werden kann, weil wir keine Daten haben, um diesen zu prüfen, war dieser Schritt insofern wertvoll, weil durch die Extrapolarisierung weiteres Overfitting unserer Modelle offen gelegt werden konnte.\\
+So zeigt diese Hausarbeit auch, dass durch das Nutzen synthetischer zusätzlicher Datensätze die Robustheit statistischer Modelle erhöht werden kann.\\
+Eine robuste Schätzung der Topographie des Fahrradverkehrs könnte möglich sein, wenn mehr geographische Relevanten Daten in das Model aufnehmen würde. Interessant wären z.B. auch die Entfernung zum nächst gelegenen Hauptbahnhof oder aber auch zum nächst gelegenden Supermarkt von der Zählstation aus, der Straßentypus auf dem die Zählstation liegt oder Bevölkerungsdichte. Auch förderlich könnte es sein, diese Analyse auf mehrere Städte auszudehnen und die Ergebnisse in einem Model zu bündeln.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 \chapter{Anhang}
 
