@@ -1,5 +1,12 @@
 \begin{thebibliography}{}
 
+\bibitem[Hankey et~al., 2021]{HANKEY2021102651}
+Hankey, S., Zhang, W., Le, H.~T., Hystad, P., and James, P. (2021).
+\newblock Predicting bicycling and walking traffic using street view imagery
+  and destination data.
+\newblock {\em Transportation Research Part D: Transport and Environment},
+  90:102651.
+
 \bibitem[Hausman et~al., 1984]{Hausman1984}
 Hausman, J., Hall, B.~H., and Griliches, Z. (1984).
 \newblock Econometric models for count data with an application to the

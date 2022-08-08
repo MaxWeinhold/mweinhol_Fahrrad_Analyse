@@ -98,7 +98,7 @@ connection/.style={thick, dotted},
 \thispagestyle{empty}	
 \tableofcontents
 
-\newpage
+
 
 \begingroup
 \let\clearpage\relax
@@ -121,13 +121,13 @@ connection/.style={thick, dotted},
 Die mobile Infrastruktur urbaner Zentren in Deutschland unterliegt einem Wandel, der nicht mehr allein das Ziel einer autofreundlicheren Stadt hat, sondern auch andere Verkehrsteilnehmer hervor hebt. Im besonderen betrifft diese Entwicklung auch das Fahrrad. So ist laut \cite{Nobis2019} die Anzahl der Fahrradfahrer und die von ihnen zurückgelegten Wege innerhalb von 15 Jahren stark angestiegen und ebenso der Ausbau von Fahrradwegen. Ein Beispiel für diese Entwicklungen ist Mannheim. Denn hier verfolgt die städtische Planung ein 21 Punkte Programm, dass dazu dienen soll den Anteil des Radverkehrs zu steigern.\\
 Im Rahmen dieses Programms installierte die Stadt an verschiedenen Stellen 8 Fahrradzähler, deren stündlichen Zählungen öffentlich abrufbar sind. Mithilfe dieser Daten wollen wir versuchen ein Model zu entwickeln, dass die kausal Einflüsse auf den Radverkehr erklärt und das Aufkommen von Fahrrädern vorhersagen kann. Im besten Fall extrapolieren wir das Model und prüfen, ob wir das Model auch auf Bereiche außerhalb der Zählstellen anwenden können.\\
 Bei diesem Vorhaben bauen wir vornehmlich auf \cite{Wessel2020}, der primär untersuchte welchen Einfluss Wettervorhersagen und tatsächliches Wetter auf den Radverkehr in verschiedenen deutschen Städten hat. Dazu nutzen wir Daten des Deutschen Wetter Dienstes.\\
-Darüber hinaus (Wenn Zeit übrig bleibt) wollen wir versuchen die Methoden von \cite{PRATI201744} ebenfalls zu verwenden, um ein Model primär zu Vorhersage des extrapolierten Fahrradaufkommens zu entwickeln.
+%Darüber hinaus (Wenn Zeit übrig bleibt) wollen wir versuchen die Methoden von \cite{PRATI201744} ebenfalls zu verwenden, um ein Model primär zu Vorhersage des extrapolierten Fahrradaufkommens zu entwickeln.
 
 \chapter{Literaturüberblick}
 
-Da diese Arbeit im Rahmen eines Seminares bei Dr. Jan Wessel entstanden ist, verfolgt diese Arbeit eine ähnliche Methodik wie bei \cite{Wessel2020}, der der Frage nachgeht, wie sehr Wettervorhersagen und tatsächliches Wetter einen Einfluss auf das Aufkommen der Fahrradfahrer hat. Dazu entwickelt er ein log-lineares Regressionsmodel, das nicht nur die notwendigen Wetterdaten berücksichtigt, sondern auch andere wesentliche Effekte, wie Feiertage, Schul- und Semesterferien. Sein Model kommt zu einem adjusted $R^2$ von 78 \%. Die Daten für das Model stammen von 188 Zählstationen in ganz Deutschland.\\
+Da diese Arbeit im Rahmen eines Seminares bei Dr. Jan Wessel entstanden ist, verfolgt diese Arbeit eine ähnliche Methodik wie bei \cite{Wessel2020}, der der Frage nachgeht, wie sehr Wettervorhersagen und tatsächliches Wetter einen Einfluss auf das Aufkommen der Fahrradfahrer hat. Dazu entwickelt er ein log-lineares Regressionsmodel, das nicht nur die notwendigen Wetterdaten berücksichtigt, sondern auch andere wesentliche Effekte, wie Feiertage, Schul- und Semesterferien. Sein Model kommt zu einem adjusted $R^2$ von 78 \%. Die Daten für das Model stammen von 188 Zählstationen in ganz Deutschland. Daneben untersuchen auch andere Fragen zum Thema das Verkehrsaufkommens von Fahrrädern. Z.b. untersuchen \cite{ZHAO2018826} und \cite{Hong2022} den Einfluss von Feinstaubbelastungen auf den Fahrradverkehr. Dabei verwenden diese ähnlich wie Wessel Zeitreihendaten ähnlich wie \cite{Wessel2020}. Aber nicht nur Einflüsse äußerer und zeitlicher Umstände wie Wetter oder Feinstaubbelastung sind interessante Variablen. \cite{HANKEY2021102651} gehen im speziellen auf räumliche Daten ein. Sie beobachten über 4000 Zählstellen in den USA in Verbindung von Google Streetview Bildern und einem Pixelerkennungs Algorithmus. Ein anderes interessantes Forschungstheme das in Verbindung zu Fahrraddaten steht, ist die Vorhersage von Verkehrsunfällen, in die Fahrradfahrer verwickelt sind. Diesen Thema gehen \cite{PRATI201744} nach. Sie greifen hierbei nicht auf Regressionsmodelle zurück, sondern auf CHAID (Chi-square Automatic Interaction Detectors) Entscheidungsbäume und auf Bayesian Netzwerkanalysen. Entscheidungsbäume sind für dieses Thema ebenfalls eine interessante Methode. Im Annhang in der Dastellung \ref{DecisionTree} ist ein Entscheidungsbaum beruhend auf den Datensatz aus Mannheim dargestellt. Dennoch verwenden wir folgend ausschließlich Regressionsmodelle.
 
-Hier noch mehr bearbeiten. Vor allem im Bezug auf die eigene Vorschungsfrage.
+%Hier noch mehr bearbeiten. Vor allem im Bezug auf die eigene Vorschungsfrage.
 
 \chapter{Beschreibung der Daten}
 
@@ -159,7 +159,7 @@ Zu Abweichungen des Fahrradverkehrs konnte es während Corona kommen, wo Teile d
 	\captionsource{Zählstationsüberblick Mannheim}{
 		Zählstation nach Durchschnitt pro Stunde und Startjahr
 	}
-	\label{fig:meine-grafik5}
+	\label{Figure1}
 \end{figure}
 
 
@@ -228,7 +228,7 @@ Ein Mittel um an diese Informationen zu kommen ist die Regressionsanalyse. Diese
 	\captionsource{Fahrrad Daten Mannheim und DWD}{
 		Graphisches Beispiel einer Regression
 	}
-	\label{fig:BSP}
+	\label{Figure2}
 \end{figure}
 
 Nehmen wir weitere Variablen in das Regressionsmodel auf, die den Fahrradverkehr erklären können, wie z.B. Wetterbeobachtungen oder Ferien- und Feiertage, dann steigt der Fit des Models. Das heißt wir können präzisere Vorhersagen treffen, weil wir uns ein mehrdimensionales Model schaffen. Dies nennt man dann auch die multiple Regressionsanalyse. Lässt man wiederum wichtige Variablen aus, dann kann das auch die Aussage über die Kausalität verzerren durch den Bias einer ausgelassenen Variable. Deswegen ist es wichtig, die richtigen und sinnigen Variablen in das Model aufzunehmen. Im folgenden Model haben sind nicht nur Wetterdaten und Ferien- Feiertage mit inbegriffen. Zusätzlich verwenden wir eine Dummy Variable für die Sommer Monate und eine Dummy Variable für alle Zeiträume, die von Corona Kontaktbeschränkungen betroffen waren. Nicht direkt dargestellt in der Übersicht \ref{reg1}, sind Dummy Variablen, für die vollen Stunden, Wochentage, Monate und Jahre, sowie der den Namen der Station als Faktor, damit das Modell zwischen den verschiedenen Leveln der Zählstationen unterscheiden können, denn der Verkehr an den einzelnen Stationen weicht stark voneinander ab, wie man in der Darstellung \ref{BoxplotStationen} sieht.\\
@@ -311,6 +311,7 @@ Wenn wir uns die abhängige Variable den Zählstand der Fahrradstationen ansehen
 		Fixed Effects & Standort & Stunde & Wochentag & Jahr & \\
 		Note: & *p<0.1; & **p<0.05; &***p<0.01 & &\\
 	\end{tabular}
+\label{reg2}
 \end{table}
 
 
@@ -323,7 +324,7 @@ Das Standardmodell kann man nun dazu verwenden, Vorhersagen zu machen. Für drei
 % Table created by stargazer v.5.2.3 by Marek Hlavac, Social Policy Institute. E-mail: marek.hlavac at gmail.com
 % Date and time: Do, Aug 04, 2022 - 17:32:08
 \begin{table}[!htbp] \centering 
-	\caption{} 
+	\caption{Utilitaristischer und Freizeitverkehr der Zählstationen} 
 	\label{utilitarian} 
 	\begin{tabular}{@{\extracolsep{-8pt}}lcccccccc} 
 		\\[-1.8ex]\hline 
@@ -445,7 +446,7 @@ Was löst in unserem Fall das Overfitting aus? Dazu vergleichen wir den Regressi
 % Date and time: Sa, Aug 06, 2022 - 12:27:57
 %\scalebox{0.9}{
 	\begin{longtable}{@{\extracolsep{-5pt}}lcc} 
-		\caption{Log-Lineare Modele} 
+		\caption{Model Vergleich} 
 		\label{ZweiModelle}
 	\small 
 		\\[-1.8ex]\hline 
@@ -550,7 +551,7 @@ Zudem ist die berechnete Topographie sehr genau. Anlaufzentren wie der Bahnhof s
 % Table created by stargazer v.5.2.3 by Marek Hlavac, Social Policy Institute. E-mail: marek.hlavac at gmail.com
 % Date and time: So, Aug 07, 2022 - 09:59:14
 \begin{table}[!htbp] \centering 
-	\caption{Model 24} 
+	\caption{Finales Model: Model 23} 
 	\label{FinalFinalModel} 
 	\small 
 	\begin{tabular}{@{\extracolsep{-15pt}}lc} 
@@ -601,9 +602,7 @@ Zudem ist die berechnete Topographie sehr genau. Anlaufzentren wie der Bahnhof s
 \begin{figure}[!ht]
 	\centering
 	\includegraphics[width=\textwidth]{Plots/HeatmapFinal1.pdf}
-	\captionsource{}{
-		Fahrrad Topographie Mannheims an einem vergangenen Tag
-	}
+	\caption{Fahrrad Topographie Mannheims an einem vergangenen Tag}
 	\label{Topography1}
 \end{figure}
 
@@ -616,9 +615,7 @@ Aufgrund dessen wurden die Daten in diesem Zeitraum von dieser Station aus dem D
 \begin{figure}[!ht]
 	\centering
 	\includegraphics[width=\textwidth]{Plots/Renzstrasse.pdf}
-	\captionsource{}{
-		Fahrrad Topographie Mannheims an einem vergangenen Tag
-	}
+	\caption{Vergleich zur Hochrechnung an der Renzstraße 2021}
 	\label{Forecast2}
 \end{figure}
 
@@ -656,7 +653,7 @@ Eine robuste Schätzung der Topographie des Fahrradverkehrs könnte möglich sei
 	\captionsource{Korrelations Plot}{
 		Korrelation zwischen den verschiedenen Variablen
 	}
-	\label{fig:meine-grafik5}
+	\label{Figure3}
 \end{figure}
 
 \begin{figure}[!ht]
@@ -665,7 +662,7 @@ Eine robuste Schätzung der Topographie des Fahrradverkehrs könnte möglich sei
 	\captionsource{Monatliche Durchschnittliche Temperaturen und maximale Niederschläge nach Tageszeiten in 2018}{
 		DWD, eigene Darstellung
 	}
-	\label{fig:meine-grafik5}
+	\label{Figure4}
 \end{figure}
 
 \begin{figure}[!ht]
@@ -674,7 +671,7 @@ Eine robuste Schätzung der Topographie des Fahrradverkehrs könnte möglich sei
 	\captionsource{Tägliche Durchschnitts Temperaturen und monatliche maximale Niederschläge nach Tageszeiten in 2018}{
 		DWD, eigene Darstellung
 	}
-	\label{fig:meine-grafik5}
+	\label{Figure5}
 \end{figure}
 
 
@@ -775,6 +772,13 @@ Zwar steigt das Bestimmtheitsmaß und die Übersichtlichkeit des Modells nimmt z
 		\hline \\[-1.8ex] 
 	\end{tabular} 
 \end{table} 
+
+\begin{figure}[!ht]
+	\centering
+	\includegraphics[width=\textwidth]{Plots/Entscheidungsbaum.png}
+	\caption{Entscheidungsbaum}
+	\label{DecisionTree}
+\end{figure}
 
 \newpage
 \addcontentsline{toc}{chapter}{Literaturverzeichnis}
