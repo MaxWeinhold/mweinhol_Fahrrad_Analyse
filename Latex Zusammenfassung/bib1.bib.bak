@@ -96,4 +96,28 @@
   url     = {https://CRAN.R-project.org/package=stargazer},
 }
 
+@Article{HANKEY2021102651,
+  author   = {Steve Hankey and Wenwen Zhang and Huyen T.K. Le and Perry Hystad and Peter James},
+  journal  = {Transportation Research Part D: Transport and Environment},
+  title    = {Predicting bicycling and walking traffic using street view imagery and destination data},
+  year     = {2021},
+  issn     = {1361-9209},
+  pages    = {102651},
+  volume   = {90},
+  abstract = {Few studies predict spatial patterns of bicycling and walking across multiple cities using street-level data. This study aims to model bicycle and pedestrian traffic at 4145 count locations across 20 U.S. cities using new micro-scale variables: (1) destinations from Google Point of Interest data (e.g., restaurants, schools) and (2) pixel classification from Google Street View imagery (e.g., sidewalks, trees, streetlights). We applied machine learning algorithms to assess how well street-level variables predict bicycling and walking rates. Adding street-level variables improved out-of-sample prediction accuracy of bicycling and walking activities. We also found that street-level variables (10-fold CV R2: 0.82–0.88) may be a useful alternative to Census data (0.85–0.88). Macro-scale factors (e.g., zoning) captured by Census data and micro-scale factors (e.g., streetscapes) captured in our street-level data are both useful for predicting active travel. Our models provide a new tool for estimating and understanding the spatial patterns of active travel.},
+  doi      = {https://doi.org/10.1016/j.trd.2020.102651},
+  keywords = {Physical activity, Activity space, Direct-demand model, Non-motorized transport},
+  url      = {https://www.sciencedirect.com/science/article/pii/S1361920920308361},
+}
+
+@Article{Stock2003,
+  author    = {James Stock and Mark W. Watson},
+  title     = {Introduction to Econometrics},
+  year      = {2015},
+  pages     = {403 - 407},
+  address   = {New York},
+  edition   = {Updated Third},
+  publisher = {Pearson},
+}
+
 @Comment{jabref-meta: databaseType:bibtex;}

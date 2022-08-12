@@ -18,7 +18,7 @@ Hlavac, M. (2022).
 \newblock stargazer: Well-formatted regression and summary statistics tables.
 \newblock {\em R package version 5.2.3.}
 
-\bibitem[Hong~J, 2022]{Hong2022}
+\bibitem[Hong, 2022]{Hong2022}
 Hong~J, McArthur~DP, S. J. K.~C. (2022).
 \newblock Did air pollution continue to affect bike share usage in seoul during
   the covid-19 pandemic?
@@ -28,6 +28,11 @@ Hong~J, McArthur~DP, S. J. K.~C. (2022).
 Kahle, D. and Wickham, H. (2013).
 \newblock Spatial visualization with ggplot2.
 \newblock {\em The R Journal}, 5(1):144--161.
+
+\bibitem[Mannheim, 2010]{Mannheim2010}
+Stadt Mannheim (2010).
+\url{https://www.mannheim.de/sites/default/files/2020-02/21-Pkt.-Programm_Plakat.pdf}
+\newblock 21-punkte programm für mehr radverkehr.
 
 \bibitem[Nobis, 2019]{Nobis2019}
 Nobis, C. (2019).
@@ -39,6 +44,11 @@ Nobis, C. (2019).
 Prati, G., Pietrantoni, L., and Fraboni, F. (2017).
 \newblock Using data mining techniques to predict the severity of bicycle
   crashes.
+
+\bibitem[Stock and Watson, 2015]{Stock2003}
+Stock, J. and Watson, M.~W. (2015).
+\newblock Introduction to econometrics.
+\newblock pages 403 -- 407.
 
 \bibitem[Wessel, 2020]{Wessel2020}
 Wessel, J. (2020).

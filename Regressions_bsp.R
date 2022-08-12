@@ -33,13 +33,21 @@ datensatz = datensatz %>%
 
 names(datensatz)
 
-plot(c(3,2,5,6,8))
-plot(datensatz$WertT2M,datensatz$Zaehlstand)
+	library(caret)
 
-ggplot(datensatz,aes(x = WertT2M, y = Zaehlstand)) +
+	# Split the data into training and test set
+	set.seed(123)
+	training.samples <- datensatz$Zaehlstand %>%
+ 		createDataPartition(p = 0.9, list = FALSE)
+	train.data  <- datensatz[training.samples, ]
+	test.data <- datensatz[-training.samples, ]
+
+names(datensatz)
+
+ggplot(test.data,aes(x = uniMA_dist, y = Zaehlstand)) +
 	geom_point(size=0.05) +
-	ggtitle("Fahrradfahrer und Temperatur") +
-	xlab("Temperatur in 2 Meter Höhe in C°") +
+	ggtitle("Fahrradfahrer in Entfernung zur Universität") +
+	xlab("Entfernung zur Universität Mannheim in m") +
 	ylab("Fahrradauufkommen") +
 	theme_bw() + 
   	stat_smooth(method = "lm", formula= y ~ x, aes(color="linear"), size = 1.5) +
