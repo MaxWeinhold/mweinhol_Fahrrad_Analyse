@@ -70,7 +70,8 @@ boxplot(data=datensatz,
 	ylab="Fahrradfahrer je Stunde",
 	xlab="",
       border="black",
-	axes=FALSE)
+	axes=FALSE, 
+	par(mar=c(10.1,4.1,4.1,2.1)))
 axis(2)
 axis(1, at = c(1,2,3,4,5,6,7,8),labels=c("Jungbuschbr.",
 	"Konrad Adenauer Br.",
@@ -80,7 +81,7 @@ axis(1, at = c(1,2,3,4,5,6,7,8),labels=c("Jungbuschbr.",
 	"Neckarauer Ueberw.",
 	"Renzstrasse",
 	"Schlosspark"),
-	las=1)
+	las=2)
 
 
 

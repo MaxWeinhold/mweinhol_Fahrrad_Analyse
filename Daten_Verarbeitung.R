@@ -36,9 +36,12 @@ library(geosphere)
 	zaehlstelle_renzstrasse 			= read.csv(file = "Daten/renzstr-eco-counter-daten.csv",sep=";")
 	zaehlstelle_schlosspark_lindenhof 		= read.csv(file = "Daten/schlosspark-lindenhof-eco-counter-verkehrszahler.csv",sep=";")
 	
+	zaehlstelle_konrad_adenau_bruecke_sued$ZÃ.hlstand=zaehlstelle_konrad_adenau_bruecke_sued$ZÃ.hlstand*2
+	zaehlstelle_kurt_schumacher_brucke_sud$ZÃ.hlstand=zaehlstelle_kurt_schumacher_brucke_sud$ZÃ.hlstand*2
+	
 	summary(zaehlstelle_jungbuschbrucke)
 	summary(zaehlstelle_konrad_adenau_bruecke_sued)
-	summary(zaehlstelle_urpfalzbrucke)
+	summary(zaehlstelle_kurpfalzbrucke)
 	summary(zaehlstelle_kurt_schumacher_brucke_sud)
 	summary(zaehlstelle_lindenhofuberfuhrung)
 	summary(zaehlstelle_neckarauer_ubergang)

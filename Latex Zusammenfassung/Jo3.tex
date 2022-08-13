@@ -132,7 +132,7 @@ Da diese Arbeit im Rahmen eines Seminares bei Dr. Jan Wessel entstanden ist, ver
 
 \chapter{Beschreibung der Daten}
 
-Die Bearbeitung des Modells baut überwiegend auf zwei Datenquellen auf. Am wichtigsten sind die Fahrradzählstationen Mannheims, die öffentlich im Netz zugänglich sind (Link: \url{https://mannheim.opendatasoft.com/page/home/}). Hier sind stündliche Werte gezählter Fahrräder verfügbar an acht verschiedenen Stellen in der Stadt sowie Längen und Breitengrad der Position, Standortname, Zeit und Datum. Im zweiten Schritt werden diese Daten mit stündlichen Daten des Deutschen Wetter Dienstes zur Lufttemperatur in 2 Meter Höhe, zur relativen Feuchte, zum Bedeckungsgrad, zum Niederschlag und zur Sonnenstrahlung verbunden.\\
+Die Bearbeitung des Modells baut überwiegend auf zwei Datenquellen auf. Am wichtigsten sind die Fahrradzählstationen Mannheims, die öffentlich im Netz zugänglich sind (Link: \url{https://mannheim.opendatasoft.com/page/home/}). Hier sind stündliche Werte gezählter Fahrräder verfügbar an acht verschiedenen Stellen in der Stadt sowie Längen und Breitengrad der Position, Standortname, Zeit und Datum. Zwei dieser Zählstation waren nur in eine Richtung verfügbar (Kurt Schuhmacher und Konrad Adenauer Brücke). Deswegen werden diese der Einfachheit halber mal zwei multipliziert. Im zweiten Schritt werden diese Daten mit stündlichen Daten des Deutschen Wetter Dienstes zur Lufttemperatur in 2 Meter Höhe, zur relativen Feuchte, zum Bedeckungsgrad, zum Niederschlag und zur Sonnenstrahlung verbunden.\\
 \cite{ZHAO2018826} und \cite{Hong2022} zeigen, dass auch die Feinstaubbelastung den Radverkehr beeinflussen kann. Grundsätzlich wären die dazu notwendigen Daten aus Mannheim über \url{Opensensemap.org} zugänglich, jedoch nicht für den gesamten Betrachtungszeitraum. Da \cite{ZHAO2018826} und \cite{Hong2022} ihre Forschung in ostasiatischen Ballungsräumen betrieben haben und in einer Stadt wie Mannheim nicht die selbe Feinstaubbelastung zu erwarten ist, kann man von dieser Variable nicht erhoffen, dass sie die notwendige Erklärungskraft bringt, um einen Wegfall des Betrachtungszeitraumes zu rechtfertigen, weshalb Feinstaubmessungen keinen Weg in den Datensatz gefunden haben.\\
 Dafür ist es wichtig Feiertage, Schulferien und Semesterferien zu berücksichtigen. Hier könnte potentiell eine geographische Besonderheit Mannheims eine Rolle spielen, denn das Stadtgebiet grenzt direkt zu zwei verschiedenen Bundesländern an. Zum einem liegt auf dem gegenüberliegenden Rheinufer die Stadt Ludwigshafen, die bereits in Rheinland Pfalz liegt. Zwischen beiden Städten herrscht ein reger Verkehr, weshalb anzunehmen ist, dass voneinander abweichende Feiertage in Rheinland Pfalz und Baden Württemberg eine Rolle spielen könnten. Ebenso grenzt Hessen an Mannheim an. Jedoch nicht in einer Reichweite, die für Fahrradfahrer realistisch erscheint und nicht mit einer Stadt, die vergleichbar groß wie Ludwigshafen wäre. Somit finden Feiertage für Hessen keinen Weg ins Model.\\
 Dies gilt ebenso für die Schulferien. Es ist anzunehmen, dass innerhalb Mannheims, Schulen überwiegend von Mannheimern besucht werden, weshalb nur die Schulferien von Baden Württemberg im Datensatz zu finden sind. Neben Schülern fahren ebenso häufig Studenten Fahrrad. Die größte Hochschulbildungseinrichtung ist die Universität Mannheim, deren Semesterferien eine signifikante Rolle spielen dürften.
@@ -173,7 +173,7 @@ Zu Abweichungen des Fahrradverkehrs konnte es während der Corona Krise kommen, 
 		\toprule
 		Name & Min & Durchschnitt & Max & Stand.abw. & Korrelation \\ 
 		\midrule
-		Zählstand & 1 & 108.35 & 955 & 120.21 & 1 \\ 
+		Zählstand & 1 & 116.78 & 955 & 122.74 & 1 \\ 
 		Distanz z Uni & 208.36 & 1122.51 & 1875.72 & 583.35 & 0.26 \\ 
 		Wochenende & 0 & 0.28 & 1 & 0.45 & -0.21 \\ 
 		Sommer & 0 & 0.48 & 1 & 0.5 & 0.15 \\ 
@@ -218,27 +218,27 @@ Nimmt man weitere Variablen in das Regressionsmodell auf, die den Fahrradverkehr
 		& Koeffizient & Std Abw & t-Wert & Pr(>|t|) & \\
 		\midrule
 		%Intercept & -0.184 & (0.015) &\\
-		Leichter Nieselregen & -0.184 & (0.015) & -12.12259 & 5.9389e-06 & ***\\
-		Starker Nieselregen & -0.249 & (0.012) & -20.60850 & 1.5899e-07 & ***\\
-		Leichter Regen & -0.331 & (0.021) & -15.84990 & 9.6482e-07 & ***\\
-		Moderater Regen & -0.353 & (0.019) & -18.79747 & 2.9962e-07 & ***\\
-		Starker Regen & -0.373 & (0.043) & -8.61747 & 5.6532e-05 & ***\\
-		Heftiger Regen & -0.209 & (0.051) & -4.05542 & 4.8375e-03 & **\\
-		Temperatur & 0.036 & (0.005) & 7.63981 & 1.2217e-04 & ***\\
-		Temperatur$^2$ & -0.0005 & (0.000) & -9.29870 & 3.4479e-05 & ***\\
-		Wind & -0.041 & (0.003) & -16.05586 & 8.8335e-07 & ***\\
-		rel. Feuchte & -0.004 & (0.001) & -3.51258 & 9.8253e-03 & **\\
-		Sonne & -0.0001 & (0.000) & -1.37325 & 2.1204e-01 & \\
-		Bedeckung & -0.009 & (0.001) & -8.05733 & 8.7084e-05 & ***\\
-		FeiertagBW & -0.460 & (0.081) & -5.69499 & 7.3917e-04 & ***\\
-		FeiertagRP & -0.414 & (0.059) & -7.00091 & 2.1138e-04 & ***\\
-		SchulferienBW & -0.139 & (0.020) & -6.84816 & 2.4239e-04 & ***\\
-		SemesterferienUM & -0.159 & (0.031) & -5.19710 & 1.2570e-03 & **\\
-		Sommer & 0.082 & (0.021) & 3.99890 & 5.1972e-03 & **\\
-		Kontaktbeschr & -0.133 & (0.027) & -5.01609 & 1.5372e-03 & **\\
+		Leichter Nieselregen & -0.186767 & (0.015737) & -11.86798 & 6.8481e-06 & ***\\
+		Starker Nieselregen & -0.252077 & (0.011276) & -22.35570 & 9.0628e-08 & ***\\
+		Leichter Regen & -0.335288 & (0.020819) & -16.10480 & 8.6516e-07 & ***\\
+		Moderater Regen & -0.363761 & (0.019870) & -18.30659 & 3.5941e-07 & ***\\
+		Starker Regen & -0.382894 & (0.044853) & -8.53673 & 6.0076e-05 & ***\\
+		Heftiger Regen & -0.205909 & (0.052566) & -3.91711 & 5.7704e-03 & **\\
+		Temperatur & 0.036746 & (0.004933) & 7.44970 & 1.4326e-04 & ***\\
+		Temperatur$^2$ & -0.000496 & (0.000054) & -9.11186 & 3.9361e-05 & ***\\
+		Wind & -0.041435 & (0.002633) & -15.73843 & 1.0125e-06 & ***\\
+		rel. Feuchte & -0.003825 & (0.001071) & -3.57128 & 9.0814e-03 & **\\
+		Sonne & -0.000124 & (0.000082) & -1.51990 & 1.7234e-01 & \\
+		Bedeckung & -0.008739 & (0.001070) & -8.16766 & 7.9824e-05 & ***\\
+		FeiertagBW & -0.459730 & (0.081119) & -5.66738 & 7.6062e-04 & ***\\
+		FeiertagRP & -0.427518 & (0.060086) & -7.11505 & 1.9112e-04 & ***\\
+		SchulferienBW & -0.140156 & (0.019901) & -7.04263 & 2.0371e-04 & ***\\
+		SemesterferienUM & -0.159926 & (0.030295) & -5.27895 & 1.1494e-03 & **\\
+		Sommer & 0.084612 & (0.020959) & 4.03704 & 4.9514e-03 & **\\
+		Kontaktbeschr & -0.135452 & (0.026406) & -5.12952 & 1.3544e-03 & **\\
 		\midrule
-		Num.Obs. & 410891& & RMSE & 0.62 & \\
-		R2 & 0.818& R2 Adj. & 0.818 &  & \\
+		Num.Obs. & 410891& & RMSE & 0.633826 & \\
+		R2 Adj. & 0.785286 &  &  &  & \\
 		\bottomrule
 		Fixed Effects & Standort & Stunde & Wochentag & Jahr & \\
 		Signifikanz: & *p<0.1; & **p<0.05; &***p<0.01 & &\\
@@ -262,27 +262,27 @@ Die Zählstationen zählen immer in ganzen Schritten, da diese naturgemäß kein
 		& Koeffizient & Std Abw & t-Wert & Pr(>|t|) & \\
 		\midrule
 		%Intercept & -0.184 & (0.015) &\\
-		Leichter Nieselregen & -0.189047 & (0.010061) & -18.790256 & < 2.2e-16 & *** \\
-		Starker Nieselregen & -0.233913 & (0.007726) & -30.274180 & < 2.2e-16 & *** \\
-		Leichter Regen & -0.310315 & (0.011664) & -26.605631 & < 2.2e-16 & *** \\
-		Moderater Regen & -0.327817 & (0.011601) & -28.257201 & < 2.2e-16 & *** \\
-		Starker Regen & -0.305291 & (0.024972) & -12.225408 & < 2.2e-16 & *** \\
-		Heftiger Regen & -0.086290 & (0.052804) & -1.634136 & 1.0223e-01 & \\
-		Temperatur & 0.035417 & (0.002609) & 13.576529 & < 2.2e-16 & *** \\
-		Temperatur$^2$ & -0.000425 & (0.000045) & -9.433671 & < 2.2e-16 & *** \\
-		Wind & -0.037234 & (0.002592) & -14.364224 & < 2.2e-16 & *** \\
-		rel. Feuchte & -0.002813 & (0.000649) & -4.333943 & 1.4646e-05 & *** \\
-		Sonne & -0.000086 & (0.000093) & -0.927537 & 3.5365e-01 & \\
-		Bedeckung & -0.009645 & (0.000888) & -10.865248 & < 2.2e-16 & *** \\
-		FeiertagBW & -0.495062 & (0.068356) & -7.242427 & 4.4073e-13 & *** \\
-		FeiertagRP & -0.247711 & (0.031382) & -7.893448 & 2.9395e-15 & *** \\
-		SchulferienBW & -0.137121 & (0.013632) & -10.058793 & < 2.2e-16 & *** \\
-		SemesterferienUM & -0.127239 & (0.005794) & -21.962002 & < 2.2e-16 & *** \\
-		Sommer & 0.080012 & (0.008060) & 9.926549 & < 2.2e-16 & *** \\
-		Kontaktbeschr & -0.102099 & (0.024805) & -4.116008 & 3.8549e-05 & *** \\
+		Leichter Nieselregen & -0.190599 & (0.010495) & -18.161447 & < 2.2e-16 & *** \\
+		Starker Nieselregen & -0.235324 & (0.007872) & -29.891931 & < 2.2e-16 & *** \\
+		Leichter Regen & -0.311577 & (0.011883) & -26.220764 & < 2.2e-16 & *** \\
+		Moderater Regen & -0.330017 & (0.011603) & -28.442294 & < 2.2e-16 & *** \\
+		Starker Regen & -0.308139 & (0.025086) & -12.283392 & < 2.2e-16 & *** \\
+		Heftiger Regen & -0.083444 & (0.051245) & -1.628348 & 1.0345e-01 & \\
+		Temperatur & 0.035840 & (0.002722) & 13.169145 & < 2.2e-16 & *** \\
+		Temperatur$^2$ & -0.000432 & (0.000047) & -9.259697 & < 2.2e-16 & *** \\
+		Wind & -0.037601 & (0.002648) & -14.199233 & < 2.2e-16 & *** \\
+		rel. Feuchte & -0.002825 & (0.000633) & -4.462412 & 8.1042e-06 & *** \\
+		Sonne & -0.000078 & (0.000097) & -0.800906 & 4.2319e-01 & \\
+		Bedeckung & -0.009677 & (0.000870) & -11.121828 & < < 2.2e-16 & *** \\
+		FeiertagBW & -0.486463 & (0.070097) & -6.939882 & 3.9243e-12 & *** \\
+		FeiertagRP & -0.253083 & (0.031649) & -7.996481 & 1.2803e-15 & *** \\
+		SchulferienBW & -0.136337 & (0.013729) & -9.930817 & < 2.2e-16 & *** \\
+		SemesterferienUM & -0.126973 & (0.005859) & -21.671515 & < 2.2e-16 & *** \\
+		Sommer & 0.080617 & (0.008046) & 10.019919 & < 2.2e-16 & *** \\
+		Kontaktbeschr & -0.101819 & (0.023953) & -4.250844 & 2.1297e-05 & *** \\
 		\midrule
-		Num.Obs. & 410891& & RMSE & 49.86 & \\
-		psydo R2 & 0.164 & psydo R2 Adj. & 0.164 &  & \\
+		Num.Obs. & 410891& & RMSE & 52.79 & \\
+		psydo R2 Adj. & 0.149594 &  &  &  & \\
 		\bottomrule
 		Fixed Effects & Standort & Stunde & Wochentag & Jahr & \\
 		Signifikanz: & *p<0.1; & **p<0.05; &***p<0.01 & &\\
@@ -413,73 +413,73 @@ Eine naheliegende Vorgehensweise wäre es, verschiedene Modelle zu erstellen, di
 Auf der Y-Achse der Graphik \ref{ModelSelektion} abgetragen ist die Höhe des Bestimmtheitsmaßes. Auf der X Achse erscheint die Anzahl der Koeffizienten. Mit jedem weiteren Model wurden weitere Variablen hinzugefügt, angefangen mit den Wetter Variablen, Feiertage, Ferien, Zeitliche Variablen, wie das Jahr, Sommer oder Tageszeit bis hin zur geographischen Lage. Wir sehen, dass das Bestimmtheitsmaß, also die Genauigkeit der Vorhersage des Modells, zu nimmt je mehr Variablen hinzufügt werden bis zu einem Punkt, an dem das Bestimmtheitsmaß im Trainingsdatensatz zwar nochmals bedeutend zu nimmt, im Test Datensatz aber abnimmt. Hier geraten wir in das so genannte Overfitting. Das heißt, das Modell, das hier entwickelt wurde, kann zwar die Daten, mit denen es trainiert wurde, extrem gut erklären, sobald wir aber mithilfe des Modells Vorhersagen treffen wollen, auf Grundlage neuer Daten, ist die Genauigkeit der Vorhersagen schlechter, als sie sein dürfte. Das muss verhindert werden. Denn ist ein Modell von Overfitting betroffen, sind in den Variablen Zusammenhänge zu sehen, die sich nicht replizieren lassen.\\
 Was löst in unserem Fall das Overfitting aus? Dazu vergleicht man den Regressions Output zweier Modelle in der Tabelle \ref{ZweiModelle}. Das zweite Modell ist jenes, in dem erstmals Overfitting auftritt. Das erste Modell ist das davor, in dem noch kein Overfitting auftritt.
 
-
 % Table created by stargazer v.5.2.3 by Marek Hlavac, Social Policy Institute. E-mail: marek.hlavac at gmail.com
-% Date and time: Sa, Aug 06, 2022 - 12:27:57
-%\scalebox{0.9}{
+% Date and time: Sa, Aug 13, 2022 - 12:09:39
 	\begin{longtable}{@{\extracolsep{-5pt}}lcc} 
-		\caption{Modell Vergleich} 
-		\label{ZweiModelle}
+	\caption{Modell Vergleich} 
+	\label{ZweiModelle}
 	\small 
 		\\[-1.8ex]\hline 
 		\hline \\[-1.8ex] 
 		& \multicolumn{2}{c}{\textit{Dependent variable:}} \\ 
 		\cline{2-3} 
-		\\[-1.8ex] & \multicolumn{2}{c}{log(Zaehlstand)} \\ 
+		\\[-1.8ex] & \multicolumn{2}{c}{log(Zählstand)} \\ 
 		\\[-1.8ex] & (1) & (2)\\ 
 		\hline \\[-1.8ex] 
 		Temperatur & 0.028$^{***}$ (0.001) & 0.028$^{***}$ (0.001) \\ 
-		Temperatur$^2$ & 0.0004$^{***}$ (0.0001) & 0.0005$^{***}$ (0.0001) \\ 
-		Temperatur$^3$ & $-$0.00002$^{***}$ (0.00000) & $-$0.00002$^{***}$ (0.00000) \\ 
-		Leichter Nieselregen & $-$0.188$^{***}$ (0.007) & $-$0.187$^{***}$ (0.005) \\ 
-		Starker Nieselregen & $-$0.269$^{***}$ (0.012) & $-$0.263$^{***}$ (0.009) \\ 
-		Leichter Regen & $-$0.305$^{***}$ (0.013) & $-$0.307$^{***}$ (0.010) \\ 
-		Moderater Regen & $-$0.356$^{***}$ (0.020) & $-$0.353$^{***}$ (0.015) \\ 
-		Starker Regen & $-$0.384$^{***}$ (0.043) & $-$0.361$^{***}$ (0.032) \\ 
-		Heftiger Regen & $-$0.270$^{***}$ (0.078) & $-$0.232$^{***}$ (0.058) \\ 
-		Wind & $-$0.066$^{***}$ (0.006) & $-$0.070$^{***}$ (0.005) \\ 
-		Wind$^2$ & 0.008$^{***}$ (0.002) & 0.008$^{***}$ (0.001) \\ 
+		Temperatur$^2$ & 0.0005$^{***}$ (0.0001) & 0.001$^{***}$ (0.0001) \\ 
+		Temperatur$^3$ & $-$0.00002$^{***}$ (0.00000) & $-$0.00003$^{***}$ (0.00000) \\ 
+		Leichter Nieselregen & $-$0.198$^{***}$ (0.007) & $-$0.197$^{***}$ (0.006) \\ 
+		Starker Nieselregen & $-$0.258$^{***}$ (0.011) & $-$0.260$^{***}$ (0.009) \\ 
+		nLeichter Regen & $-$0.334$^{***}$ (0.013) & $-$0.328$^{***}$ (0.010) \\ 
+		Moderater Regen & $-$0.369$^{***}$ (0.018) & $-$0.363$^{***}$ (0.015) \\ 
+		Starker Regen & $-$0.367$^{***}$ (0.039) & $-$0.354$^{***}$ (0.031) \\ 
+		Heftiger Regen & $-$0.199$^{***}$ (0.069) & $-$0.188$^{***}$ (0.056) \\ 
+		Wind & $-$0.071$^{***}$ (0.006) & $-$0.074$^{***}$ (0.005) \\ 
+		Wind$^2$ & 0.009$^{***}$ (0.001) & 0.009$^{***}$ (0.001) \\ 
 		Wind$^3$ & $-$0.001$^{***}$ (0.0001) & $-$0.001$^{***}$ (0.0001) \\ 
-		Rel. Feuchte & 0.0003 (0.002) & $-$0.001 (0.002) \\ 
-		Rel. Feuchte$^2$ & $-$0.0001$^{***}$ (0.00003) & $-$0.0001$^{***}$ (0.00003) \\ 
-		Rel. Feuchte$^3$ & 0.00000$^{***}$ (0.00000) & 0.00000$^{***}$ (0.00000) \\ 
-		Bedeckung & 0.003 (0.006) & 0.002 (0.005) \\ 
-		Bedeckung$^2$ & $-$0.003 (0.002) & $-$0.003$^{*}$ (0.001) \\ 
-		Bedeckung$^3$ & 0.0001 (0.0001) & 0.0002$^{*}$ (0.0001) \\ 
-		SemesterferienUM & $-$0.129$^{***}$ (0.003) & $-$0.142$^{***}$ (0.003) \\ 
-		SchulferienBW & $-$0.156$^{***}$ (0.004) & $-$0.145$^{***}$ (0.003) \\ 
-		FeiertagBW & $-$0.388$^{***}$ (0.026) & $-$0.383$^{***}$ (0.019) \\ 
-		FeiertagRP & 0.062 (0.162) & 0.076 (0.121) \\ 
-		FeiertagBW*RP & $-$0.553$^{***}$ (0.164) & $-$0.568$^{***}$ (0.123) \\ 
-		Sommer & 0.053$^{***}$ (0.005) & 0.047$^{***}$ (0.004) \\ 
-		Längengrad & 2,939,930.000$^{***}$ (14,714.250) &  \\ 
-		Breitengrad & 493,297.900$^{***}$ (2,540.769) &  \\ 
-		LängengxBreiteng & $-$58,170.540$^{***}$ (299.637) &  \\ 
-		Längengrad$^3$ & $-$281.543$^{***}$ (1.343) &  \\ 
-		Konrad-Adenauer-Br. &  & 0.182$^{***}$ (0.004) \\ 
-		Kurpfalzbrücke &  & 1.549$^{***}$ (0.004) \\ 
-		K. Schumacher-Br. &  & $-$2.612$^{***}$ (0.004) \\ 
-		Lindenhofüberf. &  & $-$0.509$^{***}$ (0.005) \\ 
-		Neckarauer Überg. &  & $-$0.042$^{***}$ (0.005) \\ 
-		Renzstraße &  & 0.863$^{***}$ (0.004) \\ 
-		Schlosspark Lind. &  & 0.178$^{***}$ (0.005) \\ 
-		uniMA\_dist & $-$0.013$^{***}$ (0.0001) &  \\ 
-		Corona & 0.015$^{**}$ (0.006) & $-$0.021$^{***}$ (0.005) \\ 
-		Kontaktbeschr & $-$0.122$^{***}$ (0.005) & $-$0.119$^{***}$ (0.004) \\ 
-		Jahr & 24,671.730$^{***}$ (2,362.121) & $-$5,005.576$^{***}$ (1,768.591) \\ 
-		Jahr$^2$ & $-$12.216$^{***}$ (1.170) & 2.492$^{***}$ (0.876) \\ 
-		Jahr$^3$ & 0.002$^{***}$ (0.0002) & $-$0.0004$^{***}$ (0.0001) \\ 
-		Constant & $-$41,369,101.000$^{***}$ & 3,351,009.000$^{***}$  \\ 
-		 & (1,588,755.000) & (1,189,707.000) \\ 
+		Rel. Feuchte & $-$0.002 (0.002) & $-$0.001 (0.002) \\ 
+		Rel. Feuchte$^2$ & $-$0.0001$^{*}$ (0.00003) & $-$0.0001$^{**}$ (0.00003) \\ 
+		Rel. Feuchte$^3$ & 0.00000$^{**}$ (0.00000) & 0.00000$^{***}$ (0.00000) \\ 
+		Bedeckung & 0.005 (0.006) & 0.0001 (0.005) \\ 
+		Bedeckung$^2$ & $-$0.004$^{**}$ (0.002) & $-$0.003$^{*}$ (0.001) \\ 
+		Bedeckung$^3$ & 0.0003$^{**}$ (0.0001) & 0.0002$^{*}$ (0.0001) \\ 
+		SemesterferienUM & $-$0.131$^{***}$ (0.003) & $-$0.142$^{***}$ (0.003) \\ 
+		SchulferienBW & $-$0.154$^{***}$ (0.003) & $-$0.145$^{***}$ (0.003) \\ 
+		FeiertagBW & $-$0.398$^{***}$ (0.024) & $-$0.384$^{***}$ (0.020) \\ 
+		FeiertagRP & 0.047 (0.151) & 0.068 (0.123) \\ 
+		FeiertagBW*RP & $-$0.541$^{***}$ (0.153) & $-$0.573$^{***}$ (0.124) \\ 
+		Sommer & 0.050$^{***}$ (0.005) & 0.046$^{***}$ (0.004) \\ 
+		Längengrad & 4,275,254.000$^{***}$ (13,711.460) &  \\ 
+		Breitengrad & 728,085.000$^{***}$ (2,367.637) &  \\ 
+		Längen*Breitengrad & $-$85,858.130$^{***}$ (279.219) &  \\ 
+		Längengrad$^3$ & $-$118.352$^{***}$ (1.252) &  \\ 
+		K-Adenauer-Brücke &  & 0.877$^{***}$ (0.005) \\ 
+		Kurpfalzbrücke &  & 1.555$^{***}$ (0.004) \\ 
+		K-Schumacher-Brücke &  & $-$1.982$^{***}$ (0.005) \\ 
+		Lindenhofüberführung &  & $-$0.507$^{***}$ (0.005) \\ 
+		Neckarauer Übergang &  & $-$0.043$^{***}$ (0.005) \\ 
+		Renzstraße &  & 0.869$^{***}$ (0.004) \\ 
+		Schlosspark &  & 0.183$^{***}$ (0.005) \\ 
+		uniMA\_dist & $-$0.020$^{***}$ (0.0001) &  \\ 
+		Corona & 0.008 (0.006) & $-$0.022$^{***}$ (0.005) \\ 
+		Kontaktbeschr & $-$0.120$^{***}$ (0.005) & $-$0.120$^{***}$ (0.004) \\ 
+		Jahr & 20,824.930$^{***}$ (2,200.256) & $-$3,893.328$^{**}$ (1,788.879) \\ 
+		Jahr$^2$ & $-$10.308$^{***}$ (1.090) & 1.941$^{**}$ (0.886) \\ 
+		Jahr$^3$ & 0.002$^{***}$ (0.0002) & $-$0.0003$^{**}$ (0.0001) \\ 
+		Constant & $-$50,205,702.000$^{***}$  & 2,602,558.000$^{**}$  \\
+		 & (1,479,908.000) & (1,203,354.000) \\  
 		\hline \\[-1.8ex] 
 		Observations & 328,715 & 328,715 \\ 
-		R$^{2}$ & 0.669 & 0.815 \\ 
-		Adjusted R$^{2}$ & 0.669 & 0.815 \\ 
+		R$^{2}$ & 0.672 & 0.784 \\ 
+		Adjusted R$^{2}$ & 0.672 & 0.783 \\ 
 		\hline 
 		\hline \\[-1.8ex] 
 		\textit{Note:}  & \multicolumn{2}{r}{$^{*}$p$<$0.1; $^{**}$p$<$0.05; $^{***}$p$<$0.01} \\ 
 		\textit{Fixed Effects:}  & \multicolumn{2}{r}{Stunde, Wochentag} \\
-	\end{longtable}
+\end{longtable}
+
+
 
 Beide Modelle unterscheiden sich im Wesentlichen in der Wahl der Fixed Effects. Fixed Effects sind all jene Schätzer, die über die Zeit nicht variieren, also fix sind und nur zwischen den Entitäten variieren (\cite{Stock2003}). In diesem konkreten Fall heißt das, ein Fixed Effect ist eine Variable die zeitlich konstant bleibt, sich aber zwischen den Fahrradzählstationen unterscheidet. Das dient dazu, die Unterschiede zwischen diesen Stationen zu messen und im Model mit aufzunehmen. Denn fällt der Blick auf die Graphik \ref{BoxplotStationen}, sehen wir, dass die Stationen untereinander recht stark variieren. So herrscht auf der Kurpfalzbrücke, die von der Innenstadt über den Neckar führt, grundsätzlich mehr Radverkehr. Deswegen lässt sich z.B. eine Dummy Variable in das Modell aufnehmen, die 1 ist, wenn ein Beobachtungswert von der Kurpfalzbrücke stammte und 0 ist, wenn der Beobachtungswert von einer anderen Station stammte, dann erklärt diese Variable den Unterschied zwischen der Kurpfalzbrücke und den anderen Stationen im Modell, ohne den ursächlichen Grund dafür zu kennen. Dies erhöht aber die Treffsicherheit (Fit) des Modells, denn nun können die anderen Variablen ihren Einfluss präziser schätzen.\\ 
 Eine solche Dummy Variable können wir für sieben von acht Stationen in das Modell aufnehmen. Bei der achten reicht es, wenn alle anderen Dummy Variablen 0 sind. Andernfalls bekämen wir ein multikollineares Modell, also ein eines in dem mindestens zwei Variablen linear abhängig von einander sind. Genau auf diese Weise sind wir im zweiten Modell vorgegangen. Dieses beinhaltet eine Dummy Variable für die Kurpfalzbrücke, die Lindenhofüberführung, den Neckarauer Übergang, die Renzstraße und dem Schloßpark/Lindenhof. Die übrige Station an der Kurt Schuhmacher Brücke ergibt sich, wie bereits erklärt, wenn alle anderen 7 Dummy Variablen 0 sind. Diese Vorgehensweise führt zu einem Bestimmtheitsmaß von 81,44 \%, was sich gut anhört, wie aber bereits gezeigt, größtenteils auf Overfitting zurückzuführen ist.\\
@@ -501,24 +501,23 @@ Dazu kann ein Netz von Koordinaten über die Straßen Mannheims gelegt werden un
 		%\\[-1.8ex] & \multicolumn{8}{c}{log(Zaehlstand)}  \\ 
 		\\[-1.8ex] & Min & Median & Mean & Max\\ 
 		\hline \\[-1.8ex] 
-		Datensatz & 1 & 63 & 108.3 & 955 \\ 
-		Vorhersagen von Model 21	 & 12.5 & 101.2 & 123.1 & 509 \\ 
-		Vorhersagen von Model 22	 & 12.5 & 101.9 & 123.8 & 507.6 \\ 
-		Vorhersagen von Model 23	 & 12.5 & 101.3 & 123.3 & 509.6 \\ 
-		Vorhersagen von Model 24	 & 0 & 318.1 & 22604.4 & 514502.8\\ 
-		Vorhersagen von Model 25	 & 0 & 318.1 & 22604.4 & 514502.8\\ 
-		Vorhersagen von Model 26	 & 0 & 285.5 & 19143.1 & 425675.6\\ 
-		Vorhersagen von Model 27	 & 0 & 168 & 2943.41 & 36717.38\\ 
+		Datensatz & 1 & 69 & 116.8 & 955 \\ 
+		Vorhersagen von Model 21	 & 19.8 & 150 & 157.6 & 471.3 \\ 
+		Vorhersagen von Model 22	 & 19.8 & 149.7 & 157.4 & 470.6 \\ 
+		Vorhersagen von Model 23	 & 19.8 & 150.3 & 158 & 472.3 \\ 
+		Vorhersagen von Model 24	 & 0 & 374.2 & 63424.4 & 1935375.6\\ 
+		Vorhersagen von Model 25	 & 0 & 374.2 & 63424.4 & 1935375.6\\ 
+		Vorhersagen von Model 26	 & 0 & 93.4 & 15076.5 & 453753.1\\ 
+		Vorhersagen von Model 27	 & 0 & 296.2 & 25163.4 & 593288.3\\ 
 		\hline \\[-1.8ex] 
 	\end{tabular} 
 \end{table} 
 
-Ein Grund für die extremen Ausreißer ist die Einführung der Intersektionsvariabel $LaengengradxBreitengrad$. Das ist jedoch nicht weiter dramatisch, denn ohne große Verluste bietet sich eines der vorherigen Modelle an, welches in der Übersicht \ref{FinalFinalModel} zu sehen ist. Wendet man genau dieses Modell auf das angelegte Straßennetz Mannheims an, dann kommt man zu der Vorhersage in der Graphik \ref{Topography1}. Zudem ist eine animierte Vorhersage auf YouTube verfügbar (Link: \url{https://www.youtube.com/watch?v=nqP-_xEMWok}). Beiden Darstellungen kann man entnehmen, dass der Verkehr im Westen der Stadt stärker sei, vor allem im Nordwesten. Es gibt jedoch keine Möglichkeiten, diese Aussagen weiter zu prüfen, als durch bloße ungefähre subjektive Ortskenntnis des Verkehrs.\\
+Ein Grund für die extremen Ausreißer ist die Einführung der Intersektionsvariabel $LaengengradxBreitengrad$. Das ist jedoch nicht weiter dramatisch, denn ohne große Verluste bietet sich eines der vorherigen Modelle an, welches in der Übersicht \ref{FinalFinalModel} zu sehen ist. Wendet man genau dieses Modell auf das angelegte Straßennetz Mannheims an, dann kommt man zu der Vorhersage in der Graphik \ref{Topography1}. Zudem ist eine animierte Vorhersage auf YouTube verfügbar (Link: \url{https://youtu.be/EsQ2UK1niJo}). Beiden Darstellungen kann man entnehmen, dass der Verkehr im Westen der Stadt stärker sei, vor allem im Nordwesten. Es gibt jedoch keine Möglichkeiten, diese Aussagen weiter zu prüfen, als durch bloße ungefähre subjektive Ortskenntnis des Verkehrs.\\
 Zudem ist die berechnete Topographie sehr ungenau. Anlaufzentren wie der Bahnhof oder der Jungbusch sollten stärker hervor treten. Außerdem je weiter die Vorhersage vom Stadtzentrum entfernt ist, desto weniger ist sie verlässlich, denn die Beobachtungspunkte, auf denen das Modell zur Vorhersage aufbaut, liegen alle sehr nah am Zentrum. Mit nur acht Beobachtungspunkten auf ein räumliches Model zu schließen, ist zu gewagt, um daraus überzeugende Schlussfolgerungen zu ziehen. Vielmehr dienlich war die Topographie, um zu zeigen, wie weit Overfitting in den Modellen vorhanden war, denn auch wenn Model 24 bis 27 in der Darstellung \ref{ModelSelektion} keinen Hinweis auf Overfitting gaben, zeigte sich in der Anwendung der Modelle außerhalb der geographischen Lageparameter des vorhandenen Datensatzes unrealistische Vorhersagen mit extremen Ausreißern.
 
-
 % Table created by stargazer v.5.2.3 by Marek Hlavac, Social Policy Institute. E-mail: marek.hlavac at gmail.com
-% Date and time: So, Aug 07, 2022 - 09:59:14
+% Date and time: Sa, Aug 13, 2022 - 12:35:28
 \begin{table}[!htbp] \centering 
 	\caption{Finales Modell: Model 23} 
 	\label{FinalFinalModel} 
@@ -528,39 +527,39 @@ Zudem ist die berechnete Topographie sehr ungenau. Anlaufzentren wie der Bahnhof
 		\hline \\[-1.8ex] 
 		& \multicolumn{1}{c}{\textit{Dependent variable:}} \\ 
 		\cline{2-2} 
-		\\[-1.8ex] & log(Zaehlstand) \\ 
+		\\[-1.8ex] & log(Zählstand) \\ 
 		\hline \\[-1.8ex] 
-		Temperatur & 0.034$^{***}$ (0.001) \\ 
-		Temperatur$^2$ & $-$0.0004$^{***}$ (0.00003) \\ 
-		Leichter Nieselregen & $-$0.183$^{***}$ (0.009) \\ 
-		Starker Nieselregen & $-$0.271$^{***}$ (0.015) \\ 
-		Leichter Regen & $-$0.301$^{***}$ (0.016) \\ 
-		Moderater Regen & $-$0.351$^{***}$ (0.024) \\ 
-		Starker Regen & $-$0.347$^{***}$ (0.051) \\ 
-		Heftiger Regen & $-$0.192$^{**}$ (0.093) \\ 
-		Wind & $-$0.031$^{***}$ (0.004) \\ 
+		Temperatur & 0.035$^{***}$ (0.001) \\ 
+		Temperatur$^2$ & $-$0.0004$^{***}$ (0.00002) \\ 
+		Leichter Nieselregen & $-$0.198$^{***}$ (0.008) \\ 
+		Starker Nieselregen & $-$0.254$^{***}$ (0.014) \\ 
+		Leichter Regen & $-$0.337$^{***}$ (0.015) \\ 
+		Moderater Regen & $-$0.371$^{***}$ (0.022) \\ 
+		Starker Regen & $-$0.316$^{***}$ (0.047) \\ 
+		Heftiger Regen & $-$0.124 (0.084) \\ 
+		Wind & $-$0.034$^{***}$ (0.003) \\ 
 		Wind$^2$ & $-$0.001$^{***}$ (0.0004) \\ 
 		Rel. Feuchte & $-$0.006$^{***}$ (0.001) \\ 
 		Rel. Feuchte$^2$ & 0.00001$^{**}$ (0.00000) \\ 
-		Bedeckung & 0.001 (0.003) \\ 
-		Bedeckung$^2$ & $-$0.001$^{***}$ (0.0004) \\ 
-		SemesterferienUM & $-$0.201$^{***}$ (0.004) \\ 
-		SchulferienBW & $-$0.077$^{***}$ (0.004) \\ 
-		FeiertagBW & $-$0.458$^{***}$ (0.031) \\ 
-		FeiertagRP & $-$0.344$^{*}$ (0.195) \\ 
-		FeiertagBW*RP & $-$0.077 (0.197) \\ 
-		Sommer & 0.045$^{***}$ (0.006) \\ 
-		Längengrad & 123.791$^{***}$ (0.314) \\ 
-		Breitengrad & 93.715$^{***}$ (0.350) \\ 
+		Bedeckung & $-$0.002 (0.003) \\ 
+		Bedeckung$^2$ & $-$0.001$^{*}$ (0.0003) \\ 
+		SemesterferienUM & $-$0.205$^{***}$ (0.004) \\ 
+		SchulferienBW & $-$0.066$^{***}$ (0.004) \\ 
+		FeiertagBW & $-$0.453$^{***}$ (0.029) \\ 
+		FeiertagRP & $-$0.308$^{*}$ (0.184) \\ 
+		FeiertagBW*RP & $-$0.137 (0.187) \\ 
+		Sommer & 0.043$^{***}$ (0.005) \\ 
+		Längengrad & 111.977$^{***}$ (0.297) \\ 
+		Breitengrad & 89.465$^{***}$ (0.331) \\ 
 		uniMA\_dist & $-$0.001$^{***}$ (0.00001) \\ 
-		Corona & $-$0.250$^{***}$ (0.006) \\ 
-		Kontaktbeschr & $-$0.089$^{***}$ (0.006) \\ 
-		Jahr & 0.040$^{***}$ (0.002) \\ 
-		Constant & $-$5,761.069$^{***}$ (20.485) \\ 
+		Corona & $-$0.249$^{***}$ (0.006) \\ 
+		Kontaktbeschr & $-$0.087$^{***}$ (0.006) \\ 
+		Jahr & 0.032$^{***}$ (0.002) \\ 
+		Constant & $-$5,434.835$^{***}$ (19.382) \\ 
 		\hline \\[-1.8ex] 
 		Observations & 328,715 \\ 
-		R$^{2}$ & 0.523 \\ 
-		Adjusted R$^{2}$ & 0.523 \\ 
+		R$^{2}$ & 0.512 \\ 
+		Adjusted R$^{2}$ & 0.512 \\ 
 		\hline 
 		\hline \\[-1.8ex] 
 		\textit{Note:}  & \multicolumn{1}{r}{$^{*}$p$<$0.1; $^{**}$p$<$0.05; $^{***}$p$<$0.01} \\ 
@@ -720,7 +719,7 @@ Eine robuste Schätzung der Topographie des Fahrradverkehrs könnte möglich sei
 		Jahr & 2018 & 2018 & 2018 \\
 		Kontakteinschr & Nein & Nein & Nein \\
 		\hline \\[-1.8ex]
-		Vorhersagen: & 356 & 32 & 162 \\ 
+		Vorhersagen: & 361 & 31 & 161 \\ 
 		\hline \\[-1.8ex] 
 	\end{tabular} 
 \end{table} 
