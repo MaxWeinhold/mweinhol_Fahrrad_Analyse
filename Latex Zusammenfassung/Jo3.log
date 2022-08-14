@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (MiKTeX 22.3) (preloaded format=pdflatex 2022.6.8)  13 AUG 2022 16:53
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (MiKTeX 22.3) (preloaded format=pdflatex 2022.6.8)  14 AUG 2022 13:39
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -1126,22 +1126,22 @@ Overfull \hbox (22.41954pt too wide) in alignment at lines 418--480
  [] [] [] 
  []
 
-[23]
-Underfull \hbox (badness 10000) in paragraph at lines 484--486
+[23] [24] [25]
 
- []
+LaTeX Warning: Command \" invalid in math mode on input line 515.
 
-[24] [25] [26]
+Missing character: There is no � in font cmr12!
+[26]
 <Plots/HeatmapFinal1.pdf, id=343, 507.8975pt x 504.88625pt>
 File: Plots/HeatmapFinal1.pdf Graphic file (type pdf)
 <use Plots/HeatmapFinal1.pdf>
-Package pdftex.def Info: Plots/HeatmapFinal1.pdf  used on input line 572.
+Package pdftex.def Info: Plots/HeatmapFinal1.pdf  used on input line 571.
 (pdftex.def)             Requested size: 390.0pt x 387.70045pt.
  [27] [28] [29 <./Plots/HeatmapFinal1.pdf>]
 <Plots/Renzstrasse.pdf, id=365, 545.03625pt x 529.98pt>
 File: Plots/Renzstrasse.pdf Graphic file (type pdf)
 <use Plots/Renzstrasse.pdf>
-Package pdftex.def Info: Plots/Renzstrasse.pdf  used on input line 585.
+Package pdftex.def Info: Plots/Renzstrasse.pdf  used on input line 584.
 (pdftex.def)             Requested size: 390.0pt x 379.22394pt.
  [30 <./Plots/Renzstrasse.pdf>]
 Kapitel 6.
@@ -1152,31 +1152,31 @@ Kapitel 7.
 <Plots/Corr_Plot.pdf, id=382, 597.23125pt x 688.5725pt>
 File: Plots/Corr_Plot.pdf Graphic file (type pdf)
 <use Plots/Corr_Plot.pdf>
-Package pdftex.def Info: Plots/Corr_Plot.pdf  used on input line 606.
+Package pdftex.def Info: Plots/Corr_Plot.pdf  used on input line 605.
 (pdftex.def)             Requested size: 390.0pt x 449.64714pt.
 <Plots/Monatliche_Temperatur_Niederschläge.png, id=383, 929.4725pt x 613.29124
 pt>
 File: Plots/Monatliche_Temperatur_Niederschläge.png Graphic file (type png)
 <use Plots/Monatliche_Temperatur_Niederschläge.png>
 Package pdftex.def Info: Plots/Monatliche_Temperatur_Niederschläge.png  used o
-n input line 614.
+n input line 613.
 (pdftex.def)             Requested size: 390.0pt x 257.3279pt.
 <Plots/Taegliche_Temperatur_Niederschläge.png, id=384, 929.4725pt x 613.29124p
 t>
 File: Plots/Taegliche_Temperatur_Niederschläge.png Graphic file (type png)
 <use Plots/Taegliche_Temperatur_Niederschläge.png>
 Package pdftex.def Info: Plots/Taegliche_Temperatur_Niederschläge.png  used on
- input line 623.
+ input line 622.
 (pdftex.def)             Requested size: 390.0pt x 257.3279pt.
 
-Overfull \hbox (14.71678pt too wide) in paragraph at lines 638--695
+Overfull \hbox (14.71678pt too wide) in paragraph at lines 637--694
  [][] 
  []
 
 <Plots/Entscheidungsbaum.png, id=385, 1026.08344pt x 685.05937pt>
 File: Plots/Entscheidungsbaum.png Graphic file (type png)
 <use Plots/Entscheidungsbaum.png>
-Package pdftex.def Info: Plots/Entscheidungsbaum.png  used on input line 729.
+Package pdftex.def Info: Plots/Entscheidungsbaum.png  used on input line 728.
 (pdftex.def)             Requested size: 390.0pt x 260.37753pt.
 [33
 
@@ -1220,9 +1220,9 @@ sers\MaxWe\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/dpi600\ecrm1200.pk>
 ecrm1440.pk> <C:\Users\MaxWe\AppData\Local\MiKTeX\fonts/pk/ljfour/jknappen/ec/d
 pi600\ecrm2074.pk><C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmmi1
 2.pfb><C:/Program Files/MiKTeX/fonts/type1/public/amsfonts/cm/cmr8.pfb>
-Output written on Jo3.pdf (40 pages, 1848741 bytes).
+Output written on Jo3.pdf (40 pages, 1848808 bytes).
 PDF statistics:
- 976 PDF objects out of 1000 (max. 8388607)
+ 977 PDF objects out of 1000 (max. 8388607)
  90 named destinations out of 1000 (max. 500000)
  180 words of extra memory for PDF output out of 10000 (max. 10000000)
 
